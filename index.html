@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Técnico - Célula de Termoformado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0052CC;
+            --light-blue: #F4F8FF;
+            --dark-text: #172B4D;
+            --light-text: #6B778C;
+            --background: #FFFFFF;
+        }
+
+        html {
+            scroll-padding-top: 140px;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--background);
+            color: var(--dark-text);
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #dfe1e6;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.75rem;
+            letter-spacing: -0.5px;
+            color: var(--dark-text);
+        }
+
+        .section-subtitle {
+            font-family: 'Lato', sans-serif;
+            color: var(--light-text);
+        }
+        
+        .card {
+            background-color: var(--background);
+            border: 1px solid #dfe1e6;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Presentation Mode Styles */
+        body.presentation-mode {
+            overflow: hidden;
+        }
+        body.presentation-mode main > section {
+            display: none;
+            height: calc(100vh - 128px);
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        body.presentation-mode main > section.active-slide {
+            display: block;
+            opacity: 1;
+        }
+        
+        #presentation-progress-bar {
+            background-color: var(--primary-blue);
+            height: 4px;
+            transition: width 0.3s ease;
+        }
+
+        #presentation-nav-tree .nav-item {
+            transition: all 0.2s ease;
+        }
+        #presentation-nav-tree .nav-item.active {
+            color: var(--primary-blue);
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+        
+        /* Image Modal */
+        #image-modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        #image-modal-content {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800" style="font-family: 'Montserrat', sans-serif;">
+                PROYECTO TÉCNICO
+            </div>
+            <div id="main-nav-links" class="hidden md:flex space-x-6">
+                <a href="#caratula" class="text-sm text-gray-600 hover:text-blue-600">Carátula</a>
+                <a href="#resumen" class="text-sm text-gray-600 hover:text-blue-600">Resumen</a>
+                <a href="#documentacion" class="text-sm text-gray-600 hover:text-blue-600">Documentación</a>
+                <a href="#proceso" class="text-sm text-gray-600 hover:text-blue-600">Proceso</a>
+                <a href="#simulador" class="text-sm text-gray-600 hover:text-blue-600">Simulador</a>
+                <a href="#viabilidad" class="text-sm text-gray-600 hover:text-blue-600">Viabilidad</a>
+                <a href="#equipo" class="text-sm text-gray-600 hover:text-blue-600">Equipo</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="presentation-mode-btn" class="p-2 text-gray-600 hover:text-blue-600" title="Iniciar Modo Presentación">
+                    <i id="play-icon" class="fas fa-play"></i>
+                    <i id="stop-icon" class="fas fa-stop hidden"></i>
+                </button>
+                <button id="fullscreen-btn" class="p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Presentation Progress Bar and Nav Tree -->
+        <div id="presentation-nav-container" class="hidden">
+            <div id="presentation-progress-bar" style="width: 0%;"></div>
+            <div id="presentation-nav-tree" class="container mx-auto px-6 py-2 flex justify-between items-center text-xs text-gray-500">
+                <!-- Nav tree items will be injected here -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section / Carátula -->
+        <section id="caratula" data-title="Carátula" class="bg-slate-50 border-b border-slate-200">
+            <div class="container mx-auto px-6 py-20 text-center flex flex-col justify-center h-full">
+                <div class="flex justify-center mb-8">
+                    <img src="https://i.imgur.com/lia9JeX.png" alt="Logo Instituto" class="h-20">
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4" style="font-family: 'Montserrat', sans-serif;">CÉLULA DE PRODUCCIÓN AUTOMATIZADA</h1>
+                <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto mb-10">Presentación del proyecto de integración de una termoformadora y cinta transportadora.</p>
+                <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Integrantes del Equipo</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Abril Abdala • Jesus Castellanos • Guillermo Paulosky • Joaquin Huaman • Joaquin Gozainy • Benjamin Cubilla • Tomas Ratti • Brian Gimenez • Brian Alcon
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary Section -->
+        <section id="resumen" data-title="Resumen">
+            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                <div class="text-center max-w-5xl mx-auto mb-12">
+                     <h2 class="section-title">Resumen del Proyecto</h2>
+                     <p class="section-subtitle">Este proyecto demuestra la transformación de activos industriales subutilizados en una línea de producción sinérgica, como caso de estudio en ingeniería, eficiencia y viabilidad comercial.</p>
+                </div>
+                <div class="card grid lg:grid-cols-5 gap-8">
+                    <div class="lg:col-span-3">
+                        <h3 class="font-bold text-2xl mb-6 text-blue-600">Pilares del Proyecto</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4"><i class="fas fa-cogs text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Ingeniería de Valor Aumentado</h4><p class="text-gray-600 text-sm">Integramos una termoformadora y cinta transportadora, creando una célula productiva que minimiza la intervención humana y maximiza la eficiencia.</p></div></div>
+                            <div class="flex items-start gap-4"><i class="fas fa-shield-alt text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Ventaja Competitiva</h4><p class="text-gray-600 text-sm">La automatización del flujo nos permite ofrecer costos más bajos, tiempos de entrega récord y una calidad consistente, atacando un nicho desatendido.</p></div></div>
+                            <div class="flex items-start gap-4"><i class="fas fa-chart-line text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Potencial de Crecimiento</h4><p class="text-gray-600 text-sm">El sistema está diseñado como la base para futuras automatizaciones (troquelado, apilado), asegurando un camino de crecimiento claro.</p></div></div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200">
+                         <h3 class="font-bold text-2xl mb-6 text-blue-600 text-center">Indicadores Clave</h2>
+                         <div class="space-y-6 text-center">
+                            <div><p class="text-sm text-gray-500">PRODUCCIÓN ANUAL (12HS)</p><p class="text-4xl font-bold text-gray-800">+735.000</p></div>
+                            <div><p class="text-sm text-gray-500">RECUPERO DE COSTOS (ROI)</p><p class="text-4xl font-bold text-gray-800">~5</p><p class="text-xs text-gray-400">Meses</p></div>
+                             <div><p class="text-sm text-gray-500">GANANCIA NETA ANUAL</p><p class="text-4xl font-bold text-green-600">~$11.4M</p></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section id="documentacion" data-title="Documentación">
+            <div class="container mx-auto px-6 py-12 h-full flex flex-col">
+                 <div class="text-center max-w-5xl mx-auto mb-12">
+                    <h2 class="section-title">Ingeniería y Documentación</h2>
+                    <p class="section-subtitle">Un recorrido visual por el proceso de transformación, desde la recepción de los activos hasta la documentación técnica final.</p>
+                </div>
+                <!-- Tabs -->
+                <div class="mb-8 border-b border-slate-200 flex justify-center space-x-8">
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 active" data-tab="inicial">Estado Inicial</button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500" data-tab="proceso-tab">Puesta a Punto</button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500" data-tab="tecnica">Planos y Diagramas</button>
+                </div>
+                <!-- Tab Content -->
+                <div id="tab-content" class="card flex-grow">
+                    <div class="tab-pane active" id="inicial">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div><h4 class="font-semibold text-center mb-4">Termoformadora</h4><img src="https://i.imgur.com/gK2Ew73.jpeg" alt="Termoformadora desarmada" class="w-full rounded-lg shadow-md mb-4 clickable-image"><p class="text-sm text-center text-gray-600">Recibida parcialmente desarmada y con componentes obsoletos.</p></div>
+                            <div><h4 class="font-semibold text-center mb-4">Cinta Transportadora</h4><img src="https://placehold.co/600x450/e9e9e9/64748b?text=Cinta+Inicial" alt="Cinta transportadora antes" class="w-full rounded-lg shadow-md mb-4 clickable-image"><p class="text-sm text-center text-gray-600">Estructura funcional pero sin sistema de control ni motorización.</p></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane hidden" id="proceso-tab">
+                        <div class="grid md:grid-cols-3 gap-6">
+                           <figure><img src="https://i.imgur.com/uR2iZcG.jpeg" alt="Equipo trabajando" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Reingeniería del tablero de control.</figcaption></figure>
+                            <figure><img src="https://placehold.co/600x400/e9e9e9/64748b?text=Montaje+Mecánico" alt="Montaje mecánico" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Montaje de componentes mecánicos.</figcaption></figure>
+                            <figure><img src="https://placehold.co/600x400/e9e9e9/64748b?text=Integración+Sensores" alt="Integración de sensores" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Instalación y calibración de sensores.</figcaption></figure>
+                        </div>
+                    </div>
+                    <div class="tab-pane hidden" id="tecnica">
+                        <div class="grid md:grid-cols-3 gap-8 text-center">
+                            <div><h4 class="font-semibold mb-4">Diagrama de Conexiones</h4><img src="https://i.imgur.com/Y1ZlJ7o.png" alt="Diagrama de conexiones" class="w-full rounded-lg shadow-md border clickable-image"></div>
+                            <div><h4 class="font-semibold mb-4">Diagrama Unifilar</h4><img src="https://placehold.co/600x800/e9e9e9/64748b?text=Diagrama+Unifilar" alt="Diagrama unifilar" class="w-full rounded-lg shadow-md border clickable-image"></div>
+                            <div><h4 class="font-semibold mb-4">Componente Clave: PLC</h4><img src="https://i.imgur.com/8iLrmgA.png" alt="PLC Kinco" class="w-full rounded-lg shadow-md mb-4 border p-4 clickable-image"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Production Line Section -->
+        <section id="proceso" data-title="Proceso">
+             <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                <div class="text-center max-w-5xl mx-auto mb-16">
+                    <h2 class="section-title">La Línea de Producción Integrada</h2>
+                    <p class="section-subtitle">Así es como los dos activos se convierten en un sistema de producción fluido y semi-automatizado.</p>
+                </div>
+                <div class="relative timeline-container max-w-3xl mx-auto">
+                    <!-- Timeline items -->
+                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-hand-paper"></i></div><div class="card !p-6"><h4 class="font-bold">1. Carga y Sujeción</h4><p class="text-sm text-gray-600">Operario carga lámina. PLC activa cilindros. (t: 3s)</p></div></div>
+                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-fire"></i></div><div class="card !p-6"><h4 class="font-bold">2. Termoformado</h4><p class="text-sm text-gray-600">Calentamiento, moldeo por vacío y enfriamiento. (t: 4s)</p></div></div>
+                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-cogs"></i></div><div class="card !p-6"><h4 class="font-bold">3. Expulsión y Detección</h4><p class="text-sm text-gray-600">Pieza expulsada a la cinta. Sensor óptico la detecta. (t: 1s)</p></div></div>
+                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-long-arrow-alt-right"></i></div><div class="card !p-6"><h4 class="font-bold">4. Transporte y Curado</h4><p class="text-sm text-gray-600">PLC activa cinta para enfriamiento en tránsito. (t: 4s)</p></div></div>
+                    <div class="timeline-item"><div class="timeline-dot bg-green-500 text-white border-green-500"><i class="fas fa-check"></i></div><div class="card !p-6"><h4 class="font-bold">5. Recolección</h4><p class="text-sm text-gray-600">Pieza lista para apilado. (Ciclo Total: ~12s)</p></div></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Simulator Section -->
+        <section id="simulador" data-title="Simulador">
+            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                <div class="card">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Simulador de la Célula Productiva</h2><p class="section-subtitle">Seleccione un producto y observe cómo la línea integrada lo transforma en ganancia.</p></div>
+                    <div class="grid lg:grid-cols-2 gap-12 items-start">
+                        <div>
+                            <h3 class="font-bold text-xl mb-6">1. Seleccione Producto:</h3>
+                            <div class="space-y-4">
+                                <input type="radio" name="product" id="prod1" value="bandeja" class="hidden custom-radio" checked>
+                                <label for="prod1" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/3LXJ6xJ.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Bandeja Gastronómica</h5></div></label>
+                                <input type="radio" name="product" id="prod2" value="mascara" class="hidden custom-radio">
+                                 <label for="prod2" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/c2Yw2a1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Máscara de Cotillón</h5></div></label>
+                                <input type="radio" name="product" id="prod3" value="blister" class="hidden custom-radio">
+                                 <label for="prod3" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/wV2eQk1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Blíster Industrial</h5></div></label>
+                            </div>
+                            <button id="start-simulation-btn" class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Activar Línea</button>
+                        </div>
+                        <div>
+                             <h3 class="font-bold text-xl mb-6">2. Resultado del Ciclo:</h3>
+                             <div id="simulation-result" class="bg-slate-50 border border-slate-200 p-6 rounded-lg min-h-[300px] flex justify-center items-center text-center"><p class="text-gray-500">Esperando ciclo...</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financials Section -->
+        <section id="viabilidad" data-title="Viabilidad">
+            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                 <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle">Un desglose transparente de costos y proyecciones de rentabilidad.</p></div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="card"><h3 class="text-2xl font-bold mb-6">Costos de Puesta en Marcha</h3><div class="space-y-3 text-gray-600"><p>Adquisición Activos: <span class="font-bold text-gray-800 float-right">$ 2.200.000</span></p><p>Refacciones e Integración: <span class="font-bold text-gray-800 float-right">$ 450.000</span></p><p>Primeros moldes: <span class="font-bold text-gray-800 float-right">$ 1.000.000</span></p><div class="pt-4 mt-4 border-t-2 border-blue-500"><p class="text-xl font-bold">Costo Total Inicial: <span class="text-blue-600 float-right">$ 3.650.000</span></p></div></div></div>
+                    <div class="card"><h3 class="text-2xl font-bold mb-6">Costos Operativos Mensuales</h3><div class="space-y-3 text-gray-600"><p>Materia Prima (61.320u): <span class="font-bold text-gray-800 float-right">$ 2.330.160</span></p><p>Costos Fijos Totales: <span class="font-bold text-gray-800 float-right">$ 1.500.000</span></p><p>Energía y Mantenimiento: <span class="font-bold text-gray-800 float-right">$ 150.000</span></p><p>Impuestos y Adm.: <span class="font-bold text-gray-800 float-right">$ 250.000</span></p><div class="pt-4 mt-4 border-t-2 border-blue-500"><p class="text-xl font-bold">Costo Mensual Estimado: <span class="text-blue-600 float-right">$ 4.230.160</span></p></div></div></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+        <section id="equipo" data-title="Equipo">
+            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                 <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Equipo de Proyecto</h2><p class="section-subtitle">El capital intelectual detrás de la ingeniería, la puesta en marcha y la visión del proyecto.</p></div>
+                <div id="team-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                    <!-- Team members will be injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Presentation Navigation Arrows -->
+    <div id="presentation-arrows" class="hidden">
+        <button id="prev-slide-btn" class="fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"><i class="fas fa-chevron-left text-xl"></i></button>
+        <button id="next-slide-btn" class="fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal-backdrop" class="fixed inset-0 bg-black/70 z-[60] hidden opacity-0 flex items-center justify-center p-4">
+        <div id="image-modal-content" class="bg-white rounded-lg shadow-2xl p-4 max-w-4xl max-h-[90vh] w-auto relative scale-95 opacity-0">
+            <button id="image-modal-close" class="absolute -top-4 -right-4 bg-white rounded-full h-10 w-10 text-2xl">&times;</button>
+            <img id="modal-image" src="" class="max-w-full max-h-[85vh] object-contain">
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const teamMembers = [
+                { name: 'Abril Abdala' }, { name: 'Jesus Castellanos' }, { name: 'Guillermo Paulosky' },
+                { name: 'Joaquin Huaman' }, { name: 'Joaquin Gozainy' }, { name: 'Benjamin Cubilla' },
+                { name: 'Tomas Ratti' }, { name: 'Brian Gimenez' }, { name: 'Brian Alcon' }
+            ];
+            const teamContainer = document.getElementById('team-container');
+            if(teamContainer) {
+                teamContainer.innerHTML = teamMembers.map(member => `
+                    <div class="card text-center !p-6">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/${member.name.toLowerCase().replace(' ','-')}" alt="QR de ${member.name}" class="w-24 h-24 rounded-lg mx-auto mb-4">
+                        <h4 class="font-bold text-gray-800 text-base">${member.name}</h4>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 transition mt-2 block" title="Perfil de LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+                    </div>`).join('');
+            }
+
+            // Presentation Mode Logic
+            const presentationModeBtn = document.getElementById('presentation-mode-btn');
+            const playIcon = document.getElementById('play-icon');
+            const stopIcon = document.getElementById('stop-icon');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const mainNavLinks = document.getElementById('main-nav-links');
+            const presentationNavContainer = document.getElementById('presentation-nav-container');
+            const presentationArrows = document.getElementById('presentation-arrows');
+            const prevSlideBtn = document.getElementById('prev-slide-btn');
+            const nextSlideBtn = document.getElementById('next-slide-btn');
+            
+            const slides = Array.from(document.querySelectorAll('main > section'));
+            let currentSlideIndex = 0;
+            let isPresentationMode = false;
+
+            function setupNavTree() {
+                const navTree = document.getElementById('presentation-nav-tree');
+                navTree.innerHTML = slides.map((slide, index) => 
+                    `<a href="#" class="nav-item px-3 py-1 rounded-md" data-index="${index}">${slide.dataset.title}</a>`
+                ).join('');
+                navTree.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        goToSlide(parseInt(e.currentTarget.dataset.index));
+                    });
+                });
+            }
+
+            function goToSlide(index) {
+                if (index < 0 || index >= slides.length) return;
+                currentSlideIndex = index;
+                
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active-slide', i === index);
+                });
+
+                updatePresentationUI();
+            }
+
+            function updatePresentationUI() {
+                // Update progress bar
+                const progress = ((currentSlideIndex + 1) / slides.length) * 100;
+                document.getElementById('presentation-progress-bar').style.width = `${progress}%`;
+                
+                // Update nav tree
+                document.querySelectorAll('#presentation-nav-tree .nav-item').forEach((item, i) => {
+                    item.classList.toggle('active', i === currentSlideIndex);
+                });
+                
+                // Update arrow buttons
+                prevSlideBtn.disabled = currentSlideIndex === 0;
+                nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
+            }
+
+            function togglePresentationMode() {
+                isPresentationMode = !isPresentationMode;
+                document.body.classList.toggle('presentation-mode', isPresentationMode);
+                playIcon.classList.toggle('hidden', isPresentationMode);
+                stopIcon.classList.toggle('hidden', !isPresentationMode);
+                mainNavLinks.classList.toggle('hidden', isPresentationMode);
+                presentationNavContainer.classList.toggle('hidden', !isPresentationMode);
+                presentationArrows.classList.toggle('hidden', !isPresentationMode);
+
+                if (isPresentationMode) {
+                    const currentScroll = window.scrollY;
+                    const closestSlideIndex = slides.reduce((closest, slide, index) => {
+                        const box = slide.getBoundingClientRect();
+                        const offset = box.top + box.height / 2;
+                        return Math.abs(offset) < Math.abs(slides[closest].getBoundingClientRect().top + slides[closest].getBoundingClientRect().height / 2) ? index : closest;
+                    }, 0);
+                    goToSlide(closestSlideIndex);
+                } else {
+                    slides[currentSlideIndex].scrollIntoView({ behavior: 'instant' });
+                }
+            }
+
+            presentationModeBtn.addEventListener('click', togglePresentationMode);
+            prevSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
+            nextSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
+            
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (isPresentationMode) {
+                    if (e.key === 'ArrowRight') nextSlideBtn.click();
+                    if (e.key === 'ArrowLeft') prevSlideBtn.click();
+                    if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+                }
+            });
+
+            setupNavTree();
+
+            // Tabs logic, simulator, and other functionalities...
+            const tabs = document.querySelectorAll('.tab-button');
+            const panes = document.querySelectorAll('.tab-pane');
+            tabs.forEach(tab => tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                panes.forEach(p => p.classList.toggle('hidden', p.id !== tab.dataset.tab));
+            }));
+
+            // Image Modal Logic
+            const modalBackdrop = document.getElementById('image-modal-backdrop');
+            const modalContent = document.getElementById('image-modal-content');
+            const modalImage = document.getElementById('modal-image');
+            const modalClose = document.getElementById('image-modal-close');
+
+            document.querySelectorAll('.clickable-image').forEach(img => {
+                img.addEventListener('click', () => {
+                    modalImage.src = img.src;
+                    modalBackdrop.classList.remove('hidden');
+                    setTimeout(() => {
+                        modalBackdrop.classList.remove('opacity-0');
+                        modalContent.classList.remove('opacity-0', 'scale-95');
+                    }, 10);
+                });
+            });
+
+            const closeModal = () => {
+                modalContent.classList.add('opacity-0', 'scale-95');
+                modalBackdrop.classList.add('opacity-0');
+                setTimeout(() => modalBackdrop.classList.add('hidden'), 300);
+            };
+
+            modalClose.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === modalBackdrop) closeModal();
+            });
+
+            // Simulator logic...
+            const productsData = {
+                bandeja: { name: "Bandeja Gastronómica", image: "https://i.imgur.com/3LXJ6xJ.png", cycleTime: 12, materialCost: 38, salePrice: 85 },
+                mascara: { name: "Máscara de Cotillón", image: "https://i.imgur.com/c2Yw2a1.png", cycleTime: 14, materialCost: 50, salePrice: 250 },
+                blister: { name: "Blíster Industrial", image: "https://i.imgur.com/wV2eQk1.png", cycleTime: 13, materialCost: 45, salePrice: 180 }
+            };
+            const startBtn = document.getElementById('start-simulation-btn');
+            const resultDiv = document.getElementById('simulation-result');
+            startBtn.addEventListener('click', () => {
+                const product = productsData[document.querySelector('input[name="product"]:checked').value];
+                startBtn.disabled = true; startBtn.textContent = 'Procesando...';
+                resultDiv.innerHTML = `<div class="w-full"><h4 id="simulation-status" class="font-bold mb-2">Iniciando ciclo...</h4><div class="w-full bg-slate-200 h-2 rounded-full"><div id="progress-bar-sim" class="bg-blue-600 h-2 rounded-full" style="width:0"></div></div><div id="final-result" class="opacity-0"></div></div>`;
+                const simProgressBar = document.getElementById('progress-bar-sim');
+                const simStatus = document.getElementById('simulation-status');
+                const finalResult = document.getElementById('final-result');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    simProgressBar.style.width = `${progress}%`;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        simStatus.innerHTML = `<span class="text-green-600 font-bold">¡Ciclo Completo!</span>`;
+                        const hourlyProduction = Math.floor(3600 / product.cycleTime * 0.70); // 70% OEE
+                        finalResult.innerHTML = `<img src="${product.image}" class="mx-auto h-24 my-4"><p class="text-sm text-gray-500">PRODUCCIÓN/HORA</p><p class="font-bold text-3xl">${hourlyProduction} u.</p><div class="mt-4 pt-4 border-t w-full"><p class="text-sm text-gray-500">MARGEN BRUTO</p><p class="font-bold text-3xl text-blue-600">$${product.salePrice - product.materialCost}</p></div>`;
+                        finalResult.classList.add('opacity-100', 'transition-opacity', 'duration-500');
+                        startBtn.disabled = false; startBtn.textContent = 'Activar Otro Ciclo';
+                    }
+                }, product.cycleTime * 10);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
