@@ -21,7 +21,7 @@
         .card { background-color: var(--background); border: 1px solid #dfe1e6; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); transition: all 0.3s ease; }
         .card:hover { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07); transform: translateY(-4px); }
         body.presentation-mode { overflow: hidden; }
-        .presentation-page body.presentation-mode .slide { display: none; height: calc(100vh - 128px); overflow-y: auto; padding-top: 2rem; padding-bottom: 2rem; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .presentation-page body.presentation-mode .slide { display: none; height: calc(100vh - 128px); overflow-y: auto; padding-top: 2rem; padding-bottom: 2rem; opacity: 0; transition: opacity 0.5s ease-in-out; cursor: pointer;}
         .presentation-page body.presentation-mode .slide.active-slide { display: flex; align-items: center; opacity: 1; }
         .nav-item.active { color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid var(--primary-blue); }
         
@@ -45,6 +45,9 @@
         .gantt-bar.completed { background-color: #22c55e; } /* green-500 */
         .gantt-bar.in-progress { background-color: #f59e0b; } /* amber-500 */
         .gantt-bar.pending { background-color: #ef4444; } /* red-500 */
+        
+        /* --- Simulator Styles --- */
+        .custom-radio:checked+label { border-color: var(--primary-blue); background-color: #F4F8FF; box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2); }
     </style>
 </head>
 
@@ -216,13 +219,35 @@
                     </div>
                 </div>
             </section>
-            <section data-title="Viabilidad" class="slide">
+            <section data-title="Simulador" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle mt-4">Proyección financiera basada en costos de mercado (Octubre 2025, ARS), asumiendo la producción de bandejas gastronómicas.</p></div>
+                    <div class="card">
+                        <div class="text-center"><h2 class="section-title">Simulador de Producción</h2><p class="section-subtitle mt-4">Seleccione un producto para visualizar el ciclo y su desglose económico.</p></div>
+                        <div class="grid lg:grid-cols-2 gap-12 items-start mt-12">
+                            <div>
+                                <h3 class="font-bold text-xl mb-6">1. Seleccione Producto:</h3>
+                                <div class="space-y-4">
+                                    <input type="radio" name="product" id="prod1" value="bandeja" class="hidden custom-radio" checked><label for="prod1" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/3LXJ6xJ.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Bandeja Gastronómica</h5></div></label>
+                                    <input type="radio" name="product" id="prod2" value="mascara" class="hidden custom-radio"><label for="prod2" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/c2Yw2a1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Máscara de Cotillón</h5></div></label>
+                                    <input type="radio" name="product" id="prod3" value="blister" class="hidden custom-radio"><label for="prod3" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/wV2eQk1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Blíster Industrial</h5></div></label>
+                                </div>
+                                <button id="start-simulation-btn" class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Activar Ciclo</button>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl mb-6">2. Resultado del Ciclo:</h3>
+                                <div id="simulation-result" class="bg-slate-50 border border-slate-200 p-6 rounded-lg min-h-[300px] flex justify-center items-center text-center"><p class="text-gray-500">Esperando ciclo...</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section data-title="Viabilidad" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle mt-4">Proyección financiera basada en costos de mercado actualizados a Octubre de 2025 en Argentina.</p></div>
                     <div class="grid lg:grid-cols-3 gap-8 mt-12">
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p class="font-bold text-gray-800 border-b pb-2">Inversión Inicial (CAPEX)</p><p>Máquina y Reparaciones: <span class="float-right">$2.500.000</span></p><p>Herramientas e Instalación: <span class="float-right">$600.000</span></p><p class="font-bold text-gray-800 border-t pt-2 text-lg">Total Inversión: <span class="float-right">$3.100.000</span></p><hr class="my-4"><p class="font-bold text-gray-800 border-b pb-2">Costo Operativo Mensual (OPEX)</p><p>Materia Prima (PET): <span class="float-right">$2.850.000</span></p><p>Energía y Mantenimiento: <span class="float-right">$450.000</span></p><p>Mano de Obra y Varios: <span class="float-right">$800.000</span></p><p class="font-bold text-gray-800 border-t pt-2 text-lg">Total Mensual: <span class="float-right">$4.100.000</span></p></div></div>
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Ganancias</h3><div class="space-y-3 text-gray-600"><p class="font-bold text-gray-800 border-b pb-2">Proyección de Ingresos</p><p>Producción Mensual (prom.): <span class="font-bold text-gray-800 float-right">~61.250 u.</span></p><p>Ingresos Brutos Mensuales: <span class="font-bold text-gray-800 float-right">$5.210.000</span></p><p class="border-t pt-3 mt-3 font-bold text-lg">Ganancia Neta Mensual: <span class="font-bold text-green-600 float-right">$1.110.000</span></p><p class="border-t pt-3 mt-3 font-bold text-2xl">Ganancia Neta Anual: <span class="font-bold text-green-600 float-right">$13.320.000</span></p></div></div>
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Rentabilidad</h3><div class="space-y-6 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-5xl font-bold">~4 Meses</p><hr class="my-4"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p>Inversión Inicial (CAPEX): <span class="font-bold text-gray-800 float-right">$ 3.1M</span></p><p>Costo Op. Mensual (OPEX): <span class="font-bold text-gray-800 float-right">$ 4.1M</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Ganancias Proyectadas</h3><div class="space-y-3 text-gray-600"><p>Ingresos Brutos Mensuales: <span class="font-bold text-gray-800 float-right">$ 5.21M</span></p><p>Ganancia Neta Mensual: <span class="font-bold text-green-600 float-right">$ 1.08M</span></p><p>Ganancia Neta Anual: <span class="font-bold text-green-600 float-right">~$13M</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Métricas de Rentabilidad</h3><div class="space-y-4 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-4xl font-bold">~3.8 Meses</p><hr class="my-2"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
                     </div>
                 </div>
             </section>
@@ -329,6 +354,42 @@
                     <div class="text-center"><h2 class="section-title">Planificación y Gantt</h2><p class="section-subtitle mt-4">Diagrama de Gantt del proyecto de construcción de la línea de envasado, mostrando la secuencia y duración de cada tarea.</p></div>
                     <div id="gantt-envasadora" class="card mt-12">
                         <!-- Gantt chart for Envasadora will be injected here by JS -->
+                    </div>
+                </div>
+            </section>
+             <section data-title="Viabilidad" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Análisis de Costos del Prototipo</h2><p class="section-subtitle mt-4">Desglose de la inversión en materiales y componentes para la construcción de la línea de envasado (Cifras en ARS).</p></div>
+                    <div class="card mt-12 max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Presupuesto de Componentes</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Material</th>
+                                        <th scope="col" class="px-6 py-3">Cantidad</th>
+                                        <th scope="col" class="px-6 py-3 text-right">Costo Unitario</th>
+                                        <th scope="col" class="px-6 py-3 text-right">Costo Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Banda modular plástica</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$180,000</td><td class="px-6 py-4 text-right">$180,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Motor 12V CC</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$100,000</td><td class="px-6 py-4 text-right">$100,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Guías laterales ajustables</td><td class="px-6 py-4">2</td><td class="px-6 py-4 text-right">$20,500</td><td class="px-6 py-4 text-right">$41,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Cilindro neumático MD8</td><td class="px-6 py-4">3</td><td class="px-6 py-4 text-right">$11,712</td><td class="px-6 py-4 text-right">$35,136</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Bastidores de aluminio</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$35,000</td><td class="px-6 py-4 text-right">$35,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Perilla de ajuste manual</td><td class="px-6 py-4">4</td><td class="px-6 py-4 text-right">$7,100</td><td class="px-6 py-4 text-right">$28,400</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Cojinete montado</td><td class="px-6 py-4">2</td><td class="px-6 py-4 text-right">$12,000</td><td class="px-6 py-4 text-right">$24,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Accesorios Racor</td><td class="px-6 py-4">6</td><td class="px-6 py-4 text-right">$2,500</td><td class="px-6 py-4 text-right">$15,000</td></tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="font-semibold text-gray-900">
+                                        <th scope="row" colspan="3" class="px-6 py-3 text-base text-right">Total Inversión Prototipo</th>
+                                        <td class="px-6 py-3 text-base text-right">$458,536</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -448,7 +509,11 @@
                 function setupNavTree() {
                     const navTree = pageElement.querySelector('.presentation-nav-tree');
                     navTree.innerHTML = slides.map((slide, index) => `<a href="#" class="nav-item px-3 py-2" data-index="${index}">${slide.dataset.title}</a>`).join('');
-                    navTree.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', e => { e.preventDefault(); goToSlide(parseInt(e.currentTarget.dataset.index)); }));
+                    navTree.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', e => { 
+                        e.stopPropagation(); 
+                        e.preventDefault(); 
+                        goToSlide(parseInt(e.currentTarget.dataset.index)); 
+                    }));
                 }
 
                 function goToSlide(index) {
@@ -475,21 +540,56 @@
                     if (presentationArrows) presentationArrows.classList.toggle('hidden', !isPresentationMode);
                     if (isPresentationMode) {
                         goToSlide(0);
+                        if(document.documentElement.requestFullscreen) {
+                            document.documentElement.requestFullscreen();
+                        }
                     } else {
                         slides.forEach(s => s.classList.remove('active-slide'));
+                         if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        }
                     }
                 }
 
-                presentationModeBtn.addEventListener('click', togglePresentationMode);
-                if (prevSlideBtn) prevSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
-                if (nextSlideBtn) nextSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
-                fullscreenBtn.addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen());
+                presentationModeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    togglePresentationMode();
+                });
+
+                if (prevSlideBtn) prevSlideBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    goToSlide(currentSlideIndex - 1)
+                });
+                if (nextSlideBtn) nextSlideBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    goToSlide(currentSlideIndex + 1)
+                });
+                
+                slides.forEach(slide => {
+                    slide.addEventListener('click', (e) => {
+                        if (isPresentationMode && !e.target.closest('button, a, input, label, .clickable-image')) {
+                             if (nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
+                        }
+                    });
+                });
+
+                fullscreenBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    } else {
+                        document.documentElement.requestFullscreen();
+                    }
+                });
                 
                 document.addEventListener('keydown', (e) => {
                     if (isPresentationMode && pageElement.classList.contains('active')) {
                         if (e.key === 'ArrowRight' && nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
                         if (e.key === 'ArrowLeft' && prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
-                        if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+                        if (e.key === 'Escape' || e.key === 'f') {
+                            if (document.fullscreenElement) document.exitFullscreen();
+                            if(isPresentationMode) togglePresentationMode();
+                        }
                     }
                 });
                 
@@ -502,11 +602,14 @@
             const modalBackdrop = document.getElementById('image-modal-backdrop');
             const modalContent = document.getElementById('image-modal-content');
             const modalImage = document.getElementById('modal-image');
-            document.querySelectorAll('.clickable-image').forEach(img => img.addEventListener('click', () => {
-                modalImage.src = img.src;
-                modalBackdrop.classList.remove('hidden');
-                setTimeout(() => { modalBackdrop.classList.remove('opacity-0'); modalContent.classList.remove('opacity-0', 'scale-95'); }, 10);
-            }));
+            document.querySelectorAll('.clickable-image').forEach(img => {
+                img.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent slide from advancing
+                    modalImage.src = img.src;
+                    modalBackdrop.classList.remove('hidden');
+                    setTimeout(() => { modalBackdrop.classList.remove('opacity-0'); modalContent.classList.remove('opacity-0', 'scale-95'); }, 10);
+                });
+            });
             const closeModal = () => {
                 modalContent.classList.add('opacity-0', 'scale-95');
                 modalBackdrop.classList.add('opacity-0');
@@ -514,6 +617,43 @@
             };
             document.getElementById('image-modal-close').addEventListener('click', closeModal);
             modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+            
+            // --- SIMULATOR: TERMOFORMADORA ---
+            const thermoPageSim = document.getElementById('page-thermo');
+            if (thermoPageSim) {
+                const productsData = {
+                    bandeja: { name: "Bandeja Gastronómica", image: "https://i.imgur.com/3LXJ6xJ.png", cycleTime: 12, materialCost: 45, salePrice: 95, material: "PET 0.5mm", temp: 170 },
+                    mascara: { name: "Máscara de Cotillón", image: "https://i.imgur.com/c2Yw2a1.png", cycleTime: 14, materialCost: 55, salePrice: 280, material: "HIPS 0.8mm", temp: 180 },
+                    blister: { name: "Blíster Industrial", image: "https://i.imgur.com/wV2eQk1.png", cycleTime: 13, materialCost: 50, salePrice: 190, material: "PVC 0.6mm", temp: 160 }
+                };
+                const startBtn = thermoPageSim.querySelector('#start-simulation-btn');
+                const resultDiv = thermoPageSim.querySelector('#simulation-result');
+                if (startBtn) {
+                    startBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent slide from advancing
+                        const product = productsData[thermoPageSim.querySelector('input[name="product"]:checked').value];
+                        startBtn.disabled = true; startBtn.textContent = 'Procesando...';
+                        resultDiv.innerHTML = `<div class="w-full"><h4 id="simulation-status" class="font-bold mb-2">Iniciando ciclo...</h4><div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div id="progress-bar-sim" class="bg-blue-600 h-2" style="width:0; transition: width 0.1s linear;"></div></div><div id="final-result" class="opacity-0 transition-opacity duration-500 mt-4"></div></div>`;
+                        const simStatus = resultDiv.querySelector('#simulation-status');
+                        const simProgressBar = resultDiv.querySelector('#progress-bar-sim');
+                        const finalResult = resultDiv.querySelector('#final-result');
+                        let progress = 0;
+                        const interval = setInterval(() => {
+                            progress++;
+                            simProgressBar.style.width = `${progress}%`;
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                simStatus.innerHTML = `<span class="text-green-600 font-bold">¡Ciclo Completo!</span>`;
+                                const hourlyProduction = Math.floor(3600 / product.cycleTime * 0.70); // 70% OEE
+                                finalResult.innerHTML = `<img src="${product.image}" class="mx-auto h-20 my-4"><div class="mb-4"><p class="text-sm text-gray-500">PRODUCCIÓN/HORA</p><p class="font-bold text-2xl">${hourlyProduction} u.</p></div><div class="text-xs text-left grid grid-cols-2 gap-x-4 gap-y-1"><span class="text-gray-500">Material:</span><span class="font-semibold text-right">${product.material}</span><span class="text-gray-500">Temp. Moldeo:</span><span class="font-semibold text-right">${product.temp}°C</span><span class="text-gray-500">Costo Mat. Prima:</span><span class="font-semibold text-right">$${product.materialCost}</span><span class="text-gray-500">Valor Venta:</span><span class="font-semibold text-right text-green-600">$${product.salePrice}</span></div><div class="mt-4 pt-4 border-t w-full"><p class="text-sm text-gray-500">MARGEN BRUTO</p><p class="font-bold text-3xl text-blue-600">$${product.salePrice - product.materialCost}</p></div>`;
+                                finalResult.classList.remove('opacity-0');
+                                startBtn.disabled = false; startBtn.textContent = 'Activar Otro Ciclo';
+                            }
+                        }, product.cycleTime * 1.5);
+                    });
+                }
+            }
+
 
             // --- ANIMATION: TERMOFORMADORA ---
             const thermoPage = document.getElementById('page-thermo');
@@ -543,7 +683,8 @@
                     animStartBtn.disabled = false;
                 };
                 
-                animStartBtn.addEventListener('click', () => {
+                animStartBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     animStartBtn.disabled = true;
                     resetAnimation();
                     setTimeout(() => { texts.calentar.classList.add('active'); calentador.style.transform = 'translateY(35px)'; }, 500);
@@ -556,7 +697,10 @@
                     setTimeout(() => { texts.expulsar.classList.add('active'); lamina.style.transform = 'translateY(-15px)'; }, 5300);
                     setTimeout(() => { resetAnimation(); }, 6300);
                 });
-                animResetBtn.addEventListener('click', resetAnimation);
+                animResetBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    resetAnimation();
+                });
             }
 
             // --- ANIMATION: ENVASADORA ---
@@ -587,7 +731,8 @@
                     startBtn.disabled = false;
                 };
 
-                startBtn.addEventListener('click', () => {
+                startBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     startBtn.disabled = true;
                     resetAnimation();
                     setTimeout(() => { bottleGroup.style.transition = 'transform 2s linear'; bottleGroup.style.transform = 'translateX(100px)'; }, 100);
@@ -605,7 +750,10 @@
                     setTimeout(() => { texts.salida.classList.add('active'); bottleGroup.style.transform = 'translateX(350px)'; }, 8500);
                     setTimeout(() => { resetAnimation(); }, 10600);
                 });
-                resetBtn.addEventListener('click', resetAnimation);
+                resetBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    resetAnimation();
+                });
             }
 
             // --- GANTT CHART GENERATION ---
@@ -647,7 +795,7 @@
                 { name: 'C. Montar cilindros', start: '2025-07-02', duration: 3, status: 'in-progress' },
                 { name: 'D. Mejorar tablero', start: '2025-07-14', duration: 6, status: 'completed' },
                 { name: 'E. Amurar tablero', start: '2025-07-23', duration: 2, status: 'pending' },
-                { name: 'F. Hacer programa', start: '2025-08-18', duration: 6, status: 'completed' },
+                { name: 'F. Hacer programa', start: '2025-08-18', duration: 6, 'status': 'completed' },
                 { name: 'G. Alimentar motor', start: '2025-09-01', duration: 1, status: 'pending' },
                 { name: 'H. Vincular tablero', start: '2025-09-15', duration: 4, status: 'pending' }
             ];
