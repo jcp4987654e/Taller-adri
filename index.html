@@ -3,295 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto Técnico - Célula de Termoformado</title>
+    <title>Showcase de Proyectos Técnicos 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #0052CC;
-            --light-blue: #F4F8FF;
-            --dark-text: #172B4D;
-            --light-text: #6B778C;
-            --background: #FFFFFF;
-        }
-
-        html {
-            scroll-padding-top: 140px;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--background);
-            color: var(--dark-text);
-        }
-        
-        header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #dfe1e6;
-        }
-
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.75rem;
-            letter-spacing: -0.5px;
-            color: var(--dark-text);
-        }
-
-        .section-subtitle {
-            font-family: 'Lato', sans-serif;
-            color: var(--light-text);
-        }
-        
-        .card {
-            background-color: var(--background);
-            border: 1px solid #dfe1e6;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
-        }
-        
-        /* Presentation Mode Styles */
-        body.presentation-mode {
-            overflow: hidden;
-        }
-        body.presentation-mode main > section {
-            display: none;
-            height: calc(100vh - 128px);
-            overflow-y: auto;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        body.presentation-mode main > section.active-slide {
-            display: block;
-            opacity: 1;
-        }
-        
-        #presentation-progress-bar {
-            background-color: var(--primary-blue);
-            height: 4px;
-            transition: width 0.3s ease;
-        }
-
-        #presentation-nav-tree .nav-item {
-            transition: all 0.2s ease;
-        }
-        #presentation-nav-tree .nav-item.active {
-            color: var(--primary-blue);
-            font-weight: 700;
-            transform: scale(1.05);
-        }
-        
-        /* Image Modal */
-        #image-modal-backdrop {
-            transition: opacity 0.3s ease;
-        }
-        #image-modal-content {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
+        :root { --primary-blue: #0052CC; --dark-text: #172B4D; --light-text: #6B778C; --background: #FFFFFF; }
+        html { scroll-padding-top: 80px; }
+        body { font-family: 'Lato', sans-serif; background-color: var(--background); color: var(--dark-text); }
+        .page { display: none; }
+        .page.active { display: block; }
+        header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #dfe1e6; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.75rem; letter-spacing: -0.5px; color: var(--dark-text); }
+        .section-subtitle { font-family: 'Lato', sans-serif; color: var(--light-text); }
+        .card { background-color: var(--background); border: 1px solid #dfe1e6; border-radius: 12px; padding: 2.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); }
+        body.presentation-mode { overflow: hidden; }
+        .presentation-page body.presentation-mode .slide { display: none; height: calc(100vh - 128px); overflow-y: auto; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .presentation-page body.presentation-mode .slide.active-slide { display: block; opacity: 1; }
+        #presentation-progress-bar { background-color: var(--primary-blue); height: 4px; transition: width 0.3s ease; }
+        .nav-item.active { color: var(--primary-blue); font-weight: 700; }
+        /* Thermoformer Animation */
+        .thermo-anim-svg .movable { transition: transform 0.5s ease-in-out, fill 0.5s ease-in-out; }
+        .thermo-anim-svg #lamina-formed-path { transition: d 0.3s ease-in-out, fill 0.5s ease-in-out; }
+        /* Envasadora Animation */
+        .envasadora-anim-svg #bottle-group { transition: transform 2s linear; }
+        .envasadora-anim-svg #stopper1, .envasadora-anim-svg #stopper2,
+        .envasadora-anim-svg #hopper-gate, .envasadora-anim-svg #screwdriver { transition: transform 0.3s ease-in-out; }
+        .envasadora-anim-svg #bottle-fill-level { transition: height 0.5s ease-out, transform 0.5s ease-out, opacity 0.2s; }
+        .envasadora-anim-svg #bottle-cap { transition: opacity 0.2s ease-in-out; }
+        .custom-radio:checked+label { border-color: var(--primary-blue); background-color: #F4F8FF; box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2); }
     </style>
 </head>
 
 <body>
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold text-gray-800" style="font-family: 'Montserrat', sans-serif;">
-                PROYECTO TÉCNICO
-            </div>
-            <div id="main-nav-links" class="hidden md:flex space-x-6">
-                <a href="#caratula" class="text-sm text-gray-600 hover:text-blue-600">Carátula</a>
-                <a href="#resumen" class="text-sm text-gray-600 hover:text-blue-600">Resumen</a>
-                <a href="#documentacion" class="text-sm text-gray-600 hover:text-blue-600">Documentación</a>
-                <a href="#proceso" class="text-sm text-gray-600 hover:text-blue-600">Proceso</a>
-                <a href="#simulador" class="text-sm text-gray-600 hover:text-blue-600">Simulador</a>
-                <a href="#viabilidad" class="text-sm text-gray-600 hover:text-blue-600">Viabilidad</a>
-                <a href="#equipo" class="text-sm text-gray-600 hover:text-blue-600">Equipo</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button id="presentation-mode-btn" class="p-2 text-gray-600 hover:text-blue-600" title="Iniciar Modo Presentación">
-                    <i id="play-icon" class="fas fa-play"></i>
-                    <i id="stop-icon" class="fas fa-stop hidden"></i>
-                </button>
-                <button id="fullscreen-btn" class="p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa">
-                    <i class="fas fa-expand"></i>
-                </button>
-            </div>
-        </nav>
-        <!-- Presentation Progress Bar and Nav Tree -->
-        <div id="presentation-nav-container" class="hidden">
-            <div id="presentation-progress-bar" style="width: 0%;"></div>
-            <div id="presentation-nav-tree" class="container mx-auto px-6 py-2 flex justify-between items-center text-xs text-gray-500">
-                <!-- Nav tree items will be injected here -->
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <!-- Hero Section / Carátula -->
-        <section id="caratula" data-title="Carátula" class="bg-slate-50 border-b border-slate-200">
-            <div class="container mx-auto px-6 py-20 text-center flex flex-col justify-center h-full">
-                <div class="flex justify-center mb-8">
-                    <img src="https://i.imgur.com/lia9JeX.png" alt="Logo Instituto" class="h-20">
+    <!-- PAGE 1: COVER -->
+    <div id="page-cover" class="page active">
+        <section class="bg-slate-50 border-b border-slate-200 min-h-screen flex flex-col justify-center">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <div class="flex justify-center mb-6"><img src="https://i.imgur.com/lia9JeX.png" alt="Logo Instituto" class="h-24"></div>
+                <h1 class="text-4xl md:text-6xl font-extrabold" style="font-family: 'Montserrat', sans-serif;">SHOWCASE DE PROYECTOS TÉCNICOS</h1>
+                <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto my-4">Casos de Estudio en Automatización y Control Industrial.</p>
+                <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto mt-10">
+                    <button data-target="page-thermo" class="page-link bg-white p-8 rounded-lg border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left">
+                        <i class="fas fa-cogs text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold">Proyecto Termoformadora</h3>
+                        <p class="mt-2 text-gray-600">Análisis, reconstrucción y puesta en marcha de una Célula de Termoformado.</p>
+                    </button>
+                    <button data-target="page-envasadora" class="page-link bg-white p-8 rounded-lg border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left">
+                        <i class="fas fa-box-open text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold">Proyecto Línea de Envasado</h3>
+                        <p class="mt-2 text-gray-600">Diseño, construcción y automatización de un sistema modular de envasado.</p>
+                    </button>
+                    <button data-target="page-conclusiones" class="page-link bg-blue-600 p-8 rounded-lg border border-blue-700 shadow-sm hover:shadow-xl hover:bg-blue-700 transition-all flex items-center justify-center">
+                        <i class="fas fa-arrow-right text-4xl text-white"></i>
+                    </button>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-4" style="font-family: 'Montserrat', sans-serif;">CÉLULA DE PRODUCCIÓN AUTOMATIZADA</h1>
-                <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto mb-10">Presentación del proyecto de integración de una termoformadora y cinta transportadora.</p>
-                <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm border border-slate-200">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Integrantes del Equipo</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Abril Abdala • Jesus Castellanos • Guillermo Paulosky • Joaquin Huaman • Joaquin Gozainy • Benjamin Cubilla • Tomas Ratti • Brian Gimenez • Brian Alcon
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Executive Summary Section -->
-        <section id="resumen" data-title="Resumen">
-            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
-                <div class="text-center max-w-5xl mx-auto mb-12">
-                     <h2 class="section-title">Resumen del Proyecto</h2>
-                     <p class="section-subtitle">Este proyecto demuestra la transformación de activos industriales subutilizados en una línea de producción sinérgica, como caso de estudio en ingeniería, eficiencia y viabilidad comercial.</p>
-                </div>
-                <div class="card grid lg:grid-cols-5 gap-8">
-                    <div class="lg:col-span-3">
-                        <h3 class="font-bold text-2xl mb-6 text-blue-600">Pilares del Proyecto</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-start gap-4"><i class="fas fa-cogs text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Ingeniería de Valor Aumentado</h4><p class="text-gray-600 text-sm">Integramos una termoformadora y cinta transportadora, creando una célula productiva que minimiza la intervención humana y maximiza la eficiencia.</p></div></div>
-                            <div class="flex items-start gap-4"><i class="fas fa-shield-alt text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Ventaja Competitiva</h4><p class="text-gray-600 text-sm">La automatización del flujo nos permite ofrecer costos más bajos, tiempos de entrega récord y una calidad consistente, atacando un nicho desatendido.</p></div></div>
-                            <div class="flex items-start gap-4"><i class="fas fa-chart-line text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold text-gray-800">Potencial de Crecimiento</h4><p class="text-gray-600 text-sm">El sistema está diseñado como la base para futuras automatizaciones (troquelado, apilado), asegurando un camino de crecimiento claro.</p></div></div>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200">
-                         <h3 class="font-bold text-2xl mb-6 text-blue-600 text-center">Indicadores Clave</h2>
-                         <div class="space-y-6 text-center">
-                            <div><p class="text-sm text-gray-500">PRODUCCIÓN ANUAL (12HS)</p><p class="text-4xl font-bold text-gray-800">+735.000</p></div>
-                            <div><p class="text-sm text-gray-500">RECUPERO DE COSTOS (ROI)</p><p class="text-4xl font-bold text-gray-800">~5</p><p class="text-xs text-gray-400">Meses</p></div>
-                             <div><p class="text-sm text-gray-500">GANANCIA NETA ANUAL</p><p class="text-4xl font-bold text-green-600">~$11.4M</p></div>
-                         </div>
+                 <div id="equipo-caratula" class="max-w-6xl mx-auto mt-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Equipo de Proyecto</h3>
+                    <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4">
+                        <!-- Team members injected here -->
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Documentation Section -->
-        <section id="documentacion" data-title="Documentación">
-            <div class="container mx-auto px-6 py-12 h-full flex flex-col">
-                 <div class="text-center max-w-5xl mx-auto mb-12">
-                    <h2 class="section-title">Ingeniería y Documentación</h2>
-                    <p class="section-subtitle">Un recorrido visual por el proceso de transformación, desde la recepción de los activos hasta la documentación técnica final.</p>
-                </div>
-                <!-- Tabs -->
-                <div class="mb-8 border-b border-slate-200 flex justify-center space-x-8">
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 active" data-tab="inicial">Estado Inicial</button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500" data-tab="proceso-tab">Puesta a Punto</button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500" data-tab="tecnica">Planos y Diagramas</button>
-                </div>
-                <!-- Tab Content -->
-                <div id="tab-content" class="card flex-grow">
-                    <div class="tab-pane active" id="inicial">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div><h4 class="font-semibold text-center mb-4">Termoformadora</h4><img src="https://i.imgur.com/gK2Ew73.jpeg" alt="Termoformadora desarmada" class="w-full rounded-lg shadow-md mb-4 clickable-image"><p class="text-sm text-center text-gray-600">Recibida parcialmente desarmada y con componentes obsoletos.</p></div>
-                            <div><h4 class="font-semibold text-center mb-4">Cinta Transportadora</h4><img src="https://placehold.co/600x450/e9e9e9/64748b?text=Cinta+Inicial" alt="Cinta transportadora antes" class="w-full rounded-lg shadow-md mb-4 clickable-image"><p class="text-sm text-center text-gray-600">Estructura funcional pero sin sistema de control ni motorización.</p></div>
-                        </div>
-                    </div>
-                    <div class="tab-pane hidden" id="proceso-tab">
-                        <div class="grid md:grid-cols-3 gap-6">
-                           <figure><img src="https://i.imgur.com/uR2iZcG.jpeg" alt="Equipo trabajando" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Reingeniería del tablero de control.</figcaption></figure>
-                            <figure><img src="https://placehold.co/600x400/e9e9e9/64748b?text=Montaje+Mecánico" alt="Montaje mecánico" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Montaje de componentes mecánicos.</figcaption></figure>
-                            <figure><img src="https://placehold.co/600x400/e9e9e9/64748b?text=Integración+Sensores" alt="Integración de sensores" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"><figcaption class="text-xs text-center mt-2 text-gray-500">Instalación y calibración de sensores.</figcaption></figure>
-                        </div>
-                    </div>
-                    <div class="tab-pane hidden" id="tecnica">
-                        <div class="grid md:grid-cols-3 gap-8 text-center">
-                            <div><h4 class="font-semibold mb-4">Diagrama de Conexiones</h4><img src="https://i.imgur.com/Y1ZlJ7o.png" alt="Diagrama de conexiones" class="w-full rounded-lg shadow-md border clickable-image"></div>
-                            <div><h4 class="font-semibold mb-4">Diagrama Unifilar</h4><img src="https://placehold.co/600x800/e9e9e9/64748b?text=Diagrama+Unifilar" alt="Diagrama unifilar" class="w-full rounded-lg shadow-md border clickable-image"></div>
-                            <div><h4 class="font-semibold mb-4">Componente Clave: PLC</h4><img src="https://i.imgur.com/8iLrmgA.png" alt="PLC Kinco" class="w-full rounded-lg shadow-md mb-4 border p-4 clickable-image"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Production Line Section -->
-        <section id="proceso" data-title="Proceso">
-             <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
-                <div class="text-center max-w-5xl mx-auto mb-16">
-                    <h2 class="section-title">La Línea de Producción Integrada</h2>
-                    <p class="section-subtitle">Así es como los dos activos se convierten en un sistema de producción fluido y semi-automatizado.</p>
-                </div>
-                <div class="relative timeline-container max-w-3xl mx-auto">
-                    <!-- Timeline items -->
-                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-hand-paper"></i></div><div class="card !p-6"><h4 class="font-bold">1. Carga y Sujeción</h4><p class="text-sm text-gray-600">Operario carga lámina. PLC activa cilindros. (t: 3s)</p></div></div>
-                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-fire"></i></div><div class="card !p-6"><h4 class="font-bold">2. Termoformado</h4><p class="text-sm text-gray-600">Calentamiento, moldeo por vacío y enfriamiento. (t: 4s)</p></div></div>
-                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-cogs"></i></div><div class="card !p-6"><h4 class="font-bold">3. Expulsión y Detección</h4><p class="text-sm text-gray-600">Pieza expulsada a la cinta. Sensor óptico la detecta. (t: 1s)</p></div></div>
-                    <div class="timeline-item"><div class="timeline-dot"><i class="fas fa-long-arrow-alt-right"></i></div><div class="card !p-6"><h4 class="font-bold">4. Transporte y Curado</h4><p class="text-sm text-gray-600">PLC activa cinta para enfriamiento en tránsito. (t: 4s)</p></div></div>
-                    <div class="timeline-item"><div class="timeline-dot bg-green-500 text-white border-green-500"><i class="fas fa-check"></i></div><div class="card !p-6"><h4 class="font-bold">5. Recolección</h4><p class="text-sm text-gray-600">Pieza lista para apilado. (Ciclo Total: ~12s)</p></div></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Simulator Section -->
-        <section id="simulador" data-title="Simulador">
-            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
-                <div class="card">
-                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Simulador de la Célula Productiva</h2><p class="section-subtitle">Seleccione un producto y observe cómo la línea integrada lo transforma en ganancia.</p></div>
-                    <div class="grid lg:grid-cols-2 gap-12 items-start">
-                        <div>
-                            <h3 class="font-bold text-xl mb-6">1. Seleccione Producto:</h3>
-                            <div class="space-y-4">
-                                <input type="radio" name="product" id="prod1" value="bandeja" class="hidden custom-radio" checked>
-                                <label for="prod1" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/3LXJ6xJ.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Bandeja Gastronómica</h5></div></label>
-                                <input type="radio" name="product" id="prod2" value="mascara" class="hidden custom-radio">
-                                 <label for="prod2" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/c2Yw2a1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Máscara de Cotillón</h5></div></label>
-                                <input type="radio" name="product" id="prod3" value="blister" class="hidden custom-radio">
-                                 <label for="prod3" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/wV2eQk1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Blíster Industrial</h5></div></label>
-                            </div>
-                            <button id="start-simulation-btn" class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Activar Línea</button>
-                        </div>
-                        <div>
-                             <h3 class="font-bold text-xl mb-6">2. Resultado del Ciclo:</h3>
-                             <div id="simulation-result" class="bg-slate-50 border border-slate-200 p-6 rounded-lg min-h-[300px] flex justify-center items-center text-center"><p class="text-gray-500">Esperando ciclo...</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Financials Section -->
-        <section id="viabilidad" data-title="Viabilidad">
-            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
-                 <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle">Un desglose transparente de costos y proyecciones de rentabilidad.</p></div>
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="card"><h3 class="text-2xl font-bold mb-6">Costos de Puesta en Marcha</h3><div class="space-y-3 text-gray-600"><p>Adquisición Activos: <span class="font-bold text-gray-800 float-right">$ 2.200.000</span></p><p>Refacciones e Integración: <span class="font-bold text-gray-800 float-right">$ 450.000</span></p><p>Primeros moldes: <span class="font-bold text-gray-800 float-right">$ 1.000.000</span></p><div class="pt-4 mt-4 border-t-2 border-blue-500"><p class="text-xl font-bold">Costo Total Inicial: <span class="text-blue-600 float-right">$ 3.650.000</span></p></div></div></div>
-                    <div class="card"><h3 class="text-2xl font-bold mb-6">Costos Operativos Mensuales</h3><div class="space-y-3 text-gray-600"><p>Materia Prima (61.320u): <span class="font-bold text-gray-800 float-right">$ 2.330.160</span></p><p>Costos Fijos Totales: <span class="font-bold text-gray-800 float-right">$ 1.500.000</span></p><p>Energía y Mantenimiento: <span class="font-bold text-gray-800 float-right">$ 150.000</span></p><p>Impuestos y Adm.: <span class="font-bold text-gray-800 float-right">$ 250.000</span></p><div class="pt-4 mt-4 border-t-2 border-blue-500"><p class="text-xl font-bold">Costo Mensual Estimado: <span class="text-blue-600 float-right">$ 4.230.160</span></p></div></div></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Team Section -->
-        <section id="equipo" data-title="Equipo">
-            <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
-                 <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Equipo de Proyecto</h2><p class="section-subtitle">El capital intelectual detrás de la ingeniería, la puesta en marcha y la visión del proyecto.</p></div>
-                <div id="team-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                    <!-- Team members will be injected here -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Presentation Navigation Arrows -->
-    <div id="presentation-arrows" class="hidden">
-        <button id="prev-slide-btn" class="fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"><i class="fas fa-chevron-left text-xl"></i></button>
-        <button id="next-slide-btn" class="fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
     </div>
 
-    <!-- Image Modal -->
+    <!-- PAGE 2: TERMOFORMADORA -->
+    <div id="page-thermo" class="page presentation-page">
+        <header class="sticky top-0 z-50">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                 <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">PROYECTO TERMOFORMADORA</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="presentation-mode-btn p-2 text-gray-600 hover:text-blue-600" title="Modo Presentación"><i class="play-icon fas fa-play"></i><i class="stop-icon fas fa-stop hidden"></i></button>
+                    <button class="fullscreen-btn p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
+                </div>
+            </nav>
+            <div class="presentation-nav-container hidden">
+                <div class="presentation-progress-bar" style="width: 0%;"></div>
+                <div class="presentation-nav-tree container mx-auto px-6 py-2 flex justify-between items-center text-xs text-gray-500"></div>
+            </div>
+        </header>
+        <main>
+            <section data-title="Intro" class="slide">
+                <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Proyecto 1: Termoformadora Automatizada</h2><p class="section-subtitle">Este proyecto documenta la reconstrucción, puesta en marcha y análisis de viabilidad de una termoformadora industrial.</p></div>
+                    <div class="card grid lg:grid-cols-5 gap-8">
+                        <div class="lg:col-span-3">
+                            <h3 class="font-bold text-2xl mb-6 text-blue-600">Pilares del Proyecto</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4"><i class="fas fa-wrench text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold">Ingeniería Inversa y Reconstrucción</h4><p class="text-gray-600 text-sm">Se realizó la ingeniería inversa completa del equipo sin documentación original, permitiendo su reparación, modernización y optimización.</p></div></div>
+                                <div class="flex items-start gap-4"><i class="fas fa-robot text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold">Automatización y Control</h4><p class="text-gray-600 text-sm">Se implementó un sistema de control centralizado mediante un PLC Kinco, programando la lógica para un ciclo de operación automático y fiable.</p></div></div>
+                                <div class="flex items-start gap-4"><i class="fas fa-chart-pie text-blue-600 text-2xl mt-1"></i><div><h4 class="font-semibold">Análisis de Viabilidad</h4><p class="text-gray-600 text-sm">Se elaboró un modelo de negocio, investigando costos reales de mercado y proyectando la rentabilidad para demostrar su potencial comercial.</p></div></div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200 text-center">
+                             <h3 class="font-bold text-2xl mb-6 text-blue-600">Indicadores Clave</h2>
+                             <div class="space-y-4">
+                                <div><p class="text-sm text-gray-500">PRODUCCIÓN ANUAL (12HS)</p><p class="text-3xl font-bold">+735.000</p></div>
+                                <div><p class="text-sm text-gray-500">RECUPERO DE COSTOS (ROI)</p><p class="text-3xl font-bold">~4 Meses</p></div>
+                                <div><p class="text-sm text-gray-500">GANANCIA NETA ANUAL</p><p class="text-3xl font-bold text-green-600">~$13M</p></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section data-title="Análisis Téc." class="slide">
+                 <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Análisis Funcional Animado</h2><p class="section-subtitle">Una vista detallada de la ingeniería de la máquina y una simulación animada de su funcionamiento.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold mb-4">Subsistemas de la Máquina</h3>
+                            <div><h4 class="font-semibold"><i class="fas fa-compress-arrows-alt text-blue-500 mr-2"></i>Sistema Neumático</h4><p class="text-sm text-gray-600">Cilindros de doble efecto (salidas Q0.2-Q0.4) ejecutan los movimientos mecánicos precisos del carro y el marco.</p></div>
+                            <div><h4 class="font-semibold"><i class="fas fa-fire text-blue-500 mr-2"></i>Sistema de Calentamiento</h4><p class="text-sm text-gray-600">Resistencias (salidas Q2.0-Q2.5) llevan la lámina plástica a su temperatura de transición vítrea, volviéndola maleable.</p></div>
+                            <div><h4 class="font-semibold"><i class="fas fa-wind text-blue-500 mr-2"></i>Sistema de Vacío</h4><p class="text-sm text-gray-600">La bomba de vacío (salida Q0.1) succiona el aire para forzar el moldeo del plástico.</p></div>
+                             <div><h4 class="font-semibold"><i class="fas fa-snowflake text-blue-500 mr-2"></i>Sistema de Enfriamiento</h4><p class="text-sm text-gray-600">Un motoventilador (salida Q0.5) enfría la pieza para solidificarla rápidamente y completar el ciclo.</p></div>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold mb-4">Animación del Proceso</h3>
+                            <svg class="thermo-anim-svg w-full border rounded-lg p-4 bg-slate-50" viewBox="0 0 300 200">
+                                <rect x="20" y="100" width="260" height="10" fill="#94a3b8"/><rect x="20" y="110" width="10" height="70" fill="#94a3b8"/><rect x="270" y="110" width="10" height="70" fill="#94a3b8"/>
+                                <path id="mold" d="M 100 100 L 120 80 L 180 80 L 200 100 Z" fill="#cbd5e1" class="movable"/>
+                                <path id="lamina-formed-path" d="M 70 60 L 230 60 L 230 60 L 70 60 Z" fill="#3b82f6" class="movable"/>
+                                <g id="calentador" class="movable"><rect x="80" y="10" width="140" height="20" fill="#f87171" rx="5"/><rect x="90" y="15" width="120" height="2" fill="white"/><rect x="90" y="21" width="120" height="2" fill="white"/></g>
+                            </svg>
+                            <div class="mt-4 flex justify-center space-x-2"><button id="anim-start-thermo" class="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg">Iniciar</button><button id="anim-reset-thermo" class="text-sm bg-gray-200 px-4 py-2 rounded-lg">Reset</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section data-title="Evidencia" class="slide">
+                 <div class="container mx-auto px-6 py-12 h-full flex flex-col">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle">Un recorrido visual por el trabajo de reconstrucción y puesta a punto.</p></div>
+                    <div class="card grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Estado Inicial</h4><img src="https://i.imgur.com/gK2Ew73.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Puesta a Punto</h4><img src="https://i.imgur.com/uR2iZcG.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Cableado PLC</h4><img src="https://i.imgur.com/Xk9y2P5.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Tablero Finalizado</h4><img src="https://i.imgur.com/2YlA5dK.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                    </div>
+                </div>
+            </section>
+            <section data-title="Simulador" class="slide">
+                 <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="card">
+                        <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Simulador de Producción</h2><p class="section-subtitle">Seleccione un producto para visualizar el ciclo y su desglose económico.</p></div>
+                        <div class="grid lg:grid-cols-2 gap-12 items-start">
+                            <div>
+                                <h3 class="font-bold text-xl mb-6">1. Seleccione Producto:</h3>
+                                 <div class="space-y-4">
+                                    <input type="radio" name="product" id="prod1" value="bandeja" class="hidden custom-radio" checked><label for="prod1" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/3LXJ6xJ.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Bandeja Gastronómica</h5></div></label>
+                                    <input type="radio" name="product" id="prod2" value="mascara" class="hidden custom-radio"><label for="prod2" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/c2Yw2a1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Máscara de Cotillón</h5></div></label>
+                                    <input type="radio" name="product" id="prod3" value="blister" class="hidden custom-radio"><label for="prod3" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://i.imgur.com/wV2eQk1.png" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Blíster Industrial</h5></div></label>
+                                </div>
+                                <button id="start-simulation-btn" class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Activar Ciclo</button>
+                            </div>
+                            <div>
+                                 <h3 class="font-bold text-xl mb-6">2. Resultado del Ciclo:</h3>
+                                 <div id="simulation-result" class="bg-slate-50 border border-slate-200 p-6 rounded-lg min-h-[300px] flex justify-center items-center text-center"><p class="text-gray-500">Esperando ciclo...</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+             <section data-title="Viabilidad" class="slide">
+                <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle">Proyección financiera basada en costos de mercado actualizados a Octubre de 2025 en Argentina.</p></div>
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p>Inversión Inicial (CAPEX): <span class="font-bold text-gray-800 float-right">$ 3.1M</span></p><p>Costo Op. Mensual (OPEX): <span class="font-bold text-gray-800 float-right">$ 4.1M</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Ganancias Proyectadas</h3><div class="space-y-3 text-gray-600"><p>Ingresos Brutos Mensuales: <span class="font-bold text-gray-800 float-right">$ 5.21M</span></p><p>Ganancia Neta Mensual: <span class="font-bold text-green-600 float-right">$ 1.08M</span></p><p>Ganancia Neta Anual: <span class="font-bold text-green-600 float-right">~$13M</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Métricas de Rentabilidad</h3><div class="space-y-4 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-4xl font-bold">~3.8 Meses</p><hr class="my-2"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div class="presentation-arrows hidden">
+             <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
+             <button class="next-slide-btn fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
+        </div>
+    </div>
+    
+    <!-- PAGE 3: ENVASADORA -->
+    <div id="page-envasadora" class="page presentation-page">
+        <header class="sticky top-0 z-50">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">PROYECTO LÍNEA DE ENVASADO</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="presentation-mode-btn p-2 text-gray-600 hover:text-blue-600" title="Modo Presentación"><i class="play-icon fas fa-play"></i><i class="stop-icon fas fa-stop hidden"></i></button>
+                    <button class="fullscreen-btn p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
+                </div>
+            </nav>
+            <div class="presentation-nav-container hidden">
+                <div class="presentation-progress-bar" style="width: 0%;"></div>
+                <div class="presentation-nav-tree container mx-auto px-6 py-2 flex justify-between items-center text-xs text-gray-500"></div>
+            </div>
+        </header>
+        <main>
+             <section data-title="Intro" class="slide">
+                <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Proyecto 2: Línea de Envasado Automatizada</h2><p class="section-subtitle">Este proyecto cubre el diseño, la construcción y la automatización de una línea de envasado modular, utilizando una cinta transportadora como base.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-bold text-2xl mb-6 text-blue-600">Objetivos del Proyecto</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i><span>Construir una cinta transportadora funcional como base del sistema.</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i><span>Diseñar e integrar módulos para llenado, tapado y cerrado de botellas.</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i><span>Desarrollar un sistema de control con PLC para automatizar la secuencia completa.</span></li>
+                            </ul>
+                        </div>
+                        <img src="https://i.imgur.com/SZnB9Vj.jpeg" class="rounded-lg shadow-md w-full clickable-image">
+                    </div>
+                </div>
+            </section>
+            <section data-title="Análisis Téc." class="slide">
+                 <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Análisis Funcional Animado</h2><p class="section-subtitle">Desglose de la ingeniería de la línea de envasado y una simulación de su operación.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 items-center">
+                         <div class="space-y-4">
+                            <h3 class="text-xl font-bold mb-4">Módulos del Sistema</h3>
+                            <div><h4 class="font-semibold"><i class="fas fa-ruler-horizontal text-blue-500 mr-2"></i>Módulo 1: Transporte</h4><p class="text-sm text-gray-600">La cinta (salida Q1) avanza la botella. Cilindros de parada (Q3, Q5) la posicionan en cada estación.</p></div>
+                            <div><h4 class="font-semibold"><i class="fas fa-fill-drip text-blue-500 mr-2"></i>Módulo 2: Llenado</h4><p class="text-sm text-gray-600">Un cilindro (Q4) abre una tolva por un tiempo programado para dosificar el producto.</p></div>
+                            <div><h4 class="font-semibold"><i class="fas fa-toolbox text-blue-500 mr-2"></i>Módulo 3: Tapado y Cierre</h4><p class="text-sm text-gray-600">Un dispensador posiciona la tapa (M) y un cilindro (Q6) baja un atornillador neumático (Q7) para el cierre hermético.</p></div>
+                        </div>
+                        <div class="text-center">
+                             <h3 class="text-xl font-bold mb-4">Animación del Proceso</h3>
+                             <svg id="envasadora-anim-svg" class="w-full border rounded-lg p-4 bg-slate-50" viewBox="0 0 400 150">
+                                <rect x="10" y="100" width="380" height="15" fill="#a1a1aa"/>
+                                 <g id="bottle-group"><path d="M 0 0 L 0 -40 Q 0 -50 5 -50 L 15 -50 Q 20 -50 20 -40 L 20 0 Z" fill="#bfdbfe" transform="translate(15,100)"/>
+                                 <rect id="bottle-fill-level" x="20" y="70" width="10" height="0" fill="#60a5fa"/><rect id="bottle-cap" x="20" y="45" width="10" height="5" fill="#6b7280" opacity="0"/></g>
+                                 <g id="fill-station"><path d="M 110 30 L 140 30 L 135 15 L 115 15 Z" fill="#9ca3af"/><rect x="115" y="30" width="20" height="40" fill="#9ca3af"/><rect id="hopper-gate" x="120" y="70" width="10" height="10" fill="#a1a1aa"/></g>
+                                 <g id="cap-station"><rect x="245" y="0" width="10" height="30" fill="#4b5563" id="screwdriver"/><path d="M 235 40 L 265 40 L 265 30 L 235 30 Z" fill="#9ca3af"/></g>
+                                 <rect id="stopper1" x="100" y="85" width="5" height="15" fill="#ef4444"/><rect id="stopper2" x="230" y="85" width="5" height="15" fill="#ef4444"/>
+                             </svg>
+                             <div class="mt-4"><button id="anim-start-envasadora" class="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg">Iniciar</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+             <section data-title="Evidencia" class="slide">
+                <div class="container mx-auto px-6 py-12 h-full flex flex-col">
+                    <div class="text-center max-w-5xl mx-auto mb-12"><h2 class="section-title">Evidencia del Proceso (Línea de Envasado)</h2><p class="section-subtitle">Un recorrido visual por el trabajo de construcción y puesta a punto.</p></div>
+                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-6">
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.imgur.com/5J7p5bF.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Pruebas de Control</h4><img src="https://i.imgur.com/SZnB9Vj.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="text-center"><h4 class="font-semibold mb-2 text-sm">Trabajo en Equipo</h4><img src="https://i.imgur.com/d2aJeFw.jpeg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div class="presentation-arrows hidden">
+             <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
+             <button class="next-slide-btn fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/50 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
+        </div>
+    </div>
+    
+    <!-- PAGE 4: CONCLUSIONES -->
+    <div id="page-conclusiones" class="page">
+        <header class="sticky top-0 z-50">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">CONCLUSIONES Y EQUIPO</h1>
+                </div>
+            </nav>
+        </header>
+         <main>
+            <section>
+                <div class="container mx-auto px-6 py-12 h-full flex flex-col justify-center">
+                    <div class="text-center max-w-5xl mx-auto mb-12">
+                        <h2 class="section-title">Conclusiones Finales</h2>
+                        <p class="section-subtitle mt-4">La culminación exitosa de estos proyectos, desde la ingeniería inversa hasta la automatización funcional, es un testimonio de nuestra capacidad técnica, resolución de problemas y trabajo en equipo. Agradecemos profundamente la guía de nuestros profesores y el apoyo del instituto, cuyos recursos fueron fundamentales para transformar estos desafíos en valiosas experiencias de aprendizaje. Hemos demostrado la habilidad para aplicar conocimientos teóricos a problemas industriales reales, y estamos preparados para afrontar futuros desafíos con la misma dedicación y profesionalismo.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold text-center mb-8">Equipo de Proyecto</h3>
+                        <div id="team-container-final" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <div id="image-modal-backdrop" class="fixed inset-0 bg-black/70 z-[60] hidden opacity-0 flex items-center justify-center p-4">
-        <div id="image-modal-content" class="bg-white rounded-lg shadow-2xl p-4 max-w-4xl max-h-[90vh] w-auto relative scale-95 opacity-0">
+        <div id="image-modal-content" class="bg-white rounded-lg p-4 max-w-4xl max-h-[90vh] w-auto relative scale-95 opacity-0">
             <button id="image-modal-close" class="absolute -top-4 -right-4 bg-white rounded-full h-10 w-10 text-2xl">&times;</button>
             <img id="modal-image" src="" class="max-w-full max-h-[85vh] object-contain">
         </div>
@@ -299,188 +298,255 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- GLOBAL SETUP ---
             const teamMembers = [
                 { name: 'Abril Abdala' }, { name: 'Jesus Castellanos' }, { name: 'Guillermo Paulosky' },
                 { name: 'Joaquin Huaman' }, { name: 'Joaquin Gozainy' }, { name: 'Benjamin Cubilla' },
                 { name: 'Tomas Ratti' }, { name: 'Brian Gimenez' }, { name: 'Brian Alcon' }
             ];
-            const teamContainer = document.getElementById('team-container');
-            if(teamContainer) {
-                teamContainer.innerHTML = teamMembers.map(member => `
-                    <div class="card text-center !p-6">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/${member.name.toLowerCase().replace(' ','-')}" alt="QR de ${member.name}" class="w-24 h-24 rounded-lg mx-auto mb-4">
+
+            function populateTeam(containerSelector, isCompact) {
+                 const container = document.querySelector(containerSelector);
+                 if(!container) return;
+                 container.innerHTML = teamMembers.map(member => {
+                    if (isCompact) {
+                        return `<div class="text-center">
+                             <a href="#" title="${member.name}" class="text-gray-600 hover:text-blue-600 transition">
+                                <i class="fas fa-user-circle text-4xl mb-2"></i>
+                                <span class="text-xs block">${member.name.split(' ')[0]}</span>
+                             </a>
+                        </div>`;
+                    }
+                    return `<div class="card text-center !p-6">
+                        <i class="fas fa-user-circle text-5xl text-slate-300 mx-auto mb-4"></i>
                         <h4 class="font-bold text-gray-800 text-base">${member.name}</h4>
                         <a href="#" class="text-blue-600 hover:text-blue-800 transition mt-2 block" title="Perfil de LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-                    </div>`).join('');
+                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.linkedin.com/in/${member.name.toLowerCase().replace(' ','-')}" alt="QR de ${member.name}" class="w-24 h-24 rounded-lg mx-auto mt-2">
+                    </div>`;
+                }).join('');
             }
+            populateTeam('#equipo-caratula .grid', true);
+            populateTeam('#team-container-final', false);
 
-            // Presentation Mode Logic
-            const presentationModeBtn = document.getElementById('presentation-mode-btn');
-            const playIcon = document.getElementById('play-icon');
-            const stopIcon = document.getElementById('stop-icon');
-            const fullscreenBtn = document.getElementById('fullscreen-btn');
-            const mainNavLinks = document.getElementById('main-nav-links');
-            const presentationNavContainer = document.getElementById('presentation-nav-container');
-            const presentationArrows = document.getElementById('presentation-arrows');
-            const prevSlideBtn = document.getElementById('prev-slide-btn');
-            const nextSlideBtn = document.getElementById('next-slide-btn');
-            
-            const slides = Array.from(document.querySelectorAll('main > section'));
-            let currentSlideIndex = 0;
-            let isPresentationMode = false;
 
-            function setupNavTree() {
-                const navTree = document.getElementById('presentation-nav-tree');
-                navTree.innerHTML = slides.map((slide, index) => 
-                    `<a href="#" class="nav-item px-3 py-1 rounded-md" data-index="${index}">${slide.dataset.title}</a>`
-                ).join('');
-                navTree.querySelectorAll('.nav-item').forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        goToSlide(parseInt(e.currentTarget.dataset.index));
-                    });
+            // --- PAGE NAVIGATION ---
+            const pages = document.querySelectorAll('.page');
+            document.querySelectorAll('.page-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.dataset.target;
+                    pages.forEach(page => page.classList.toggle('active', page.id === targetId));
+                    window.scrollTo(0, 0);
                 });
-            }
-
-            function goToSlide(index) {
-                if (index < 0 || index >= slides.length) return;
-                currentSlideIndex = index;
-                
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active-slide', i === index);
-                });
-
-                updatePresentationUI();
-            }
-
-            function updatePresentationUI() {
-                // Update progress bar
-                const progress = ((currentSlideIndex + 1) / slides.length) * 100;
-                document.getElementById('presentation-progress-bar').style.width = `${progress}%`;
-                
-                // Update nav tree
-                document.querySelectorAll('#presentation-nav-tree .nav-item').forEach((item, i) => {
-                    item.classList.toggle('active', i === currentSlideIndex);
-                });
-                
-                // Update arrow buttons
-                prevSlideBtn.disabled = currentSlideIndex === 0;
-                nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
-            }
-
-            function togglePresentationMode() {
-                isPresentationMode = !isPresentationMode;
-                document.body.classList.toggle('presentation-mode', isPresentationMode);
-                playIcon.classList.toggle('hidden', isPresentationMode);
-                stopIcon.classList.toggle('hidden', !isPresentationMode);
-                mainNavLinks.classList.toggle('hidden', isPresentationMode);
-                presentationNavContainer.classList.toggle('hidden', !isPresentationMode);
-                presentationArrows.classList.toggle('hidden', !isPresentationMode);
-
-                if (isPresentationMode) {
-                    const currentScroll = window.scrollY;
-                    const closestSlideIndex = slides.reduce((closest, slide, index) => {
-                        const box = slide.getBoundingClientRect();
-                        const offset = box.top + box.height / 2;
-                        return Math.abs(offset) < Math.abs(slides[closest].getBoundingClientRect().top + slides[closest].getBoundingClientRect().height / 2) ? index : closest;
-                    }, 0);
-                    goToSlide(closestSlideIndex);
-                } else {
-                    slides[currentSlideIndex].scrollIntoView({ behavior: 'instant' });
-                }
-            }
-
-            presentationModeBtn.addEventListener('click', togglePresentationMode);
-            prevSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
-            nextSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
-            
-            fullscreenBtn.addEventListener('click', () => {
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                } else {
-                    document.exitFullscreen();
-                }
             });
 
-            window.addEventListener('keydown', (e) => {
-                if (isPresentationMode) {
-                    if (e.key === 'ArrowRight') nextSlideBtn.click();
-                    if (e.key === 'ArrowLeft') prevSlideBtn.click();
-                    if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+            // --- PRESENTATION MODE (delegated to each page) ---
+            function setupPresentationPage(pageElement) {
+                const presentationModeBtn = pageElement.querySelector('.presentation-mode-btn');
+                if (!presentationModeBtn) return;
+
+                const playIcon = presentationModeBtn.querySelector('.play-icon');
+                const stopIcon = presentationModeBtn.querySelector('.stop-icon');
+                const fullscreenBtn = pageElement.querySelector('.fullscreen-btn');
+                const presentationNavContainer = pageElement.querySelector('.presentation-nav-container');
+                const presentationArrows = pageElement.querySelector('.presentation-arrows');
+                const prevSlideBtn = pageElement.querySelector('.prev-slide-btn');
+                const nextSlideBtn = pageElement.querySelector('.next-slide-btn');
+                const slides = Array.from(pageElement.querySelectorAll('main > .slide'));
+                
+                let currentSlideIndex = 0;
+                let isPresentationMode = false;
+
+                function setupNavTree() {
+                    const navTree = pageElement.querySelector('.presentation-nav-tree');
+                    navTree.innerHTML = slides.map((slide, index) => `<a href="#" class="nav-item px-3" data-index="${index}">${slide.dataset.title}</a>`).join('');
+                    navTree.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', e => { e.preventDefault(); goToSlide(parseInt(e.currentTarget.dataset.index)); }));
                 }
-            });
 
-            setupNavTree();
+                function goToSlide(index) {
+                    if (index < 0 || index >= slides.length) return;
+                    currentSlideIndex = index;
+                    slides.forEach((slide, i) => slide.classList.toggle('active-slide', i === index));
+                    updatePresentationUI();
+                }
 
-            // Tabs logic, simulator, and other functionalities...
-            const tabs = document.querySelectorAll('.tab-button');
-            const panes = document.querySelectorAll('.tab-pane');
-            tabs.forEach(tab => tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                panes.forEach(p => p.classList.toggle('hidden', p.id !== tab.dataset.tab));
-            }));
+                function updatePresentationUI() {
+                    const progress = ((currentSlideIndex + 1) / slides.length) * 100;
+                    pageElement.querySelector('.presentation-progress-bar').style.width = `${progress}%`;
+                    pageElement.querySelectorAll('.presentation-nav-tree .nav-item').forEach((item, i) => item.classList.toggle('active', i === currentSlideIndex));
+                    if (prevSlideBtn) prevSlideBtn.disabled = currentSlideIndex === 0;
+                    if (nextSlideBtn) nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
+                }
 
-            // Image Modal Logic
+                function togglePresentationMode() {
+                    isPresentationMode = !isPresentationMode;
+                    document.body.classList.toggle('presentation-mode', isPresentationMode);
+                    playIcon.classList.toggle('hidden', isPresentationMode);
+                    stopIcon.classList.toggle('hidden', !isPresentationMode);
+                    presentationNavContainer.classList.toggle('hidden', !isPresentationMode);
+                    if (presentationArrows) presentationArrows.classList.toggle('hidden', !isPresentationMode);
+                    if (isPresentationMode) {
+                        goToSlide(0);
+                    } else {
+                        slides.forEach(s => s.classList.remove('active-slide'));
+                    }
+                }
+
+                presentationModeBtn.addEventListener('click', togglePresentationMode);
+                if (prevSlideBtn) prevSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
+                if (nextSlideBtn) nextSlideBtn.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
+                fullscreenBtn.addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen());
+                
+                // Keyboard navigation for presentation mode
+                document.addEventListener('keydown', (e) => {
+                    if (isPresentationMode && pageElement.classList.contains('active')) {
+                        if (e.key === 'ArrowRight') {
+                            if (nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
+                        }
+                        if (e.key === 'ArrowLeft') {
+                            if (prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
+                        }
+                        if (e.key === 'Escape' && document.fullscreenElement) {
+                            document.exitFullscreen();
+                        }
+                    }
+                });
+                
+                setupNavTree();
+            }
+            
+            document.querySelectorAll('.presentation-page').forEach(setupPresentationPage);
+
+             // --- IMAGE MODAL ---
             const modalBackdrop = document.getElementById('image-modal-backdrop');
             const modalContent = document.getElementById('image-modal-content');
             const modalImage = document.getElementById('modal-image');
-            const modalClose = document.getElementById('image-modal-close');
-
-            document.querySelectorAll('.clickable-image').forEach(img => {
-                img.addEventListener('click', () => {
-                    modalImage.src = img.src;
-                    modalBackdrop.classList.remove('hidden');
-                    setTimeout(() => {
-                        modalBackdrop.classList.remove('opacity-0');
-                        modalContent.classList.remove('opacity-0', 'scale-95');
-                    }, 10);
-                });
-            });
-
+            document.querySelectorAll('.clickable-image').forEach(img => img.addEventListener('click', () => {
+                modalImage.src = img.src;
+                modalBackdrop.classList.remove('hidden');
+                setTimeout(() => { modalBackdrop.classList.remove('opacity-0'); modalContent.classList.remove('opacity-0', 'scale-95'); }, 10);
+            }));
             const closeModal = () => {
                 modalContent.classList.add('opacity-0', 'scale-95');
                 modalBackdrop.classList.add('opacity-0');
                 setTimeout(() => modalBackdrop.classList.add('hidden'), 300);
             };
+            document.getElementById('image-modal-close').addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
 
-            modalClose.addEventListener('click', closeModal);
-            modalBackdrop.addEventListener('click', (e) => {
-                if (e.target === modalBackdrop) closeModal();
-            });
 
-            // Simulator logic...
+            // --- SIMULATOR: TERMOFORMADORA ---
             const productsData = {
-                bandeja: { name: "Bandeja Gastronómica", image: "https://i.imgur.com/3LXJ6xJ.png", cycleTime: 12, materialCost: 38, salePrice: 85 },
-                mascara: { name: "Máscara de Cotillón", image: "https://i.imgur.com/c2Yw2a1.png", cycleTime: 14, materialCost: 50, salePrice: 250 },
-                blister: { name: "Blíster Industrial", image: "https://i.imgur.com/wV2eQk1.png", cycleTime: 13, materialCost: 45, salePrice: 180 }
+                bandeja: { name: "Bandeja Gastronómica", image: "https://i.imgur.com/3LXJ6xJ.png", cycleTime: 12, materialCost: 45, salePrice: 95, material: "PET 0.5mm", temp: 170 },
+                mascara: { name: "Máscara de Cotillón", image: "https://i.imgur.com/c2Yw2a1.png", cycleTime: 14, materialCost: 55, salePrice: 280, material: "HIPS 0.8mm", temp: 180 },
+                blister: { name: "Blíster Industrial", image: "https://i.imgur.com/wV2eQk1.png", cycleTime: 13, materialCost: 50, salePrice: 190, material: "PVC 0.6mm", temp: 160 }
             };
             const startBtn = document.getElementById('start-simulation-btn');
             const resultDiv = document.getElementById('simulation-result');
-            startBtn.addEventListener('click', () => {
-                const product = productsData[document.querySelector('input[name="product"]:checked').value];
-                startBtn.disabled = true; startBtn.textContent = 'Procesando...';
-                resultDiv.innerHTML = `<div class="w-full"><h4 id="simulation-status" class="font-bold mb-2">Iniciando ciclo...</h4><div class="w-full bg-slate-200 h-2 rounded-full"><div id="progress-bar-sim" class="bg-blue-600 h-2 rounded-full" style="width:0"></div></div><div id="final-result" class="opacity-0"></div></div>`;
-                const simProgressBar = document.getElementById('progress-bar-sim');
-                const simStatus = document.getElementById('simulation-status');
-                const finalResult = document.getElementById('final-result');
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 10;
-                    simProgressBar.style.width = `${progress}%`;
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        simStatus.innerHTML = `<span class="text-green-600 font-bold">¡Ciclo Completo!</span>`;
-                        const hourlyProduction = Math.floor(3600 / product.cycleTime * 0.70); // 70% OEE
-                        finalResult.innerHTML = `<img src="${product.image}" class="mx-auto h-24 my-4"><p class="text-sm text-gray-500">PRODUCCIÓN/HORA</p><p class="font-bold text-3xl">${hourlyProduction} u.</p><div class="mt-4 pt-4 border-t w-full"><p class="text-sm text-gray-500">MARGEN BRUTO</p><p class="font-bold text-3xl text-blue-600">$${product.salePrice - product.materialCost}</p></div>`;
-                        finalResult.classList.add('opacity-100', 'transition-opacity', 'duration-500');
-                        startBtn.disabled = false; startBtn.textContent = 'Activar Otro Ciclo';
-                    }
-                }, product.cycleTime * 10);
-            });
+            if (startBtn) {
+                startBtn.addEventListener('click', () => {
+                    const product = productsData[document.querySelector('#page-thermo input[name="product"]:checked').value];
+                    startBtn.disabled = true; startBtn.textContent = 'Procesando...';
+                    resultDiv.innerHTML = `<div class="w-full"><h4 id="simulation-status" class="font-bold mb-2">Iniciando ciclo...</h4><div class="w-full bg-slate-200 h-2 rounded-full"><div id="progress-bar-sim" class="bg-blue-600 h-2 rounded-full" style="width:0"></div></div><div id="final-result" class="opacity-0 transition-opacity duration-500"></div></div>`;
+                    const simStatus = resultDiv.querySelector('#simulation-status');
+                    const simProgressBar = resultDiv.querySelector('#progress-bar-sim');
+                    const finalResult = resultDiv.querySelector('#final-result');
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 10;
+                        simProgressBar.style.width = `${progress}%`;
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            simStatus.innerHTML = `<span class="text-green-600 font-bold">¡Ciclo Completo!</span>`;
+                            const hourlyProduction = Math.floor(3600 / product.cycleTime * 0.70); // 70% OEE
+                            finalResult.innerHTML = `<img src="${product.image}" class="mx-auto h-20 my-4"><div class="mb-4"><p class="text-sm text-gray-500">PRODUCCIÓN/HORA</p><p class="font-bold text-2xl">${hourlyProduction} u.</p></div><div class="text-xs text-left grid grid-cols-2 gap-x-4 gap-y-1"><span class="text-gray-500">Material:</span><span class="font-semibold text-right">${product.material}</span><span class="text-gray-500">Temp. Moldeo:</span><span class="font-semibold text-right">${product.temp}°C</span><span class="text-gray-500">Costo Mat. Prima:</span><span class="font-semibold text-right">$${product.materialCost}</span><span class="text-gray-500">Valor Venta:</span><span class="font-semibold text-right text-green-600">$${product.salePrice}</span></div><div class="mt-4 pt-4 border-t w-full"><p class="text-sm text-gray-500">MARGEN BRUTO</p><p class="font-bold text-3xl text-blue-600">$${product.salePrice - product.materialCost}</p></div>`;
+                            finalResult.classList.remove('opacity-0');
+                            startBtn.disabled = false; startBtn.textContent = 'Activar Otro Ciclo';
+                        }
+                    }, product.cycleTime * 10);
+                });
+            }
+
+            // --- ANIMATION: TERMOFORMADORA ---
+            const animStartBtn = document.getElementById('anim-start-thermo');
+            if (animStartBtn) {
+                const animResetBtn = document.getElementById('anim-reset-thermo');
+                const lamina = document.getElementById('lamina-formed-path');
+                const calentador = document.getElementById('calentador');
+                const mold = document.getElementById('mold');
+                
+                const originalPath = "M 70 60 L 230 60 L 230 60 L 70 60 Z";
+                const formedPath = "M 70 60 L 100 100 L 120 80 L 180 80 L 200 100 L 230 60 Z";
+
+                const resetAnimation = () => {
+                    lamina.setAttribute('d', originalPath);
+                    lamina.style.transform = 'translateY(0px)';
+                    calentador.style.transform = 'translateY(0px)';
+                    mold.style.transform = 'translateY(0px)';
+                    lamina.setAttribute('fill', '#3b82f6');
+                };
+                
+                animStartBtn.addEventListener('click', () => {
+                    animStartBtn.disabled = true;
+                    resetAnimation();
+                    setTimeout(() => { calentador.style.transform = 'translateY(35px)'; }, 500);
+                    setTimeout(() => { lamina.setAttribute('fill', '#fb923c'); }, 1000);
+                    setTimeout(() => { calentador.style.transform = 'translateY(0px)'; }, 1500);
+                    setTimeout(() => { mold.style.transform = 'translateY(-20px)'; }, 2000);
+                    setTimeout(() => { lamina.setAttribute('d', formedPath); }, 2300);
+                    setTimeout(() => { lamina.setAttribute('fill', '#3b82f6'); }, 3000);
+                    setTimeout(() => { mold.style.transform = 'translateY(0px)'; }, 3500);
+                    setTimeout(() => { lamina.style.transform = 'translateY(-15px)'; }, 4000); // Eject
+                    setTimeout(() => { resetAnimation(); animStartBtn.disabled = false; }, 4500);
+                });
+                animResetBtn.addEventListener('click', resetAnimation);
+            }
+
+            // --- ANIMATION: ENVASADORA ---
+            const startEnvasadoraBtn = document.getElementById('anim-start-envasadora');
+            if(startEnvasadoraBtn){
+                const bottleGroup = document.getElementById('bottle-group');
+                const bottleFill = document.getElementById('bottle-fill-level');
+                const bottleCap = document.getElementById('bottle-cap');
+                const stopper1 = document.getElementById('stopper1');
+                const stopper2 = document.getElementById('stopper2');
+                const hopperGate = document.getElementById('hopper-gate');
+                const screwdriver = document.getElementById('screwdriver');
+
+                const resetEnvasadora = () => {
+                    bottleGroup.style.transition = 'none';
+                    bottleGroup.style.transform = 'translateX(0)';
+                    bottleFill.style.height = '0';
+                    bottleFill.style.transform = 'translateY(0)';
+                    bottleFill.style.opacity = '0';
+                    bottleCap.style.opacity = '0';
+                    stopper1.style.transform = 'translateY(0)';
+                    stopper2.style.transform = 'translateY(0)';
+                    hopperGate.style.transform = 'translateY(0)';
+                    screwdriver.style.transform = 'translateY(0)';
+                };
+
+                startEnvasadoraBtn.addEventListener('click', () => {
+                    startEnvasadoraBtn.disabled = true;
+                    resetEnvasadora();
+                    setTimeout(() => { bottleGroup.style.transition = 'transform 2s linear'; bottleGroup.style.transform = 'translateX(100px)';}, 100);
+                    setTimeout(() => { stopper1.style.transform = 'translateY(-15px)'; }, 2100);
+                    setTimeout(() => { hopperGate.style.transform = 'translateY(10px)'; }, 2500);
+                    setTimeout(() => { bottleFill.style.opacity = '1'; bottleFill.style.height = '30px'; bottleFill.style.transform = 'translateY(-30px)'; }, 2700);
+                    setTimeout(() => { hopperGate.style.transform = 'translateY(0)'; }, 3300);
+                    setTimeout(() => { stopper1.style.transform = 'translateY(0)'; }, 3700);
+                    setTimeout(() => { bottleGroup.style.transform = 'translateX(215px)'; }, 4000);
+                    setTimeout(() => { stopper2.style.transform = 'translateY(-15px)'; }, 6000);
+                    setTimeout(() => { bottleCap.style.opacity = '1'; }, 6400);
+                    setTimeout(() => { screwdriver.style.transform = 'translateY(50px)'; }, 6800);
+                    setTimeout(() => { screwdriver.style.transform = 'translateY(0)'; }, 7800);
+                    setTimeout(() => { stopper2.style.transform = 'translateY(0)'; }, 8200);
+                    setTimeout(() => { bottleGroup.style.transform = 'translateX(350px)'; }, 8500);
+                    setTimeout(() => { startEnvasadoraBtn.disabled = false; }, 10600);
+                });
+            }
         });
     </script>
 </body>
 </html>
-
 
