@@ -41,7 +41,7 @@
         .gantt-timeline { display: grid; grid-template-columns: repeat(5, 1fr); text-align: center; font-size: 0.75rem; color: #64748b; padding-bottom: 5px; border-bottom: 1px solid #e2e8f0; }
         .gantt-task-name { font-size: 0.8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding-right: 10px; }
         .gantt-bar-container { position: relative; height: 30px; }
-        .gantt-bar { position: absolute; height: 20px; top: 5px; border-radius: 5px; opacity: 0.8; }
+        .gantt-bar { position: absolute; height: 20px; top: 5px; border-radius: 5px; opacity: 0.8; transition: all 0.3s ease; }
         .gantt-bar.completed { background-color: #22c55e; } /* green-500 */
         .gantt-bar.in-progress { background-color: #f59e0b; } /* amber-500 */
         .gantt-bar.pending { background-color: #ef4444; } /* red-500 */
@@ -357,6 +357,27 @@
                     </div>
                 </div>
             </section>
+            <section data-title="Evidencia" class="slide">
+                <div class="container mx-auto px-6 h-full flex flex-col">
+                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Imágenes del ensamblaje de la cinta transportadora y los componentes mecánicos.</p></div>
+                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
+                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Trabajo en Equipo</h4><img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Ajuste de Mecanismos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="flex flex-col col-span-2 md:col-span-3">
+                            <h4 class="font-semibold text-center mb-2 text-sm">Vista General (Video)</h4>
+                            <iframe 
+                                src="https://streamable.com/e/kwwilr" 
+                                frameborder="0" 
+                                width="100%" 
+                                height="100%" 
+                                allowfullscreen 
+                                class="w-full flex-grow h-64 rounded-lg shadow-md">
+                            </iframe>
+                        </figure>
+                    </div>
+                </div>
+            </section>
              <section data-title="Viabilidad" class="slide">
                 <div class="container mx-auto px-6">
                     <div class="text-center"><h2 class="section-title">Análisis de Costos del Prototipo</h2><p class="section-subtitle mt-4">Desglose de la inversión en materiales y componentes para la construcción de la línea de envasado (Cifras en ARS).</p></div>
@@ -393,27 +414,6 @@
                     </div>
                 </div>
             </section>
-             <section data-title="Evidencia" class="slide">
-                <div class="container mx-auto px-6 h-full flex flex-col">
-                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Imágenes del ensamblaje de la cinta transportadora y los componentes mecánicos.</p></div>
-                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Trabajo en Equipo</h4><img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Ajuste de Mecanismos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col col-span-2 md:col-span-3">
-                            <h4 class="font-semibold text-center mb-2 text-sm">Vista General (Video)</h4>
-                            <iframe 
-                                src="https://streamable.com/e/kwwilr" 
-                                frameborder="0" 
-                                width="100%" 
-                                height="100%" 
-                                allowfullscreen 
-                                class="w-full flex-grow h-64 rounded-lg shadow-md">
-                            </iframe>
-                        </figure>
-                    </div>
-                </div>
-            </section>
         </main>
         <div class="presentation-arrows hidden">
              <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
@@ -435,7 +435,7 @@
             <section class="container mx-auto px-6 py-12">
                 <div class="text-center max-w-4xl mx-auto mb-12">
                     <h2 class="section-title">Conclusiones Finales</h2>
-                    <p class="section-subtitle mt-4">La culminación exitosa de estos proyectos, desde la ingeniería inversa hasta la automatización funcional, es un testimonio de nuestra capacidad técnica, resolución de problemas y trabajo en equipo. Agradecemos profundamente la guía de nuestros profesores y el apoyo del instituto, cuyos recursos fueron fundamentales para transformar estos desafíos en valiosas experiencias de aprendizaje. Hemos demostrado la habilidad para aplicar conocimientos teóricos a problemas industriales reales, y estamos preparados para afrontar futuros desafíos con la misma dedicación y profesionalismo.</p>
+                    <p class="section-subtitle mt-4">La culminación de estos proyectos es un testimonio de nuestra capacidad técnica, resolución de problemas y trabajo en equipo. Agradecemos profundamente la guía de nuestros profesores y el apoyo del instituto, cuyos recursos fueron fundamentales. Extendemos un especial agradecimiento a los mentores de Edesur, quienes no solo compartieron su invaluable experiencia, sino que también nos brindaron la increíble oportunidad de presentar nuestros desarrollos en sus instalaciones, un espacio que nos permitió desempeñarnos en un entorno profesional real. Hemos demostrado la habilidad para aplicar conocimientos teóricos a problemas industriales, y estamos preparados para afrontar futuros desafíos con la misma dedicación.</p>
                 </div>
                 <div class="card">
                     <h3 class="text-2xl font-bold text-center mb-8">Equipo de Proyecto</h3>
@@ -775,7 +775,7 @@
                 const end = new Date(endDate);
                 const totalDays = (end - start) / (1000 * 60 * 60 * 24);
                 
-                const months = ['Jun', 'Jul', 'Ago', 'Sep', 'Oct'];
+                const months = ['Jul', 'Ago', 'Sep', 'Oct', 'Nov'];
                 let timelineHtml = '<div class="gantt-timeline col-span-2">';
                 months.forEach(month => timelineHtml += `<div>${month} '25</div>`);
                 timelineHtml += '</div>';
@@ -800,28 +800,26 @@
             }
 
             const envasadoraTasks = [
-                { name: 'A. Armar cinta', start: '2025-06-09', duration: 6, status: 'completed' },
-                { name: 'B. Diseñar base', start: '2025-06-23', duration: 3, status: 'completed' },
-                { name: 'C. Montar cilindros', start: '2025-07-02', duration: 3, status: 'in-progress' },
-                { name: 'D. Mejorar tablero', start: '2025-07-14', duration: 6, status: 'completed' },
-                { name: 'E. Amurar tablero', start: '2025-07-23', duration: 2, status: 'pending' },
-                { name: 'F. Hacer programa', start: '2025-08-18', duration: 6, 'status': 'completed' },
-                { name: 'G. Alimentar motor', start: '2025-09-01', duration: 1, status: 'pending' },
-                { name: 'H. Vincular tablero', start: '2025-09-15', duration: 4, status: 'pending' }
+                { name: 'Diseño y Estructura', start: '2025-07-01', duration: 20, status: 'completed' },
+                { name: 'Montaje Mecánico', start: '2025-07-22', duration: 25, status: 'completed' },
+                { name: 'Instalación Neumática', start: '2025-08-18', duration: 19, status: 'completed' },
+                { name: 'Cableado Tablero', start: '2025-09-08', duration: 19, status: 'completed' },
+                { name: 'Programación PLC', start: '2025-09-29', duration: 26, status: 'in-progress' },
+                { name: 'Pruebas y Ajustes', start: '2025-10-27', duration: 19, status: 'pending' },
+                { name: 'Documentación Final', start: '2025-11-17', duration: 12, status: 'pending' }
             ];
-            createGanttChart('gantt-envasadora', envasadoraTasks, '2025-06-01', '2025-10-31');
+            createGanttChart('gantt-envasadora', envasadoraTasks, '2025-07-01', '2025-11-30');
 
             const thermoTasks = [
-                { name: 'T1. Diagnóstico', start: '2025-08-01', duration: 10, status: 'completed' },
-                { name: 'T2. Diseño Eléctrico', start: '2025-08-15', duration: 5, status: 'completed' },
-                { name: 'T3. Compra Componentes', start: '2025-08-22', duration: 7, status: 'in-progress' },
-                { name: 'T4. Reparaciones Mecánicas', start: '2025-09-01', duration: 4, status: 'in-progress' },
-                { name: 'T5. Reemplazo Componentes', start: '2025-09-05', duration: 3, status: 'pending' },
-                { name: 'T6. Pintura Estructura', start: '2025-09-10', duration: 2, status: 'pending' },
-                { name: 'T7. Montaje Final', start: '2025-09-12', duration: 5, status: 'pending' },
-                { name: 'T8. Pruebas y Ajustes', start: '2025-09-19', duration: 3, status: 'pending' }
+                { name: 'Diagnóstico y Despiece', start: '2025-07-01', duration: 18, status: 'completed' },
+                { name: 'Reparaciones Mecánicas', start: '2025-07-21', duration: 19, status: 'completed' },
+                { name: 'Diseño y Compra Comp.', start: '2025-08-11', duration: 26, status: 'completed' },
+                { name: 'Montaje Tablero Eléctrico', start: '2025-09-08', duration: 26, status: 'completed' },
+                { name: 'Pintura y Montaje Final', start: '2025-10-06', duration: 26, status: 'in-progress' },
+                { name: 'Programación y HMI', start: '2025-11-03', duration: 19, status: 'pending' },
+                { name: 'Puesta en Marcha', start: '2025-11-24', duration: 5, status: 'pending' }
             ];
-            createGanttChart('gantt-thermo', thermoTasks, '2025-08-01', '2025-10-31');
+            createGanttChart('gantt-thermo', thermoTasks, '2025-07-01', '2025-11-30');
 
         });
     </script>
