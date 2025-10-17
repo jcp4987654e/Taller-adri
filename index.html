@@ -26,7 +26,7 @@
         .nav-item.active { color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid var(--primary-blue); }
         
         /* --- Animation Styles --- */
-        .anim-svg .movable, .anim-svg path { transition: all 0.5s ease-in-out; }
+        .anim-svg .movable, .anim-svg path, .anim-svg rect, .anim-svg g { transition: all 0.5s ease-in-out; }
         .anim-svg .anim-text { opacity: 0; transition: opacity 0.4s ease-in-out; font-size: 9px; font-family: 'Lato', sans-serif; font-weight: bold; fill: #334155; }
         .anim-svg .anim-text.active { opacity: 1; }
         .envasadora-anim-svg #bottle-group { transition: transform 2s linear; }
@@ -37,9 +37,11 @@
         #image-modal-content { transition: opacity 0.3s ease, transform 0.3s ease; }
 
         /* --- Gantt Chart Styles --- */
-        .gantt-container { display: grid; grid-template-columns: 150px 1fr; gap: 5px; }
+        .gantt-container { display: grid; grid-template-columns: 220px 1fr; gap: 5px; }
         .gantt-timeline { display: grid; grid-template-columns: repeat(5, 1fr); text-align: center; font-size: 0.75rem; color: #64748b; padding-bottom: 5px; border-bottom: 1px solid #e2e8f0; }
         .gantt-task-name { font-size: 0.8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding-right: 10px; }
+        .gantt-task-name.phase { font-weight: bold; color: var(--dark-text); margin-top: 10px; }
+        .gantt-task-name.subtask { padding-left: 15px; font-size: 0.75rem; }
         .gantt-bar-container { position: relative; height: 30px; }
         .gantt-bar { position: absolute; height: 20px; top: 5px; border-radius: 5px; opacity: 0.8; transition: all 0.3s ease; }
         .gantt-bar.completed { background-color: #22c55e; } /* green-500 */
@@ -145,34 +147,15 @@
             </section>
             <section data-title="Análisis Técnico" class="slide">
                  <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis Funcional y Animación</h2><p class="section-subtitle mt-4">Una vista detallada de la ingeniería de la máquina y una simulación animada de su funcionamiento, explicando cada paso del ciclo.</p></div>
-                    <div class="card grid lg:grid-cols-2 gap-8 items-center mt-12">
-                        <div>
-                            <h3 class="text-xl font-bold mb-4">Componentes de Control Relevados</h3>
-                             <ul class="space-y-3 text-sm">
-                                <li class="flex items-start gap-3"><i class="fas fa-microchip text-blue-500 w-5 text-center mt-1"></i><div><strong>PLC:</strong> Kinco K3 CPU304EX, con 14 Entradas Digitales (Sink/Source) y 10 Salidas a Relé.</div></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-desktop text-blue-500 w-5 text-center mt-1"></i><div><strong>HMI:</strong> Array SH-300 para la interfaz de operación, configuración de parámetros y monitoreo del proceso.</div></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-toggle-on text-blue-500 w-5 text-center mt-1"></i><div><strong>Actuadores de Potencia:</strong> 6 Relés de Estado Sólido para control PWM de resistencias y 3 Contactores para arranque de motores.</div></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-cogs text-blue-500 w-5 text-center mt-1"></i><div><strong>Motores Trifásicos:</strong> Motor Eberle (0.37kW) para bomba de vacío y motor Leroy-Somer (0.55kW) para ventilador de enfriamiento.</div></li>
-                            </ul>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-xl font-bold mb-4">Animación del Ciclo</h3>
-                            <svg class="thermo-anim-svg anim-svg w-full border rounded-lg p-4 bg-slate-50" viewBox="0 0 300 200">
-                                <!-- Estructura -->
-                                <rect x="20" y="100" width="260" height="10" fill="#94a3b8"/><rect x="20" y="110" width="10" height="70" fill="#94a3b8"/><rect x="270" y="110" width="10" height="70" fill="#94a3b8"/>
-                                <!-- Componentes Móviles -->
-                                <path id="mold" d="M 100 100 L 120 80 L 180 80 L 200 100 Z" fill="#cbd5e1" class="movable"/>
-                                <path id="lamina-path" d="M 70 60 L 230 60 L 230 60 L 70 60 Z" fill="#3b82f6" class="movable"/>
-                                <g id="calentador" class="movable"><rect x="80" y="10" width="140" height="20" fill="#f87171" rx="5"/><rect x="90" y="15" width="120" height="2" fill="white"/><rect x="90" y="21" width="120" height="2" fill="white"/></g>
-                                <!-- Textos de Animación -->
-                                <text x="150" y="50" text-anchor="middle" class="anim-text" id="text-calentar">1. Calentando lámina...</text>
-                                <text x="150" y="75" text-anchor="middle" class="anim-text" id="text-moldear">2. Moldeando por vacío...</text>
-                                <text x="150" y="50" text-anchor="middle" class="anim-text" id="text-enfriar">3. Enfriando pieza...</text>
-                                <text x="150" y="40" text-anchor="middle" class="anim-text" id="text-expulsar">4. Expulsando pieza</text>
-                            </svg>
-                            <div class="mt-4 flex justify-center space-x-2"><button id="anim-start-thermo" class="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg">Iniciar</button><button id="anim-reset-thermo" class="text-sm bg-gray-200 px-4 py-2 rounded-lg">Reiniciar</button></div>
-                        </div>
+                    <div class="text-center"><h2 class="section-title">Análisis Técnico</h2><p class="section-subtitle mt-4">Un desglose de los principales componentes eléctricos, electrónicos y mecánicos relevados en la máquina.</p></div>
+                    <div class="card mt-12 max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Componentes de Control Relevados</h3>
+                         <ul class="space-y-4 text-md">
+                            <li class="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"><i class="fas fa-microchip text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">PLC:</strong> Kinco K3 CPU304EX, con 14 Entradas Digitales (Sink/Source) y 10 Salidas a Relé para la gestión de toda la lógica del ciclo.</div></li>
+                            <li class="flex items-start gap-4 p-4"><i class="fas fa-desktop text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">HMI:</strong> Array SH-300 para la interfaz de operación, configuración de parámetros y monitoreo del proceso en tiempo real.</div></li>
+                            <li class="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"><i class="fas fa-toggle-on text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">Actuadores de Potencia:</strong> 6 Relés de Estado Sólido para un control preciso (PWM) de las resistencias y 3 Contactores para el arranque de los motores.</div></li>
+                            <li class="flex items-start gap-4 p-4"><i class="fas fa-cogs text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">Motores Trifásicos:</strong> Motor Eberle (0.37kW) para la bomba de vacío y motor Leroy-Somer (0.55kW) para el ventilador de enfriamiento.</div></li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -202,20 +185,61 @@
             </section>
             <section data-title="Planificación" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Planificación y Gantt</h2><p class="section-subtitle mt-4">Diagrama de Gantt estimado para el proyecto de reconstrucción, desde el análisis inicial hasta la puesta en marcha.</p></div>
-                    <div id="gantt-thermo" class="card mt-12">
-                        <!-- Gantt chart for Thermoformer will be injected here by JS -->
+                    <div class="text-center"><h2 class="section-title">Planificación y Organización</h2><p class="section-subtitle mt-4">El proyecto se dividió en fases claras, asignando responsabilidades específicas para asegurar un flujo de trabajo eficiente.</p></div>
+                    <div class="card mt-12">
+                        <h3 class="text-xl font-bold mb-4">Organización y Roles</h3>
+                        <p class="text-sm text-gray-600 mb-6">Para optimizar el proceso, el equipo se dividió en dos subgrupos: el **Equipo Mecánico**, encargado del diagnóstico, despiece, reparación y montaje estructural; y el **Equipo Eléctrico/Electrónico**, responsable del diseño de circuitos, cableado de tablero, programación de PLC/HMI y la integración final de los sistemas de control.</p>
+                        <div id="gantt-thermo">
+                            <!-- Gantt chart for Thermoformer will be injected here by JS -->
+                        </div>
                     </div>
                 </div>
             </section>
-            <section data-title="Evidencia" class="slide">
+            <section data-title="Presupuesto" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Análisis de Costos y Presupuesto</h2><p class="section-subtitle mt-4">Estimación de la inversión requerida para la reconstrucción y puesta en marcha de la termoformadora (Cifras en ARS, Oct. 2025).</p></div>
+                    <div class="card mt-12 max-w-4xl mx-auto">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">Componentes Eléctricos y Control</h3>
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b"><td class="py-2">PLC Kinco K3 y HMI Array SH-300</td><td class="text-right font-semibold">$1,450,000</td></tr>
+                                        <tr class="border-b bg-slate-50"><td class="py-2">6x Relés de Estado Sólido</td><td class="text-right font-semibold">$210,000</td></tr>
+                                        <tr class="border-b"><td class="py-2">3x Contactores y guardamotores</td><td class="text-right font-semibold">$185,000</td></tr>
+                                        <tr class="border-b bg-slate-50"><td class="py-2">Cableado, borneras y protecciones</td><td class="text-right font-semibold">$95,000</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">Componentes Mecánicos y Repuestos</h3>
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b"><td class="py-2">Resistencia Eléctrica Tubular</td><td class="text-right font-semibold">$88,000</td></tr>
+                                        <tr class="border-b bg-slate-50"><td class="py-2">Burlete de Vacío (1.5m)</td><td class="text-right font-semibold">$42,000</td></tr>
+                                        <tr class="border-b"><td class="py-2">Pintura Alta Temperatura y consumibles</td><td class="text-right font-semibold">$55,000</td></tr>
+                                        <tr class="border-b bg-slate-50"><td class="py-2">Tornillería, racores y bujes</td><td class="text-right font-semibold">$75,000</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-4 border-t text-center">
+                            <p class="text-gray-600">INVERSIÓN TOTAL ESTIMADA (CAPEX)</p>
+                            <p class="text-3xl font-bold text-blue-600">$2,200,000</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+             <section data-title="Evidencia" class="slide">
                  <div class="container mx-auto px-6 h-full flex flex-col">
-                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Un recorrido visual por el trabajo de relevamiento, reconstrucción y cableado del tablero de control.</p></div>
-                    <div class="card grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 flex-grow">
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Máquina Original</h4><img src="https://i.postimg.cc/fy2wJJvk/IMG-20250917-WA0026-1.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Tablero de Control</h4><img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Resistencias</h4><img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Componentes Neumáticos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Un recorrido visual por el trabajo de relevamiento, reconstrucción y el estado actual del proyecto.</p></div>
+                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
+                        <figure class="md:col-span-3"><h4 class="font-semibold text-center mb-2 text-sm">Estado Actual del Proyecto</h4><img src="https://placehold.co/600x400/334155/white?text=Foto+Actual+Termoformadora" alt="Estado actual de la termoformadora" class="w-full h-64 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Máquina Original</h4><img src="https://i.postimg.cc/fy2wJJvk/IMG-20250917-WA0026-1.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Tablero de Control</h4><img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Equipo Trabajando</h4><img src="https://placehold.co/600x400/e2e8f0/64748b?text=Equipo+en+Reconstrucción" alt="Equipo trabajando en la termoformadora" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Resistencias</h4><img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="col-span-2"><h4 class="font-semibold text-center mb-2 text-sm">Componentes Neumáticos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
                     </div>
                 </div>
             </section>
@@ -241,13 +265,13 @@
                     </div>
                 </div>
             </section>
-            <section data-title="Viabilidad" class="slide">
+            <section data-title="Viabilidad Económica" class="slide">
                  <div class="container mx-auto px-6">
                     <div class="text-center"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle mt-4">Proyección financiera basada en costos de mercado actualizados a Octubre de 2025 en Argentina.</p></div>
                     <div class="grid lg:grid-cols-3 gap-8 mt-12">
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p>Inversión Inicial (CAPEX): <span class="font-bold text-gray-800 float-right">$ 3.1M</span></p><p>Costo Op. Mensual (OPEX): <span class="font-bold text-gray-800 float-right">$ 4.1M</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p>Inversión Inicial (CAPEX): <span class="font-bold text-gray-800 float-right">$ 2.2M</span></p><p>Costo Op. Mensual (OPEX): <span class="font-bold text-gray-800 float-right">$ 4.1M</span></p></div></div>
                         <div class="card"><h3 class="text-2xl font-bold mb-6">Ganancias Proyectadas</h3><div class="space-y-3 text-gray-600"><p>Ingresos Brutos Mensuales: <span class="font-bold text-gray-800 float-right">$ 5.21M</span></p><p>Ganancia Neta Mensual: <span class="font-bold text-green-600 float-right">$ 1.08M</span></p><p>Ganancia Neta Anual: <span class="font-bold text-green-600 float-right">~$13M</span></p></div></div>
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Métricas de Rentabilidad</h3><div class="space-y-4 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-4xl font-bold">~3.8 Meses</p><hr class="my-2"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-6">Métricas de Rentabilidad</h3><div class="space-y-4 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-4xl font-bold">~2 Meses</p><hr class="my-2"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
                     </div>
                 </div>
             </section>
@@ -331,17 +355,17 @@
                                 <!-- Estructura -->
                                 <rect x="10" y="100" width="380" height="15" fill="#a1a1aa"/>
                                 <g id="fill-station"><path d="M 110 30 L 140 30 L 135 15 L 115 15 Z" fill="#9ca3af"/><rect x="115" y="30" width="20" height="40" fill="#9ca3af"/><rect id="hopper-gate" class="movable" x="120" y="70" width="10" height="10" fill="#a1a1aa"/></g>
-                                <g id="cap-station"><rect id="screwdriver" class="movable" x="245" y="0" width="10" height="30" fill="#4b5563"/><path d="M 235 40 L 265 40 L 265 30 L 235 30 Z" fill="#9ca3af"/></g>
+                                <g id="cap-station" transform="translate(-15, 0)"><rect id="screwdriver" class="movable" x="245" y="0" width="10" height="30" fill="#4b5563"/><path d="M 235 40 L 265 40 L 265 30 L 235 30 Z" fill="#9ca3af"/></g>
                                 <g id="bottle-group">
                                     <path d="M 0 0 L 0 -40 Q 0 -50 5 -50 L 15 -50 Q 20 -50 20 -40 L 20 0 Z" fill="#bfdbfe" transform="translate(15,100)"/>
-                                    <rect id="bottle-fill-level" x="17" y="70" width="16" height="0" fill="#60a5fa" opacity="0"/>
+                                    <rect id="bottle-fill-level" x="17" y="100" width="16" height="0" fill="#60a5fa" opacity="0"/>
                                     <rect id="bottle-cap" class="movable" x="17.5" y="45" width="15" height="5" fill="#6b7280" opacity="0"/>
                                 </g>
                                 <rect id="stopper1" class="movable" x="100" y="85" width="5" height="15" fill="#ef4444"/>
                                 <rect id="stopper2" class="movable" x="230" y="85" width="5" height="15" fill="#ef4444"/>
                                 <!-- Textos Animación -->
                                 <text x="125" y="10" text-anchor="middle" class="anim-text" id="text-llenado">1. Llenando...</text>
-                                <text x="250" y="10" text-anchor="middle" class="anim-text" id="text-taponado">2. Taponando...</text>
+                                <text x="235" y="10" text-anchor="middle" class="anim-text" id="text-taponado">2. Taponando...</text>
                                 <text x="320" y="80" text-anchor="middle" class="anim-text" id="text-salida">3. Salida</text>
                              </svg>
                              <div class="mt-4 flex justify-center space-x-2"><button id="anim-start-envasadora" class="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg">Iniciar</button><button id="anim-reset-envasadora" class="text-sm bg-gray-200 px-4 py-2 rounded-lg">Reiniciar</button></div>
@@ -349,68 +373,67 @@
                     </div>
                 </div>
             </section>
-             <section data-title="Planificación" class="slide">
+            <section data-title="Planificación" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Planificación y Gantt</h2><p class="section-subtitle mt-4">Diagrama de Gantt del proyecto de construcción de la línea de envasado, mostrando la secuencia y duración de cada tarea.</p></div>
-                    <div id="gantt-envasadora" class="card mt-12">
-                        <!-- Gantt chart for Envasadora will be injected here by JS -->
+                    <div class="text-center"><h2 class="section-title">Planificación y Organización</h2><p class="section-subtitle mt-4">El proyecto se estructuró en fases, con equipos dedicados a las áreas mecánica y de control para un desarrollo en paralelo.</p></div>
+                    <div class="card mt-12">
+                        <h3 class="text-xl font-bold mb-4">Organización y Roles</h3>
+                        <p class="text-sm text-gray-600 mb-6">El grupo se organizó en un **Equipo de Diseño y Construcción**, enfocado en la estructura de la cinta, montaje de actuadores y la mecánica de los módulos, y un **Equipo de Automatización**, centrado en el diseño del tablero, la programación del PLC y la integración de sensores y electroválvulas.</p>
+                        <div id="gantt-envasadora">
+                            <!-- Gantt chart for Envasadora will be injected here by JS -->
+                        </div>
                     </div>
                 </div>
             </section>
-            <section data-title="Evidencia" class="slide">
-                <div class="container mx-auto px-6 h-full flex flex-col">
-                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Imágenes del ensamblaje de la cinta transportadora y los componentes mecánicos.</p></div>
-                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Trabajo en Equipo</h4><img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col"><h4 class="font-semibold text-center mb-2 text-sm">Ajuste de Mecanismos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full flex-grow h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="flex flex-col col-span-2 md:col-span-3">
-                            <h4 class="font-semibold text-center mb-2 text-sm">Vista General (Video)</h4>
-                            <iframe 
-                                src="https://streamable.com/e/kwwilr" 
-                                frameborder="0" 
-                                width="100%" 
-                                height="100%" 
-                                allowfullscreen 
-                                class="w-full flex-grow h-64 rounded-lg shadow-md">
-                            </iframe>
-                        </figure>
-                    </div>
-                </div>
-            </section>
-             <section data-title="Viabilidad" class="slide">
+            <section data-title="Presupuesto" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis de Costos del Prototipo</h2><p class="section-subtitle mt-4">Desglose de la inversión en materiales y componentes para la construcción de la línea de envasado (Cifras en ARS).</p></div>
+                    <div class="text-center"><h2 class="section-title">Análisis de Costos del Prototipo</h2><p class="section-subtitle mt-4">Desglose de la inversión en materiales y componentes para la construcción del prototipo de la línea de envasado (Cifras en ARS).</p></div>
                     <div class="card mt-12 max-w-4xl mx-auto">
-                        <h3 class="text-2xl font-bold mb-6 text-center">Presupuesto de Componentes</h3>
+                        <h3 class="text-2xl font-bold mb-6 text-center">Presupuesto de Materiales</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3">Material</th>
-                                        <th scope="col" class="px-6 py-3">Cantidad</th>
-                                        <th scope="col" class="px-6 py-3 text-right">Costo Unitario</th>
+                                        <th scope="col" class="px-6 py-3">Material / Componente</th>
+                                        <th scope="col" class="px-6 py-3 text-right">Cantidad</th>
                                         <th scope="col" class="px-6 py-3 text-right">Costo Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Banda modular plástica</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$180,000</td><td class="px-6 py-4 text-right">$180,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Motor 12V CC</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$100,000</td><td class="px-6 py-4 text-right">$100,000</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Guías laterales ajustables</td><td class="px-6 py-4">2</td><td class="px-6 py-4 text-right">$20,500</td><td class="px-6 py-4 text-right">$41,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Cilindro neumático MD8</td><td class="px-6 py-4">3</td><td class="px-6 py-4 text-right">$11,712</td><td class="px-6 py-4 text-right">$35,136</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Bastidores de aluminio</td><td class="px-6 py-4">1</td><td class="px-6 py-4 text-right">$35,000</td><td class="px-6 py-4 text-right">$35,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Perilla de ajuste manual</td><td class="px-6 py-4">4</td><td class="px-6 py-4 text-right">$7,100</td><td class="px-6 py-4 text-right">$28,400</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Cojinete montado</td><td class="px-6 py-4">2</td><td class="px-6 py-4 text-right">$12,000</td><td class="px-6 py-4 text-right">$24,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Accesorios Racor</td><td class="px-6 py-4">6</td><td class="px-6 py-4 text-right">$2,500</td><td class="px-6 py-4 text-right">$15,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">PLC Siemens</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$373,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Módulo de Expansión Siemens</td><td class="px-6 py-4 text-right">2</td><td class="px-6 py-4 text-right">$520,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">6x Electroválvulas Micro</td><td class="px-6 py-4 text-right">1 Lote</td><td class="px-6 py-4 text-right">$1,200,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Compresor de Aire Lusqtoff</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$297,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Motor 12V CC</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$200,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Banda modular plástica Rolmec</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$180,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Fuente de Alimentación Siemens</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$180,000</td></tr>
+                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">3x Cilindro neumático MD8 Micro</td><td class="px-6 py-4 text-right">1 Lote</td><td class="px-6 py-4 text-right">$132,000</td></tr>
+                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Bastidores de aluminio</td><td class="px-6 py-4 text-right">2</td><td class="px-6 py-4 text-right">$70,000</td></tr>
+                                     <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Otros (guías, racores, cojinetes, etc.)</td><td class="px-6 py-4 text-right">Varios</td><td class="px-6 py-4 text-right">$120,950</td></tr>
                                 </tbody>
                                 <tfoot>
                                     <tr class="font-semibold text-gray-900">
-                                        <th scope="row" colspan="3" class="px-6 py-3 text-base text-right">Total Inversión Prototipo</th>
-                                        <td class="px-6 py-3 text-base text-right">$458,536</td>
+                                        <th scope="row" colspan="2" class="px-6 py-3 text-base text-right">Total Inversión Prototipo</th>
+                                        <td class="px-6 py-3 text-base text-right">$3,272,950</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </section>
+             <section data-title="Evidencia" class="slide">
+                <div class="container mx-auto px-6 h-full flex flex-col">
+                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Imágenes del ensamblaje de la cinta transportadora y el estado actual del prototipo.</p></div>
+                     <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
+                        <figure class="md:col-span-3"><h4 class="font-semibold text-center mb-2 text-sm">Estado Actual del Prototipo</h4><img src="https://placehold.co/600x400/334155/white?text=Foto+Actual+Envasadora" alt="Estado actual de la línea de envasado" class="w-full h-64 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Ajuste de Mecanismos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Equipo Trabajando</h4><img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
+                        <figure class="col-span-2 md:col-span-3">
+                            <h4 class="font-semibold text-center mb-2 text-sm">Vista General (Video)</h4>
+                            <iframe src="https://streamable.com/e/kwwilr" frameborder="0" width="100%" height="100%" allowfullscreen class="w-full flex-grow h-64 rounded-lg shadow-md"></iframe>
+                        </figure>
                     </div>
                 </div>
             </section>
@@ -434,8 +457,8 @@
          <main>
             <section class="container mx-auto px-6 py-12">
                 <div class="text-center max-w-4xl mx-auto mb-12">
-                    <h2 class="section-title">Conclusiones Finales</h2>
-                    <p class="section-subtitle mt-4">La culminación de estos proyectos es un testimonio de nuestra capacidad técnica, resolución de problemas y trabajo en equipo. Agradecemos profundamente la guía de nuestros profesores y el apoyo del instituto, cuyos recursos fueron fundamentales. Extendemos un especial agradecimiento a los mentores de Edesur, quienes no solo compartieron su invaluable experiencia, sino que también nos brindaron la increíble oportunidad de presentar nuestros desarrollos en sus instalaciones, un espacio que nos permitió desempeñarnos en un entorno profesional real. Hemos demostrado la habilidad para aplicar conocimientos teóricos a problemas industriales, y estamos preparados para afrontar futuros desafíos con la misma dedicación.</p>
+                    <h2 class="section-title">Conclusiones y Aprendizajes</h2>
+                    <p class="section-subtitle mt-4">Más allá del resultado técnico, el valor principal de estos proyectos reside en el aprendizaje práctico. Hemos traducido diagramas teóricos en circuitos funcionales, enfrentado imprevistos que no figuran en los manuales y aprendido a colaborar bajo presión, dividiendo tareas y unificando esfuerzos. Esta experiencia nos ha enseñado a diagnosticar, planificar y ejecutar soluciones industriales reales, consolidando nuestra formación de una manera que solo el trabajo práctico puede lograr. Agradecemos a nuestros profesores por su guía, y especialmente a los mentores de Edesur por la invaluable oportunidad de presentar nuestros desarrollos en un entorno profesional.</p>
                 </div>
                 <div class="card">
                     <h3 class="text-2xl font-bold text-center mb-8">Equipo de Proyecto</h3>
@@ -665,54 +688,6 @@
             }
 
 
-            // --- ANIMATION: TERMOFORMADORA ---
-            const thermoPage = document.getElementById('page-thermo');
-            if (thermoPage) {
-                const animStartBtn = thermoPage.querySelector('#anim-start-thermo');
-                const animResetBtn = thermoPage.querySelector('#anim-reset-thermo');
-                const lamina = thermoPage.querySelector('#lamina-path');
-                const calentador = thermoPage.querySelector('#calentador');
-                const mold = thermoPage.querySelector('#mold');
-                const texts = {
-                    calentar: thermoPage.querySelector('#text-calentar'),
-                    moldear: thermoPage.querySelector('#text-moldear'),
-                    enfriar: thermoPage.querySelector('#text-enfriar'),
-                    expulsar: thermoPage.querySelector('#text-expulsar')
-                };
-                
-                const originalPath = "M 70 60 L 230 60 L 230 60 L 70 60 Z";
-                const formedPath = "M 70 60 L 100 100 L 120 80 L 180 80 L 200 100 L 230 60 Z";
-
-                const resetAnimation = () => {
-                    lamina.setAttribute('d', originalPath);
-                    lamina.style.transform = 'translateY(0px)';
-                    calentador.style.transform = 'translateY(0px)';
-                    mold.style.transform = 'translateY(0px)';
-                    lamina.setAttribute('fill', '#3b82f6');
-                    Object.values(texts).forEach(t => t.classList.remove('active'));
-                    animStartBtn.disabled = false;
-                };
-                
-                animStartBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    animStartBtn.disabled = true;
-                    resetAnimation();
-                    setTimeout(() => { texts.calentar.classList.add('active'); calentador.style.transform = 'translateY(35px)'; }, 500);
-                    setTimeout(() => { lamina.setAttribute('fill', '#fb923c'); }, 1000);
-                    setTimeout(() => { texts.calentar.classList.remove('active'); calentador.style.transform = 'translateY(0px)'; }, 2000);
-                    setTimeout(() => { texts.moldear.classList.add('active'); mold.style.transform = 'translateY(-20px)'; }, 2500);
-                    setTimeout(() => { lamina.setAttribute('d', formedPath); }, 2800);
-                    setTimeout(() => { texts.moldear.classList.remove('active'); texts.enfriar.classList.add('active'); lamina.setAttribute('fill', '#3b82f6'); }, 3800);
-                    setTimeout(() => { texts.enfriar.classList.remove('active'); mold.style.transform = 'translateY(0px)'; }, 4800);
-                    setTimeout(() => { texts.expulsar.classList.add('active'); lamina.style.transform = 'translateY(-15px)'; }, 5300);
-                    setTimeout(() => { resetAnimation(); }, 6300);
-                });
-                animResetBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    resetAnimation();
-                });
-            }
-
             // --- ANIMATION: ENVASADORA ---
             const envasadoraPage = document.getElementById('page-envasadora');
             if(envasadoraPage){
@@ -734,7 +709,9 @@
                 const resetAnimation = () => {
                     bottleGroup.style.transition = 'none';
                     bottleGroup.style.transform = 'translateX(0)';
-                    bottleFill.style.height = '0'; bottleFill.style.transform = 'translateY(0)'; bottleFill.style.opacity = '0';
+                    bottleFill.style.height = '0';
+                    bottleFill.style.transform = 'translateY(0)';
+                    bottleFill.style.opacity = '0';
                     bottleCap.style.opacity = '0';
                     [stopper1, stopper2, hopperGate, screwdriver].forEach(el => el.style.transform = 'translateY(0)');
                     Object.values(texts).forEach(t => t.classList.remove('active'));
@@ -748,7 +725,11 @@
                     setTimeout(() => { bottleGroup.style.transition = 'transform 2s linear'; bottleGroup.style.transform = 'translateX(100px)'; }, 100);
                     setTimeout(() => { stopper1.style.transform = 'translateY(-15px)'; texts.llenado.classList.add('active'); }, 2100);
                     setTimeout(() => { hopperGate.style.transform = 'translateY(10px)'; }, 2500);
-                    setTimeout(() => { bottleFill.style.opacity = '1'; bottleFill.style.height = '30px'; bottleFill.style.transform = 'translateY(-30px)'; }, 2700);
+                    setTimeout(() => { 
+                        bottleFill.style.opacity = '1';
+                        bottleFill.style.height = '30px';
+                        bottleFill.style.transform = 'translateY(-30px)'; // Grow up from the bottom
+                    }, 2700);
                     setTimeout(() => { hopperGate.style.transform = 'translateY(0)'; }, 3300);
                     setTimeout(() => { stopper1.style.transform = 'translateY(0)'; texts.llenado.classList.remove('active'); }, 3700);
                     setTimeout(() => { bottleGroup.style.transform = 'translateX(215px)'; }, 4000);
@@ -781,6 +762,9 @@
                 timelineHtml += '</div>';
 
                 let tasksHtml = tasks.map(task => {
+                    if(task.isPhase) {
+                        return `<div class="gantt-task-name phase col-span-2">${task.name}</div>`;
+                    }
                     const taskStart = new Date(task.start);
                     const taskDays = task.duration;
                     const offsetDays = (taskStart - start) / (1000 * 60 * 60 * 24);
@@ -789,7 +773,7 @@
                     const width = (taskDays / totalDays) * 100;
 
                     return `
-                        <div class="gantt-task-name">${task.name}</div>
+                        <div class="gantt-task-name subtask">${task.name}</div>
                         <div class="gantt-bar-container">
                             <div class="gantt-bar ${task.status}" style="left: ${left}%; width: ${width}%;"></div>
                         </div>
@@ -800,24 +784,44 @@
             }
 
             const envasadoraTasks = [
-                { name: 'Diseño y Estructura', start: '2025-07-01', duration: 20, status: 'completed' },
-                { name: 'Montaje Mecánico', start: '2025-07-22', duration: 25, status: 'completed' },
-                { name: 'Instalación Neumática', start: '2025-08-18', duration: 19, status: 'completed' },
-                { name: 'Cableado Tablero', start: '2025-09-08', duration: 19, status: 'completed' },
-                { name: 'Programación PLC', start: '2025-09-29', duration: 26, status: 'in-progress' },
-                { name: 'Pruebas y Ajustes', start: '2025-10-27', duration: 19, status: 'pending' },
-                { name: 'Documentación Final', start: '2025-11-17', duration: 12, status: 'pending' }
+                { name: 'Fase 1: Diseño y Construcción', isPhase: true },
+                { name: 'Diseño de estructura y módulos', start: '2025-07-01', duration: 14, status: 'completed' },
+                { name: 'Construcción de cinta transportadora', start: '2025-07-15', duration: 21, status: 'completed' },
+                { name: 'Fabricación de módulos (Impresión 3D)', start: '2025-08-05', duration: 14, status: 'completed' },
+                
+                { name: 'Fase 2: Montaje y Cableado', isPhase: true },
+                { name: 'Montaje de módulos y actuadores', start: '2025-08-19', duration: 18, status: 'completed' },
+                { name: 'Instalación de circuito neumático', start: '2025-09-08', duration: 10, status: 'completed' },
+                { name: 'Diseño y montaje de tablero eléctrico', start: '2025-09-22', duration: 14, status: 'completed' },
+
+                { name: 'Fase 3: Programación e Integración', isPhase: true },
+                { name: 'Cableado de sensores y actuadores', start: '2025-10-06', duration: 10, status: 'in-progress' },
+                { name: 'Desarrollo de lógica de control (PLC)', start: '2025-10-20', duration: 12, status: 'pending' },
+                
+                { name: 'Fase 4: Pruebas y Documentación', isPhase: true },
+                { name: 'Pruebas integrales y ajuste de tiempos', start: '2025-11-03', duration: 14, status: 'pending' },
+                { name: 'Elaboración de informe técnico final', start: '2025-11-17', duration: 10, status: 'pending' },
             ];
             createGanttChart('gantt-envasadora', envasadoraTasks, '2025-07-01', '2025-11-30');
 
             const thermoTasks = [
-                { name: 'Diagnóstico y Despiece', start: '2025-07-01', duration: 18, status: 'completed' },
-                { name: 'Reparaciones Mecánicas', start: '2025-07-21', duration: 19, status: 'completed' },
-                { name: 'Diseño y Compra Comp.', start: '2025-08-11', duration: 26, status: 'completed' },
-                { name: 'Montaje Tablero Eléctrico', start: '2025-09-08', duration: 26, status: 'completed' },
-                { name: 'Pintura y Montaje Final', start: '2025-10-06', duration: 26, status: 'in-progress' },
-                { name: 'Programación y HMI', start: '2025-11-03', duration: 19, status: 'pending' },
-                { name: 'Puesta en Marcha', start: '2025-11-24', duration: 5, status: 'pending' }
+                { name: 'Fase 1: Diagnóstico y Planificación', isPhase: true },
+                { name: 'Relevamiento y diagnóstico completo', start: '2025-07-07', duration: 10, status: 'completed' },
+                { name: 'Diseño de plano eléctrico y de control', start: '2025-07-21', duration: 7, status: 'completed' },
+
+                { name: 'Fase 2: Reparación y Adquisiciones', isPhase: true },
+                { name: 'Despiece y reparaciones mecánicas', start: '2025-07-28', duration: 18, status: 'completed' },
+                { name: 'Compra de componentes eléctricos', start: '2025-08-19', duration: 14, status: 'completed' },
+                { name: 'Pintura y tratamiento de estructura', start: '2025-09-02', duration: 7, status: 'completed' },
+
+                { name: 'Fase 3: Montaje y Cableado', isPhase: true },
+                { name: 'Montaje de nuevo tablero eléctrico', start: '2025-09-09', duration: 21, status: 'completed' },
+                { name: 'Cableado de potencia y resistencias', start: '2025-09-30', duration: 10, status: 'in-progress' },
+                { name: 'Cableado de control (PLC/HMI)', start: '2025-10-14', duration: 14, status: 'in-progress' },
+                
+                { name: 'Fase 4: Puesta en Marcha', isPhase: true },
+                { name: 'Programación de secuencia y HMI', start: '2025-10-28', duration: 14, status: 'pending' },
+                { name: 'Pruebas de ciclo y calibración', start: '2025-11-11', duration: 10, status: 'pending' },
             ];
             createGanttChart('gantt-thermo', thermoTasks, '2025-07-01', '2025-11-30');
 
@@ -825,5 +829,3 @@
     </script>
 </body>
 </html>
-
-
