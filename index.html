@@ -239,7 +239,6 @@
                         <figure><h4 class="font-semibold text-center mb-2 text-sm">Tablero de Control</h4><img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
                         <figure><h4 class="font-semibold text-center mb-2 text-sm">Equipo Trabajando</h4><img src="https://i.postimg.cc/Yqtc5ycq/IMG-20250827-WA0079.jpg" alt="Equipo trabajando en la termoformadora" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
                         <figure><h4 class="font-semibold text-center mb-2 text-sm">Resistencias</h4><img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="col-span-2"><h4 class="font-semibold text-center mb-2 text-sm">Componentes Neumáticos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
                     </div>
                 </div>
             </section>
@@ -480,28 +479,37 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- GLOBAL SETUP ---
-            const teamMembers = [ 'Alcon Brian', 'Abdala Abril', 'Ratti Tomás', 'Gimenez Brian', 'Gozainy Joaquin', 'Cubilla Benjamín', 'Jesus Castellanos', 'Guillermo Paulosky', 'Joaquin Huaman'];
+            const teamMembers = [
+                { name: 'Alcon Brian', linkedin: '#', qr: 'https://i.postimg.cc/v8n6ByYN/IMG-20251017-WA0010.jpg' },
+                { name: 'Abdala Abril', linkedin: '#', qr: 'https://i.postimg.cc/sDRGGL1z/IMG-20251017-WA0015.jpg' },
+                { name: 'Ratti Tomás', linkedin: '#', qr: 'https://i.postimg.cc/Prkvv7Jc/IMG-20251015-WA0130.jpg' },
+                { name: 'Gimenez Brian', linkedin: '#', qr: 'https://i.postimg.cc/02qKK4jH/IMG-20251017-WA0005.jpg' },
+                { name: 'Gozainy Joaquin', linkedin: '#', qr: 'https://i.postimg.cc/4NTHH0nk/IMG-20251017-WA0012.jpg' },
+                { name: 'Cubilla Benjamín', linkedin: '#', qr: 'https://i.postimg.cc/VLc00h5c/IMG-20251017-WA0013.jpg' },
+                { name: 'Jesus Castellanos', linkedin: '#', qr: 'https://i.postimg.cc/dtKZZf3f/IMG-20251017-WA0009.jpg' },
+                { name: 'Guillermo Paulosky', linkedin: '#', qr: 'https://i.postimg.cc/02qKK4rs/IMG-20251017-WA0014.jpg' },
+                { name: 'Joaquin Huaman', linkedin: '#', qr: 'https://i.postimg.cc/8PVffYc0/IMG-20251017-WA0011.jpg' }
+            ];
             
             function populateTeamCaratula(containerSelector) {
                 const container = document.querySelector(containerSelector);
                 if(container) {
-                    container.innerHTML = teamMembers.map(name => `<span>${name}</span>`).join('<span class="hidden md:inline mx-2">•</span>');
+                    container.innerHTML = teamMembers.map(member => `<span>${member.name}</span>`).join('<span class="hidden md:inline mx-2">•</span>');
                 }
             }
 
             function populateTeamFinal(containerSelector) {
                 const container = document.querySelector(containerSelector);
                 if(container) {
-                    container.innerHTML = teamMembers.map(name => `
+                    container.innerHTML = teamMembers.map(member => `
                         <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 flex items-center gap-4">
                             <i class="fas fa-user-circle text-5xl text-slate-400"></i>
                             <div class="flex-grow">
-                                <h4 class="font-bold text-gray-800">${name}</h4>
-                                <a href="#" class="text-blue-600 hover:text-blue-800 transition text-sm"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
+                                <h4 class="font-bold text-gray-800">${member.name}</h4>
+                                <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 transition text-sm"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
                             </div>
                             <div class="w-20 h-20 bg-slate-200 rounded-md flex items-center justify-center text-xs text-slate-500 text-center">
-                                <!-- Reemplazar '...' con la URL de la imagen QR -->
-                                <img src="https://placehold.co/80x80/e2e8f0/64748b?text=QR" alt="QR de ${name}" class="rounded-md">
+                                <img src="${member.qr || 'https://placehold.co/80x80/e2e8f0/64748b?text=QR'}" alt="QR de ${member.name}" class="rounded-md object-cover w-full h-full">
                             </div>
                         </div>
                     `).join('');
@@ -829,3 +837,5 @@
     </script>
 </body>
 </html>
+
+
