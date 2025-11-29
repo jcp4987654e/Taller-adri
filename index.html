@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <script>
@@ -15,9 +15,8 @@
             theme: {
                 extend: {
                     colors: {
-                        slate: { 850: '#1e293b', 900: '#0f172a' },
+                        slate: { 850: '#1e293b' },
                         blue: { 600: '#2563eb', 800: '#1e40af' },
-                        industrial: '#334155'
                     },
                     fontFamily: {
                         sans: ['Roboto', 'sans-serif'],
@@ -29,178 +28,156 @@
     </script>
 
     <style>
-        body { background-color: #f8fafc; color: #334155; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+        body { background-color: #ffffff; color: #334155; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
         
         /* Tipografía */
         h1, h2, h3, .section-header { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
         
         /* Control de Páginas (SPA) */
-        .page { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; min-height: 100vh; padding-bottom: 6rem; }
+        .page { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; min-height: 100vh; padding-bottom: 4rem; }
         .page.active { display: block; opacity: 1; }
 
         /* Navegación Interna */
         .project-header { 
-            position: sticky; top: 0; z-index: 50; 
-            background: rgba(255,255,255,0.98); border-bottom: 2px solid #e2e8f0; 
-            padding: 1.2rem 0; box-shadow: 0 4px 10px -2px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 40; 
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 2px solid #e2e8f0; 
+            padding: 1rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
         /* Tarjetas de Menú Principal */
         .menu-card { 
-            background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; 
-            transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; height: 100%;
-            display: flex; flex-direction: column; justify-content: space-between;
+            background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; 
+            transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
         }
-        .menu-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -5px rgba(0,0,0,0.1); border-color: #2563eb; }
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border-color: #2563eb; }
         
         /* Estilos Técnicos */
-        .tech-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.02); height: 100%; }
-        .tech-label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem; }
-        .tech-value { font-size: 1rem; font-weight: 500; color: #1e293b; font-family: 'Roboto', sans-serif; }
+        .tech-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; }
+        .step-card { background: white; border-left: 4px solid #cbd5e1; padding: 1rem; margin-bottom: 1rem; transition: border-color 0.3s; }
+        .step-card:hover { border-left-color: #3b82f6; background: #f0f9ff; }
 
         /* Gantt Estilo Tabla */
-        .gantt-container { border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .gantt-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
-        .gantt-table th { background: #1e293b; color: white; padding: 12px; border: 1px solid #334155; font-weight: 500; letter-spacing: 0.05em; }
-        .gantt-table td { border: 1px solid #e2e8f0; padding: 10px; position: relative; height: 45px; vertical-align: middle; }
-        .gantt-bar { 
-            position: absolute; top: 10px; bottom: 10px; border-radius: 6px; 
-            color: white; font-weight: bold; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15); letter-spacing: 0.03em;
-        }
+        .gantt-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; background: white; }
+        .gantt-table th { background: #1e293b; color: white; padding: 10px; border: 1px solid #334155; }
+        .gantt-table td { border: 1px solid #cbd5e1; padding: 8px; position: relative; height: 35px; }
+        .gantt-bar { position: absolute; top: 8px; bottom: 8px; border-radius: 4px; color: white; font-weight: bold; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+        
         .bg-p1 { background: #3b82f6; }
         .bg-p2 { background: #f97316; }
         .bg-p3 { background: #10b981; }
         .bg-p4 { background: #8b5cf6; }
 
-        /* Galería de Imágenes */
-        .img-gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 1rem; }
-        .img-gallery { height: 140px; width: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; transition: transform 0.3s, box-shadow 0.3s; cursor: zoom-in; }
-        .img-gallery:hover { transform: scale(1.03); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); z-index: 10; }
-        .img-main { width: 100%; height: 450px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; cursor: zoom-in; transition: transform 0.3s; }
+        /* Galería de Imágenes Interactiva */
+        .img-gallery { height: 120px; width: 100%; object-fit: cover; border-radius: 6px; border: 1px solid #e2e8f0; transition: transform 0.3s; cursor: zoom-in; }
+        .img-gallery:hover { transform: scale(1.05); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .img-main-container { cursor: zoom-in; }
+        .img-main { width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; transition: transform 0.3s; }
         .img-main:hover { transform: scale(1.01); }
-        .img-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: #10b981; color: white; padding: 0.6rem 1.2rem; font-weight: bold; font-size: 0.85rem; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); font-family: 'Oswald', sans-serif; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .img-badge { position: absolute; bottom: 1rem; left: 1rem; background: #10b981; color: white; padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
         
         /* Modal de Imagen */
         #image-modal { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(15, 23, 42, 0.95); z-index: 100; 
+            background: rgba(0,0,0,0.9); z-index: 100; 
             display: none; align-items: center; justify-content: center; 
-            opacity: 0; transition: opacity 0.3s ease; padding: 2rem;
+            opacity: 0; transition: opacity 0.3s ease; 
         }
         #image-modal.active { display: flex; opacity: 1; }
-        #modal-img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        #modal-close { position: absolute; top: 30px; right: 30px; color: white; font-size: 3rem; cursor: pointer; transition: color 0.2s; }
-        #modal-close:hover { color: #f87171; }
+        #modal-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #modal-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
 
-        /* Video Placeholder */
+        /* Placeholder de Video */
         .video-placeholder {
-            width: 100%; height: 280px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
-            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
-            color: white; flex-direction: column; cursor: pointer; transition: all 0.3s; 
-            border: 1px solid #334155; margin-top: 1.5rem;
-            position: relative; overflow: hidden;
+            width: 100%; height: 250px; background: #1e293b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; flex-direction: column; cursor: pointer; transition: background 0.3s; border: 1px solid #334155; margin-top: 1rem;
         }
-        .video-placeholder::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIiBvcGFjaXR5PSIwLjAyIj48cGF0aCBkPSJNMjAgMjBMMCAwMDIwIDIwTDQwIDQwVjQwTDQwIDBMMjAgMjB6IiBmaWxsPSIjZmZmZmZmIi8+PC9zdmc+');
-            opacity: 0.1;
-        }
-        .video-placeholder:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-color: #3b82f6; }
+        .video-placeholder:hover { background: #334155; }
 
-        /* Citas y Textos */
+        /* Script de Discurso */
         .speech-box {
             font-family: 'Roboto', serif;
             font-style: italic;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             line-height: 1.8;
             color: #334155;
             background-color: #fffbeb;
-            border-left: 8px solid #f59e0b;
-            padding: 3rem;
-            border-radius: 0 12px 12px 0;
+            border-left: 6px solid #f59e0b;
+            padding: 2.5rem;
+            border-radius: 0 8px 8px 0;
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        .speech-box::before { content: '"'; font-size: 6rem; color: #fcd34d; position: absolute; top: -10px; left: 10px; opacity: 0.4; font-family: serif; }
+        .speech-box::before { content: '"'; font-size: 4rem; color: #fcd34d; position: absolute; top: 0; left: 10px; opacity: 0.5; }
 
-        /* Animaciones */
-        .anim-part { transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
-        .liquid-fill { transition: height 1s ease-in-out, y 1s ease-in-out; }
+        /* Botón Fullscreen Flotante */
+        #fullscreen-fab {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
+            width: 3.5rem; height: 3.5rem; background-color: #1e293b; color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); cursor: pointer;
+            transition: all 0.3s ease; border: 2px solid #334155;
+        }
+        #fullscreen-fab:hover { background-color: #2563eb; transform: scale(1.1); border-color: #60a5fa; }
+
+        /* Estilos de Impresión */
+        @media print {
+            .no-print, #fullscreen-fab, .project-header button, .video-placeholder, #anim-start { display: none !important; }
+            body { background: white; color: black; }
+            .page { display: block !important; opacity: 1 !important; page-break-after: always; }
+            .project-header { position: static; border-bottom: 1px solid #000; }
+            .menu-card, .tech-box { box-shadow: none; border: 1px solid #ccc; }
+        }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Botón Fullscreen -->
+    <button id="fullscreen-fab" onclick="toggleFullScreen()" title="Pantalla Completa">
+        <i class="fas fa-expand text-xl" id="fs-icon"></i>
+    </button>
+
     <!-- === PÁGINA 1: HOME / MENÚ PRINCIPAL === -->
     <div id="home" class="page active">
-        <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-white">
-            <!-- Fondo Sutil -->
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
-            <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-100 rounded-full blur-[120px] opacity-60 -z-10"></div>
-            <div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-slate-100 rounded-full blur-[120px] opacity-60 -z-10"></div>
+        <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-slate-50">
+            <!-- Decoración de Fondo -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-slate-200 rounded-full blur-3xl opacity-50 -z-10"></div>
 
-            <div class="container mx-auto px-6 text-center z-10 py-12">
-                <img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo" class="h-28 mx-auto mb-10 drop-shadow-sm">
+            <div class="container mx-auto px-6 text-center z-10">
+                <img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo" class="h-24 mx-auto mb-10">
                 
-                <span class="inline-block py-2 px-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold tracking-[0.2em] mb-8 border border-slate-200 shadow-sm">PRÁCTICAS PROFESIONALIZANTES 2025</span>
+                <span class="inline-block py-1 px-4 rounded-full bg-slate-200 text-slate-700 text-sm font-bold tracking-widest mb-6 border border-slate-300">DEFENSA DE PROYECTO FINAL 2025</span>
                 
-                <h1 class="text-6xl md:text-8xl font-bold text-slate-900 mb-8 leading-tight tracking-tight">
-                    TALLER DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">AUTOMATIZACIÓN</span>
+                <h1 class="text-6xl md:text-8xl font-bold text-slate-900 mb-6 leading-tight">
+                    TALLER DE <span class="text-blue-600">AUTOMATIZACIÓN</span>
                 </h1>
                 
-                <p class="text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mb-20 font-light leading-relaxed">
-                    Sintetizando la teoría y la práctica a través de dos desafíos industriales: <br>
-                    <strong class="text-slate-700">Recuperación de Activos</strong> y <strong class="text-slate-700">Prototipado Modular</strong>.
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-16 font-light">
+                    Dos desafíos paralelos: La <strong>Recuperación de Activos Industriales</strong> y el <strong>Prototipado Modular</strong>.
                 </p>
 
                 <!-- Menú de Selección -->
-                <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     <!-- Botón Termoformadora -->
-                    <div onclick="navTo('termo')" class="menu-card border-t-8 border-t-blue-600 group">
-                        <div>
-                            <div class="flex justify-between items-start mb-6">
-                                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-blue-100">Proyecto 01</span>
-                                <i class="fas fa-temperature-high text-4xl text-slate-200 group-hover:text-blue-500 transition-colors"></i>
-                            </div>
-                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-blue-600 transition">Termoformadora</h3>
-                            <p class="text-slate-500 text-base leading-relaxed mb-6">Reconstrucción integral de maquinaria obsoleta. Ingeniería inversa, PLC Kinco y Seguridad Bimanual.</p>
-                        </div>
-                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-blue-600 font-bold text-sm tracking-wide">
-                            <span>EXPLORAR CASO</span>
-                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
-                        </div>
+                    <div onclick="navTo('termo')" class="menu-card border-t-4 border-t-blue-600 group">
+                        <div class="absolute right-4 top-4 text-slate-200 group-hover:text-blue-100 transition text-6xl"><i class="fas fa-temperature-high"></i></div>
+                        <h3 class="text-2xl text-slate-800 font-bold mb-2 group-hover:text-blue-600 transition">Termoformadora</h3>
+                        <p class="text-slate-500 text-sm mb-4">Ingeniería inversa, PLC Kinco y Seguridad Bimanual.</p>
+                        <span class="text-blue-600 font-bold text-sm border-b-2 border-transparent group-hover:border-blue-600">VER PROYECTO &rarr;</span>
                     </div>
 
                     <!-- Botón Envasadora -->
-                    <div onclick="navTo('envasadora')" class="menu-card border-t-8 border-t-orange-500 group">
-                        <div>
-                            <div class="flex justify-between items-start mb-6">
-                                <span class="bg-orange-50 text-orange-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-orange-100">Proyecto 02</span>
-                                <i class="fas fa-conveyor-belt text-4xl text-slate-200 group-hover:text-orange-500 transition-colors"></i>
-                            </div>
-                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-orange-500 transition">Línea de Envasado</h3>
-                            <p class="text-slate-500 text-base leading-relaxed mb-6">Diseño desde cero de sistema modular. Cinta transportadora, Neumática y Lógica Secuencial.</p>
-                        </div>
-                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-orange-600 font-bold text-sm tracking-wide">
-                            <span>EXPLORAR CASO</span>
-                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
-                        </div>
+                    <div onclick="navTo('envasadora')" class="menu-card border-t-4 border-t-orange-500 group">
+                        <div class="absolute right-4 top-4 text-slate-200 group-hover:text-orange-100 transition text-6xl"><i class="fas fa-conveyor-belt"></i></div>
+                        <h3 class="text-2xl text-slate-800 font-bold mb-2 group-hover:text-orange-500 transition">Línea de Envasado</h3>
+                        <p class="text-slate-500 text-sm mb-4">Diseño desde cero, Neumática y Lógica Secuencial.</p>
+                        <span class="text-orange-500 font-bold text-sm border-b-2 border-transparent group-hover:border-orange-500">VER PROYECTO &rarr;</span>
                     </div>
 
                     <!-- Botón Conclusiones -->
-                    <div onclick="navTo('conclusiones')" class="menu-card border-t-8 border-t-green-500 group">
-                        <div>
-                            <div class="flex justify-between items-start mb-6">
-                                <span class="bg-green-50 text-green-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-green-100">Cierre</span>
-                                <i class="fas fa-users-gear text-4xl text-slate-200 group-hover:text-green-500 transition-colors"></i>
-                            </div>
-                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-green-600 transition">Conclusiones</h3>
-                            <p class="text-slate-500 text-base leading-relaxed mb-6">Análisis de resultados, Habilidades Técnicas/Blandas adquiridas y Equipo de Trabajo.</p>
-                        </div>
-                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-green-600 font-bold text-sm tracking-wide">
-                            <span>VER REFLEXIÓN</span>
-                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
-                        </div>
+                    <div onclick="navTo('conclusiones')" class="menu-card border-t-4 border-t-green-500 group">
+                        <div class="absolute right-4 top-4 text-slate-200 group-hover:text-green-100 transition text-6xl"><i class="fas fa-users"></i></div>
+                        <h3 class="text-2xl text-slate-800 font-bold mb-2 group-hover:text-green-600 transition">Conclusiones</h3>
+                        <p class="text-slate-500 text-sm mb-4">Equipo de trabajo, Habilidades adquiridas y Cierre.</p>
+                        <span class="text-green-600 font-bold text-sm border-b-2 border-transparent group-hover:border-green-600">VER CIERRE &rarr;</span>
                     </div>
                 </div>
             </div>
@@ -212,191 +189,156 @@
         <!-- Header Sticky -->
         <div class="project-header">
             <div class="container mx-auto px-6 flex justify-between items-center">
-                <div class="flex items-center gap-6">
-                    <button onclick="navTo('home')" class="text-slate-400 hover:text-blue-700 transition text-sm font-bold flex items-center gap-2 border px-3 py-1.5 rounded hover:bg-slate-50">
-                        <i class="fas fa-arrow-left"></i> MENÚ
+                <div class="flex items-center gap-4">
+                    <button onclick="navTo('home')" class="text-slate-400 hover:text-blue-700 transition text-lg font-bold flex items-center gap-2 group">
+                        <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> MENÚ
                     </button>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 leading-none">TERMOFORMADORA</h2>
-                        <span class="text-xs text-slate-500 font-bold uppercase tracking-wide">Recuperación de Activos</span>
-                    </div>
+                    <div class="h-6 w-px bg-slate-300 mx-2"></div>
+                    <h2 class="text-xl font-bold text-slate-800">TERMOFORMADORA</h2>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold border border-green-200 shadow-sm flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> OPERATIVO
-                    </span>
-                </div>
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded text-sm font-bold border border-green-200 uppercase flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Estado: Finalizado
+                </span>
             </div>
         </div>
 
-        <div class="container mx-auto px-6 py-12 max-w-7xl">
-            <!-- Sección 1: Introducción y Ficha Técnica -->
-            <div class="grid lg:grid-cols-12 gap-12 mb-20 items-start">
-                
-                <!-- Columna Izquierda: Texto -->
-                <div class="lg:col-span-5 space-y-8">
-                    <div>
-                        <span class="text-blue-600 font-bold text-sm tracking-widest uppercase mb-2 block">El Desafío Técnico</span>
-                        <h3 class="text-4xl font-bold text-slate-900 mb-6 leading-tight">Reconstrucción Industrial & Ingeniería Inversa</h3>
-                        <p class="text-slate-600 text-lg leading-relaxed text-justify">
-                            El proyecto consistió en la <strong>recuperación integral</strong> de una célula de moldeo fuera de servicio y sin documentación. El equipo realizó un relevamiento exhaustivo, diseñó piezas mecánicas faltantes y migró el sistema de control obsoleto a tecnología PLC moderna.
-                        </p>
-                    </div>
-
-                    <!-- Ficha Técnica -->
-                    <div class="tech-box">
-                        <h4 class="font-bold text-slate-800 border-b border-slate-200 pb-3 mb-4 text-sm uppercase tracking-wide flex items-center gap-2">
-                            <i class="fas fa-microchip text-blue-500"></i> Especificaciones del Sistema
-                        </h4>
-                        <div class="grid grid-cols-2 gap-y-6 gap-x-4">
-                            <div>
-                                <span class="tech-label">PLC Central</span>
-                                <div class="tech-value">Kinco K3 CPU304EX</div>
-                            </div>
-                            <div>
-                                <span class="tech-label">Interfaz HMI</span>
-                                <div class="tech-value">Array SH-300</div>
-                            </div>
-                            <div>
-                                <span class="tech-label">Bomba de Vacío</span>
-                                <div class="tech-value">Motor Eberle 0.37kW</div>
-                            </div>
-                            <div>
-                                <span class="tech-label">Calefacción</span>
-                                <div class="tech-value">Resistencias IR + SSR</div>
-                            </div>
+        <div class="container mx-auto px-6 py-12">
+            <!-- Introducción y Pilares -->
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-blue-600 pl-3">Reconstrucción Industrial</h3>
+                    <p class="text-slate-600 mb-6 text-justify leading-relaxed">
+                        Este proyecto se centró en la <strong>recuperación de activos</strong>. La máquina se encontraba fuera de servicio y sin planos. El trabajo consistió en relevar el funcionamiento, diseñar piezas mecánicas faltantes y migrar el control obsoleto a un sistema moderno con PLC y HMI.
+                    </p>
+                    
+                    <h4 class="font-bold text-slate-800 mb-3 uppercase text-sm tracking-wide">Pilares del Proyecto</h4>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                            <i class="fas fa-search text-blue-500 mb-1"></i>
+                            <h5 class="font-bold text-sm text-slate-700">Ingeniería Inversa</h5>
+                            <p class="text-xs text-slate-500">Relevamiento sin documentación original.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                            <i class="fas fa-microchip text-blue-500 mb-1"></i>
+                            <h5 class="font-bold text-sm text-slate-700">Automatización</h5>
+                            <p class="text-xs text-slate-500">Migración de relés a PLC Kinco K3.</p>
                         </div>
                     </div>
 
-                    <!-- Aplicaciones -->
-                    <div class="bg-blue-50 border border-blue-100 p-5 rounded-lg">
-                        <h5 class="text-blue-800 font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                            <i class="fas fa-industry"></i> Aplicaciones Industriales
-                        </h5>
-                        <ul class="space-y-2 text-sm text-slate-700">
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Farmacéutica:</strong> Blísters para medicamentos.</li>
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Alimenticia:</strong> Bandejas descartables y envases PET.</li>
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Marketing:</strong> Expositores y cartelería 3D.</li>
+                    <div class="bg-blue-50 p-4 rounded border border-blue-200 text-sm text-slate-700">
+                        <strong><i class="fas fa-industry text-blue-600"></i> Aplicaciones Industriales:</strong>
+                        <ul class="list-disc list-inside mt-2 text-slate-600">
+                            <li><strong>Farmacéutica:</strong> Blísters para medicamentos.</li>
+                            <li><strong>Alimenticia:</strong> Bandejas descartables y envases PET.</li>
+                            <li><strong>Publicidad:</strong> Moldes y cartelería 3D.</li>
                         </ul>
                     </div>
                 </div>
-
-                <!-- Columna Derecha: Multimedia -->
-                <div class="lg:col-span-7 space-y-6">
-                    <!-- Imagen Principal -->
-                    <div class="relative group cursor-zoom-in" onclick="openModal(this.querySelector('img').src)">
+                <div>
+                    <!-- Galería de Imágenes Termoformadora -->
+                    <div class="img-main-container mb-4" onclick="openModal(this.querySelector('img').src)">
                         <img src="https://i.postimg.cc/fy2wJJvk/IMG-20250917-WA0026-1.jpg" alt="Termoformadora Finalizada" class="img-main">
-                        <div class="img-badge">
-                            <i class="fas fa-check-circle text-lg"></i>
-                            <span>PROYECTO FINALIZADO</span>
-                        </div>
-                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl"></div>
+                        <div class="img-badge"><i class="fas fa-check-circle mr-2"></i>PROYECTO TERMINADO</div>
                     </div>
                     
-                    <!-- Galería -->
-                    <div class="img-gallery-container">
+                    <div class="grid grid-cols-3 gap-2 mb-4">
                         <img src="https://i.postimg.cc/P5FMMNzH/IMG-20251016-WA0185.jpg" class="img-gallery" title="Estado Original" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="img-gallery" title="Nuevo Tablero" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="img-gallery" title="Resistencias" onclick="openModal(this.src)">
                     </div>
                     
-                    <!-- Video -->
+                    <!-- Placeholder de Video -->
                     <div class="video-placeholder group">
-                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-white/20">
-                            <i class="fas fa-play text-2xl text-white ml-1"></i>
+                        <i class="fas fa-play-circle text-6xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-bold">VIDEO DE FUNCIONAMIENTO</span>
+                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide">Clic para reproducir evidencia</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ficha Técnica y Funcionamiento -->
+            <div class="mb-16">
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div class="tech-box">
+                        <h4 class="font-bold text-slate-700 border-b border-slate-200 pb-2 mb-3 text-sm uppercase">Ficha Técnica</h4>
+                        <ul class="text-sm space-y-3">
+                            <li class="flex justify-between border-b border-slate-50 pb-2"><span class="text-slate-500">PLC Central:</span> <span class="font-bold font-mono">Kinco K3 CPU304EX</span></li>
+                            <li class="flex justify-between border-b border-slate-50 pb-2"><span class="text-slate-500">Interfaz HMI:</span> <span class="font-bold font-mono">Array SH-300</span></li>
+                            <li class="flex justify-between border-b border-slate-50 pb-2"><span class="text-slate-500">Bomba de Vacío:</span> <span class="font-bold font-mono">Motor Eberle 0.37kW</span></li>
+                            <li class="flex justify-between"><span class="text-slate-500">Calefacción:</span> <span class="font-bold font-mono">Resistencias IR + SSR</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Ciclo de Funcionamiento</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-sm">1</span>
+                                <div class="text-sm"><strong class="text-slate-800">Calentamiento:</strong> Resistencias IR controladas por PID.</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">2</span>
+                                <div class="text-sm"><strong class="text-slate-800">Moldeado:</strong> La matriz sube y el vacío (-0.8 bar) conforma la pieza.</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-600 font-bold flex items-center justify-center text-sm">3</span>
+                                <div class="text-sm"><strong class="text-slate-800">Enfriamiento:</strong> Ventilación forzada para solidificación rápida.</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-green-100 text-green-600 font-bold flex items-center justify-center text-sm">4</span>
+                                <div class="text-sm"><strong class="text-slate-800">Desmolde:</strong> Inyección de aire a presión positiva.</div>
+                            </div>
                         </div>
-                        <span class="font-bold tracking-wider text-sm">VIDEO DE FUNCIONAMIENTO</span>
-                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide opacity-70">Ciclo Completo de Producción</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Sección 2: Funcionamiento del Proceso -->
-            <div class="mb-20">
-                <h3 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-slate-800 pl-4">Ciclo de Producción Automatizado</h3>
-                <div class="grid md:grid-cols-4 gap-6">
-                    <div class="tech-box text-center hover:border-red-400 transition-colors">
-                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">1</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Calentamiento</h4>
-                        <p class="text-sm text-slate-500">Resistencias IR llevan el plástico a temp. vítrea. Control PID.</p>
-                    </div>
-                    <div class="tech-box text-center hover:border-blue-400 transition-colors">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">2</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Moldeado</h4>
-                        <p class="text-sm text-slate-500">La matriz sube y el vacío (-0.8 bar) fuerza al material a copiar la forma.</p>
-                    </div>
-                    <div class="tech-box text-center hover:border-cyan-400 transition-colors">
-                        <div class="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">3</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Enfriamiento</h4>
-                        <p class="text-sm text-slate-500">Ventilación forzada inmediata para solidificar y evitar deformaciones.</p>
-                    </div>
-                    <div class="tech-box text-center hover:border-green-400 transition-colors">
-                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">4</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Desmolde</h4>
-                        <p class="text-sm text-slate-500">Inyección de aire a presión positiva para liberar la pieza final.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sección 3: Seguridad -->
-            <div class="grid md:grid-cols-2 gap-8 mb-20">
-                <div class="tech-box bg-white border-l-4 border-blue-600 shadow-sm">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-3 bg-blue-50 rounded text-blue-600"><i class="fas fa-hands-holding-circle text-2xl"></i></div>
-                        <h4 class="font-bold text-slate-800 text-lg">Mando Bimanual</h4>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
-                        Lógica de seguridad programada en el PLC para la protección del operador. Se exige presionar <strong>dos pulsadores simultáneamente</strong> (con una diferencia menor a 0.5s) para iniciar el ciclo.
+            <!-- Seguridad -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="tech-box bg-white border-l-4 border-blue-600">
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-hands-holding-circle text-blue-600"></i> Mando Bimanual</h4>
+                    <p class="text-sm text-slate-600 mb-3">
+                        Lógica de seguridad programada en el PLC. El operador debe presionar <strong>dos pulsadores simultáneamente</strong> (<0.5s) para iniciar el ciclo, garantizando que sus manos estén fuera de la zona de prensado.
                     </p>
-                    <div class="bg-slate-50 p-3 rounded text-xs font-mono text-slate-500 border border-slate-200">
-                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Garantiza manos fuera de la zona de prensado.
-                    </div>
                 </div>
-                <div class="tech-box bg-white border-l-4 border-red-600 shadow-sm">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-3 bg-red-50 rounded text-red-600"><i class="fas fa-power-off text-2xl"></i></div>
-                        <h4 class="font-bold text-slate-800 text-lg">Parada de Emergencia</h4>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
-                        Normalización bajo estándar ISO 13850. Pulsador tipo hongo con enclavamiento mecánico accesible.
+                <div class="tech-box bg-white border-l-4 border-red-600">
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-power-off text-red-600"></i> Parada de Emergencia</h4>
+                    <p class="text-sm text-slate-600 mb-3">
+                        Implementación de pulsador tipo hongo con enclavamiento mecánico (ISO 13850). Realiza un corte físico de la potencia mediante contactores, deteniendo motores y resistencias al instante.
                     </p>
-                    <div class="bg-slate-50 p-3 rounded text-xs font-mono text-slate-500 border border-slate-200">
-                        <i class="fas fa-bolt text-amber-500 mr-2"></i>Corte físico de potencia (Motores + Calor).
-                    </div>
                 </div>
             </div>
 
-            <!-- Sección 4: Gantt -->
+            <!-- Gantt -->
             <div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-2">Cronograma de Ejecución Real</h3>
-                <div class="gantt-container">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6">Planificación del Proyecto</h3>
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="gantt-table">
                         <thead>
                             <tr>
-                                <th class="w-1/4 text-left pl-4">Fase / Tarea</th>
+                                <th class="w-1/4 text-left pl-4">Fase</th>
                                 <th>Julio</th><th>Agosto</th><th>Septiembre</th><th>Octubre</th><th>Noviembre</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">1. Diagnóstico y Planos</td>
+                                <td class="font-bold text-slate-700 pl-4">1. Diagnóstico</td>
                                 <td colspan="5"><div class="gantt-bar bg-p1" style="left: 0%; width: 15%;">Relevamiento</div></td>
                             </tr>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">2. Reparación Mecánica</td>
+                                <td class="font-bold text-slate-700 pl-4">2. Reparación Mec.</td>
                                 <td colspan="5"><div class="gantt-bar bg-p1" style="left: 10%; width: 25%;">Tornería</div></td>
                             </tr>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">3. Montaje Tablero</td>
-                                <td colspan="5"><div class="gantt-bar bg-p2" style="left: 30%; width: 20%;">Cableado</div></td>
+                                <td class="font-bold text-slate-700 pl-4">3. Tablero</td>
+                                <td colspan="5"><div class="gantt-bar bg-p2" style="left: 30%; width: 20%;">Montaje</div></td>
                             </tr>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">4. Programación PLC</td>
-                                <td colspan="5"><div class="gantt-bar bg-p3" style="left: 50%; width: 30%;">Lógica Ladder</div></td>
+                                <td class="font-bold text-slate-700 pl-4">4. Programación</td>
+                                <td colspan="5"><div class="gantt-bar bg-p3" style="left: 50%; width: 30%;">Lógica PLC</div></td>
                             </tr>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">5. Pruebas Finales</td>
+                                <td class="font-bold text-slate-700 pl-4">5. Pruebas</td>
                                 <td colspan="5"><div class="gantt-bar bg-p4" style="left: 80%; width: 20%;">Ajustes</div></td>
                             </tr>
                         </tbody>
@@ -411,72 +353,45 @@
         <!-- Header Sticky -->
         <div class="project-header">
             <div class="container mx-auto px-6 flex justify-between items-center">
-                <div class="flex items-center gap-6">
-                    <button onclick="navTo('home')" class="text-slate-400 hover:text-orange-600 transition text-sm font-bold flex items-center gap-2 border px-3 py-1.5 rounded hover:bg-slate-50">
-                        <i class="fas fa-arrow-left"></i> MENÚ
+                <div class="flex items-center gap-4">
+                    <button onclick="navTo('home')" class="text-slate-400 hover:text-orange-600 transition text-lg font-bold flex items-center gap-2 group">
+                        <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> VOLVER AL MENÚ
                     </button>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 leading-none">LÍNEA DE ENVASADO</h2>
-                        <span class="text-xs text-slate-500 font-bold uppercase tracking-wide">Prototipado Modular</span>
-                    </div>
+                    <div class="h-6 w-px bg-slate-300 mx-2"></div>
+                    <h2 class="text-xl font-bold text-slate-800">LÍNEA DE ENVASADO</h2>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-xs font-bold border border-blue-200 shadow-sm flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> PROTOTIPO OK
-                    </span>
-                </div>
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm font-bold border border-blue-200 uppercase flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Estado: Finalizado
+                </span>
             </div>
         </div>
 
         <div class="container mx-auto px-6 py-12 max-w-7xl">
-            <!-- Sección 1: Introducción y Ficha Técnica -->
-            <div class="grid lg:grid-cols-12 gap-12 mb-20 items-start">
-                
-                <div class="lg:col-span-5 space-y-8">
-                    <div>
-                        <span class="text-orange-600 font-bold text-sm tracking-widest uppercase mb-2 block">Desarrollo desde Cero</span>
-                        <h3 class="text-4xl font-bold text-slate-900 mb-6 leading-tight">Diseño Modular Integral</h3>
-                        <p class="text-slate-600 text-lg leading-relaxed text-justify">
-                            Se diseñó y construyó una cinta transportadora inteligente capaz de sincronizar 3 estaciones de trabajo: <strong>Llenado, Taponado y Cierre</strong>. Se combinó impresión 3D para la matricería personalizada con neumática industrial para la actuación.
-                        </p>
+            <!-- Introducción y Ficha -->
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-orange-500 pl-3">Diseño Modular Integral</h3>
+                    <p class="text-slate-600 mb-6 text-justify leading-relaxed">
+                        Desarrollo desde cero. Se diseñó una cinta transportadora inteligente que sincroniza 3 estaciones de trabajo: <strong>Llenado, Taponado y Cierre</strong>. Se utilizó impresión 3D para la matricería personalizada con neumática industrial para la actuación.
+                    </p>
+                    
+                    <div class="tech-box mb-6 bg-orange-50 border-orange-200">
+                        <h4 class="font-bold text-orange-800 border-b border-orange-200 pb-2 mb-3 text-sm uppercase">Arquitectura de Control & Actuadores</h4>
+                        <ul class="text-sm space-y-2">
+                            <li class="flex justify-between"><span class="text-slate-500">PLC:</span> <span class="font-bold">Siemens S7-1200</span></li>
+                            <li class="flex justify-between"><span class="text-slate-500">Actuadores:</span> <span class="font-bold">Cilindros + Electroválvulas 5/2</span></li>
+                            <li class="flex justify-between"><span class="text-slate-500">Cinta:</span> <span class="font-bold">Modular plástica + Motor DC</span></li>
+                            <li class="flex justify-between"><span class="text-slate-500">Alimentación:</span> <span class="font-bold">Gravedad (Tobogán)</span></li>
+                        </ul>
                     </div>
 
-                    <div class="tech-box bg-orange-50 border-orange-200">
-                        <h4 class="font-bold text-orange-800 border-b border-orange-200 pb-3 mb-4 text-sm uppercase tracking-wide flex items-center gap-2">
-                            <i class="fas fa-cogs"></i> Arquitectura de Control
-                        </h4>
-                        <div class="grid grid-cols-1 gap-y-4">
-                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
-                                <span class="tech-label text-orange-900/60">PLC</span>
-                                <div class="tech-value">Siemens S7-1200</div>
-                            </div>
-                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
-                                <span class="tech-label text-orange-900/60">Actuadores</span>
-                                <div class="tech-value">Cilindros + Válvulas 5/2</div>
-                            </div>
-                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
-                                <span class="tech-label text-orange-900/60">Motor Cinta</span>
-                                <div class="tech-value">DC 12V con Reductor</div>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="tech-label text-orange-900/60">Posicionamiento</span>
-                                <div class="tech-value">Topes Neumáticos</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
-                        <h5 class="text-slate-800 font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                            <i class="fas fa-boxes-packing text-orange-500"></i> Aplicaciones
-                        </h5>
-                        <p class="text-sm text-slate-600">Líneas de llenado flexibles para PyMEs (Química, Bebidas, Farmacéutica).</p>
+                    <div class="bg-blue-50 p-4 rounded border border-blue-200 text-sm text-slate-700">
+                        <strong><i class="fas fa-boxes-packing text-orange-600"></i> Aplicaciones:</strong> Líneas de llenado para pymes (química, farmacéutica, bebidas).
                     </div>
                 </div>
-
-                <div class="lg:col-span-7 space-y-6">
-                    <!-- Imagen Principal Envasadora -->
-                    <div class="relative group cursor-zoom-in" onclick="openModal(this.querySelector('img').src)">
+                <div>
+                    <!-- Galería de Imágenes Envasadora -->
+                    <div class="img-main-container mb-4" onclick="openModal(this.querySelector('img').src)">
                         <img src="https://i.postimg.cc/8znbbsdR/IMG-20251015-WA0031.jpg" alt="Envasadora Finalizada" class="img-main">
                         <div class="img-badge bg-orange-500">
                             <i class="fas fa-check-circle text-lg"></i>
@@ -485,31 +400,29 @@
                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl"></div>
                     </div>
                     
-                    <div class="img-gallery-container">
+                    <div class="grid grid-cols-3 gap-2 mb-4">
                         <img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="img-gallery" title="Montaje Cinta" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="img-gallery" title="Ajustes Mecánicos" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/BbYqXXC5/IMG-20250823-WA0086.jpg" class="img-gallery" title="Diseño CAD" onclick="openModal(this.src)">
                     </div>
                     
-                    <!-- Video Placeholder -->
+                    <!-- Placeholder de Video Envasadora -->
                     <div class="video-placeholder group">
-                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-white/20">
-                            <i class="fas fa-play text-2xl text-white ml-1"></i>
-                        </div>
-                        <span class="font-bold tracking-wider text-sm">VIDEO DE FUNCIONAMIENTO</span>
-                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide opacity-70">Secuencia de Llenado y Cierre</span>
+                        <i class="fas fa-play-circle text-6xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-bold">VIDEO DE FUNCIONAMIENTO</span>
+                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide">Clic para reproducir evidencia</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Sección 2: Animación y Proceso -->
-            <div class="mb-20">
-                <h3 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-orange-500 pl-4">Lógica del Proceso (Secuencia PLC)</h3>
+            <!-- Proceso de Envasado Detallado -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6">Proceso de Envasado y Lógica (PLC)</h3>
                 
                 <!-- Animación SVG -->
                 <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 mb-8 relative">
                     <button onclick="runPackingAnimation()" class="absolute top-6 right-6 bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-700 transition shadow-sm z-10 flex items-center gap-2">
-                        <i class="fas fa-play text-xs"></i> SIMULAR
+                        <i class="fas fa-play text-xs"></i> SIMULAR CICLO
                     </button>
                     
                     <div class="relative h-[250px] overflow-hidden rounded-lg bg-slate-50 border border-slate-100">
@@ -552,70 +465,64 @@
                 </div>
 
                 <div class="grid md:grid-cols-4 gap-4">
-                    <div class="tech-box p-4 text-center border-l-4 border-slate-300">
-                        <span class="text-xs font-bold text-slate-400 uppercase">Paso 1</span>
+                    <div class="step-card">
+                        <span class="text-xs font-bold text-orange-500 uppercase">Paso 1</span>
                         <h4 class="font-bold text-slate-800">Transporte</h4>
-                        <p class="text-xs text-slate-600 mt-2">Avance hasta tope neumático.</p>
+                        <p class="text-xs text-slate-600 mt-2">La cinta avanza hasta que la botella es detenida por un tope neumático en la posición de llenado.</p>
                     </div>
-                    <div class="tech-box p-4 text-center border-l-4 border-blue-400">
-                        <span class="text-xs font-bold text-blue-500 uppercase">Paso 2</span>
+                    <div class="step-card">
+                        <span class="text-xs font-bold text-orange-500 uppercase">Paso 2</span>
                         <h4 class="font-bold text-slate-800">Dosificación</h4>
-                        <p class="text-xs text-slate-600 mt-2">Apertura temporizada de tolva.</p>
+                        <p class="text-xs text-slate-600 mt-2">Se detiene la cinta. El cilindro abre la tolva por tiempo temporizado en el PLC.</p>
                     </div>
-                    <div class="tech-box p-4 text-center border-l-4 border-orange-400">
+                    <div class="step-card">
                         <span class="text-xs font-bold text-orange-500 uppercase">Paso 3</span>
                         <h4 class="font-bold text-slate-800">Taponado</h4>
-                        <p class="text-xs text-slate-600 mt-2">Arrastre de tapa por gravedad.</p>
+                        <p class="text-xs text-slate-600 mt-2">La botella avanza y arrastra la tapa desde el tobogán por gravedad (diseño mecánico).</p>
                     </div>
-                    <div class="tech-box p-4 text-center border-l-4 border-green-400">
-                        <span class="text-xs font-bold text-green-500 uppercase">Paso 4</span>
+                    <div class="step-card">
+                        <span class="text-xs font-bold text-orange-500 uppercase">Paso 4</span>
                         <h4 class="font-bold text-slate-800">Cierre</h4>
-                        <p class="text-xs text-slate-600 mt-2">Descenso y torque neumático.</p>
+                        <p class="text-xs text-slate-600 mt-2">El cilindro baja el atornillador neumático que aplica el torque final a la tapa.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Sección 3: Seguridad -->
-            <div class="grid md:grid-cols-2 gap-8 mb-20">
-                <div class="tech-box bg-white border-l-4 border-amber-500 shadow-sm">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-3 bg-amber-50 rounded text-amber-600"><i class="fas fa-wind text-2xl"></i></div>
-                        <h4 class="font-bold text-slate-800 text-lg">Despresurización</h4>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
-                        Implementación de <strong>Válvula de Escape Rápido (3/2 vías)</strong>. Ante una parada de emergencia, libera toda la presión del circuito (6 bar a 0 bar) evitando movimientos residuales peligrosos de los cilindros.
+            <!-- Seguridad -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="tech-box bg-white border-l-4 border-amber-500">
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-wind text-amber-500"></i> Despresurización</h4>
+                    <p class="text-sm text-slate-600">
+                        Implementación de <strong>Válvula de Escape Rápido</strong>. Ante una parada de emergencia, libera toda la presión del circuito (6 bar a 0 bar) evitando movimientos residuales peligrosos.
                     </p>
                 </div>
-                <div class="tech-box bg-white border-l-4 border-amber-500 shadow-sm">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-3 bg-amber-50 rounded text-amber-600"><i class="fas fa-shield-alt text-2xl"></i></div>
-                        <h4 class="font-bold text-slate-800 text-lg">Protecciones Físicas</h4>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
-                        Diseño e instalación de <strong>guardas de policarbonato</strong> en la zona de atornillado para evitar el acceso manual durante el giro del actuador.
+                <div class="tech-box bg-white border-l-4 border-amber-500">
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-shield-alt text-amber-500"></i> Protecciones Físicas</h4>
+                    <p class="text-sm text-slate-600">
+                        Diseño de <strong>guardas de policarbonato</strong> en la zona de atornillado para evitar atrapamientos manuales durante el giro del actuador.
                     </p>
                 </div>
             </div>
 
-            <!-- Sección 4: Gantt -->
+            <!-- Gantt -->
             <div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-2">Cronograma de Ejecución Real</h3>
-                <div class="gantt-container">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6">Planificación de Tareas (A-H)</h3>
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="gantt-table">
                         <thead>
                             <tr>
-                                <th class="w-1/4 text-left pl-4">Fase / Tarea</th>
+                                <th class="w-1/4 text-left pl-4">Tarea</th>
                                 <th>Julio</th><th>Agosto</th><th>Septiembre</th><th>Octubre</th><th>Noviembre</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">A. Armado Estructura</td>
-                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 0%; width: 20%;">Cinta</div></td>
+                                <td class="font-bold text-slate-700 pl-4">A. Armado Cinta</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 0%; width: 20%;">Estructura</div></td>
                             </tr>
                             <tr>
-                                <td class="font-bold text-slate-700 pl-4">B. Diseño CAD</td>
-                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 15%; width: 15%;">Modelado</div></td>
+                                <td class="font-bold text-slate-700 pl-4">B. Diseño Base</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 15%; width: 15%;">CAD</div></td>
                             </tr>
                             <tr>
                                 <td class="font-bold text-slate-700 pl-4">C. Impresión 3D</td>
@@ -670,8 +577,8 @@
                 </div>
             </div>
 
-            <!-- Palabras de Cierre (Script) -->
-            <div class="mb-20 speech-box">
+            <!-- Palabras de Cierre (Narradas) -->
+            <div class="mb-20 speech-box shadow-sm">
                 <h4 class="font-bold text-slate-800 not-italic mb-6 text-sm uppercase tracking-wide border-b border-orange-200 pb-2 flex justify-between">
                     <span>Palabras de Cierre</span>
                     <span class="text-orange-500"><i class="fas fa-microphone"></i></span>
@@ -797,6 +704,38 @@
                 bottle.style.transform = "translate(600px, 120px)"; 
             }, 5500);
         }
+
+        // --- FULLSCREEN FUNCTION ---
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+        
+        // Add Fullscreen toggle button
+        const fsBtn = document.createElement('button');
+        fsBtn.id = "fullscreen-fab";
+        fsBtn.onclick = toggleFullScreen;
+        fsBtn.title = "Pantalla Completa";
+        fsBtn.innerHTML = '<i class="fas fa-expand text-xl" id="fs-icon"></i>';
+        document.body.appendChild(fsBtn);
+
+        document.addEventListener('fullscreenchange', () => {
+            const icon = document.getElementById('fs-icon');
+            if (document.fullscreenElement) {
+                icon.classList.remove('fa-expand');
+                icon.classList.add('fa-compress');
+            } else {
+                icon.classList.remove('fa-compress');
+                icon.classList.add('fa-expand');
+            }
+        });
     </script>
 </body>
 </html>
