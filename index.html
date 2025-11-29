@@ -3,839 +3,800 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase de Proyectos Técnicos 2025 - Versión Final</title>
+    <title>PPI 2025 - Defensa Final</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 850: '#1e293b', 900: '#0f172a' },
+                        blue: { 600: '#2563eb', 800: '#1e40af' },
+                        industrial: '#334155'
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        header: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root { --primary-blue: #0052CC; --dark-text: #172B4D; --light-text: #6B778C; --background: #FFFFFF; }
-        html { scroll-padding-top: 80px; }
-        body { font-family: 'Lato', sans-serif; background-color: #F4F5F7; color: var(--dark-text); }
-        .page { display: none; }
-        .page.active { display: block; }
-        header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #dfe1e6; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.75rem; letter-spacing: -0.5px; color: var(--dark-text); }
-        .section-subtitle { font-family: 'Lato', sans-serif; color: var(--light-text); max-width: 800px; margin-left: auto; margin-right: auto; }
-        .card { background-color: var(--background); border: 1px solid #dfe1e6; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); transition: all 0.3s ease; }
-        .card:hover { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07); transform: translateY(-4px); }
-        body.presentation-mode { overflow: hidden; }
-        .presentation-page body.presentation-mode .slide { display: none; height: calc(100vh - 128px); overflow-y: auto; padding-top: 2rem; padding-bottom: 2rem; opacity: 0; transition: opacity 0.5s ease-in-out; cursor: pointer;}
-        .presentation-page body.presentation-mode .slide.active-slide { display: flex; align-items: center; opacity: 1; }
-        .nav-item.active { color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid var(--primary-blue); }
+        body { background-color: #f8fafc; color: #334155; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
         
-        /* --- Animation Styles --- */
-        .anim-svg .movable, .anim-svg path, .anim-svg rect, .anim-svg g { transition: all 0.5s ease-in-out; }
-        .anim-svg .anim-text { opacity: 0; transition: opacity 0.4s ease-in-out; font-size: 9px; font-family: 'Lato', sans-serif; font-weight: bold; fill: #334155; }
-        .anim-svg .anim-text.active { opacity: 1; }
-        .envasadora-anim-svg #bottle-group { transition: transform 2s linear; }
-        .envasadora-anim-svg #bottle-fill-level { transition: height 0.5s ease-out, transform 0.5s ease-out, opacity 0.2s; }
-
-        .clickable-image { cursor: zoom-in; }
-        #image-modal-backdrop { transition: opacity 0.3s ease; }
-        #image-modal-content { transition: opacity 0.3s ease, transform 0.3s ease; }
-
-        /* --- Gantt Chart Styles --- */
-        .gantt-container { display: grid; grid-template-columns: 220px 1fr; gap: 5px; }
-        .gantt-timeline { display: grid; grid-template-columns: repeat(5, 1fr); text-align: center; font-size: 0.75rem; color: #64748b; padding-bottom: 5px; border-bottom: 1px solid #e2e8f0; }
-        .gantt-task-name { font-size: 0.8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding-right: 10px; }
-        .gantt-task-name.phase { font-weight: bold; color: var(--dark-text); margin-top: 10px; }
-        .gantt-task-name.subtask { padding-left: 15px; font-size: 0.75rem; }
-        .gantt-bar-container { position: relative; height: 30px; }
-        .gantt-bar { position: absolute; height: 20px; top: 5px; border-radius: 5px; opacity: 0.8; transition: all 0.3s ease; }
-        .gantt-bar.completed { background-color: #22c55e; } /* green-500 */
-        .gantt-bar.in-progress { background-color: #f59e0b; } /* amber-500 */
-        .gantt-bar.pending { background-color: #ef4444; } /* red-500 */
+        /* Tipografía */
+        h1, h2, h3, .section-header { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
         
-        /* --- Simulator Styles --- */
-        .custom-radio:checked+label { border-color: var(--primary-blue); background-color: #F4F8FF; box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2); }
+        /* Control de Páginas (SPA) */
+        .page { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; min-height: 100vh; padding-bottom: 6rem; }
+        .page.active { display: block; opacity: 1; }
+
+        /* Navegación Interna */
+        .project-header { 
+            position: sticky; top: 0; z-index: 50; 
+            background: rgba(255,255,255,0.98); border-bottom: 2px solid #e2e8f0; 
+            padding: 1.2rem 0; box-shadow: 0 4px 10px -2px rgba(0,0,0,0.05);
+        }
+
+        /* Tarjetas de Menú Principal */
+        .menu-card { 
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; 
+            transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; height: 100%;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .menu-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -5px rgba(0,0,0,0.1); border-color: #2563eb; }
+        
+        /* Estilos Técnicos */
+        .tech-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.02); height: 100%; }
+        .tech-label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem; }
+        .tech-value { font-size: 1rem; font-weight: 500; color: #1e293b; font-family: 'Roboto', sans-serif; }
+
+        /* Gantt Estilo Tabla */
+        .gantt-container { border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .gantt-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
+        .gantt-table th { background: #1e293b; color: white; padding: 12px; border: 1px solid #334155; font-weight: 500; letter-spacing: 0.05em; }
+        .gantt-table td { border: 1px solid #e2e8f0; padding: 10px; position: relative; height: 45px; vertical-align: middle; }
+        .gantt-bar { 
+            position: absolute; top: 10px; bottom: 10px; border-radius: 6px; 
+            color: white; font-weight: bold; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); letter-spacing: 0.03em;
+        }
+        .bg-p1 { background: #3b82f6; }
+        .bg-p2 { background: #f97316; }
+        .bg-p3 { background: #10b981; }
+        .bg-p4 { background: #8b5cf6; }
+
+        /* Galería de Imágenes */
+        .img-gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 1rem; }
+        .img-gallery { height: 140px; width: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; transition: transform 0.3s, box-shadow 0.3s; cursor: zoom-in; }
+        .img-gallery:hover { transform: scale(1.03); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); z-index: 10; }
+        .img-main { width: 100%; height: 450px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; cursor: zoom-in; transition: transform 0.3s; }
+        .img-main:hover { transform: scale(1.01); }
+        .img-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: #10b981; color: white; padding: 0.6rem 1.2rem; font-weight: bold; font-size: 0.85rem; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); font-family: 'Oswald', sans-serif; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        
+        /* Modal de Imagen */
+        #image-modal { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(15, 23, 42, 0.95); z-index: 100; 
+            display: none; align-items: center; justify-content: center; 
+            opacity: 0; transition: opacity 0.3s ease; padding: 2rem;
+        }
+        #image-modal.active { display: flex; opacity: 1; }
+        #modal-img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        #modal-close { position: absolute; top: 30px; right: 30px; color: white; font-size: 3rem; cursor: pointer; transition: color 0.2s; }
+        #modal-close:hover { color: #f87171; }
+
+        /* Video Placeholder */
+        .video-placeholder {
+            width: 100%; height: 280px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+            color: white; flex-direction: column; cursor: pointer; transition: all 0.3s; 
+            border: 1px solid #334155; margin-top: 1.5rem;
+            position: relative; overflow: hidden;
+        }
+        .video-placeholder::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIiBvcGFjaXR5PSIwLjAyIj48cGF0aCBkPSJNMjAgMjBMMCAwMDIwIDIwTDQwIDQwVjQwTDQwIDBMMjAgMjB6IiBmaWxsPSIjZmZmZmZmIi8+PC9zdmc+');
+            opacity: 0.1;
+        }
+        .video-placeholder:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-color: #3b82f6; }
+
+        /* Citas y Textos */
+        .speech-box {
+            font-family: 'Roboto', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #334155;
+            background-color: #fffbeb;
+            border-left: 8px solid #f59e0b;
+            padding: 3rem;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .speech-box::before { content: '"'; font-size: 6rem; color: #fcd34d; position: absolute; top: -10px; left: 10px; opacity: 0.4; font-family: serif; }
+
+        /* Animaciones */
+        .anim-part { transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
+        .liquid-fill { transition: height 1s ease-in-out, y 1s ease-in-out; }
     </style>
 </head>
+<body class="antialiased">
 
-<body>
-    <!-- PAGE 1: COVER -->
-    <div id="page-cover" class="page active">
-        <section class="bg-slate-50 min-h-screen flex flex-col justify-center">
-            <div class="container mx-auto px-6 py-12 text-center">
-                <div class="flex justify-center mb-6"><img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo Instituto 13 de Julio" class="h-24"></div>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-800" style="font-family: 'Montserrat', sans-serif;">SHOWCASE DE PROYECTOS TÉCNICOS</h1>
-                <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto my-4">Casos de Estudio en Automatización y Control Industrial del Instituto Técnico 13 de Julio.</p>
-                <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto mt-10">
-                    <button data-target="page-thermo" class="page-link bg-white p-8 rounded-lg border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
-                        <i class="fas fa-cogs text-4xl text-blue-600 mb-4 group-hover:animate-spin" style="animation-duration: 3s;"></i>
-                        <h3 class="text-2xl font-bold">Proyecto Termoformadora</h3>
-                        <p class="mt-2 text-gray-600">Análisis, reconstrucción y puesta en marcha de una Célula de Termoformado industrial.</p>
-                    </button>
-                    <button data-target="page-envasadora" class="page-link bg-white p-8 rounded-lg border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
-                        <i class="fas fa-box-open text-4xl text-blue-600 mb-4 group-hover:animate-bounce"></i>
-                        <h3 class="text-2xl font-bold">Proyecto Línea de Envasado</h3>
-                        <p class="mt-2 text-gray-600">Diseño, construcción y automatización de un sistema modular de envasado y taponado.</p>
-                    </button>
-                    <button data-target="page-conclusiones" class="page-link bg-blue-600 text-white p-8 rounded-lg border border-blue-700 shadow-sm hover:shadow-xl hover:bg-blue-700 transition-all flex flex-col items-center justify-center group">
-                        <i class="fas fa-users text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
-                        <h3 class="text-2xl font-bold">Equipo y Conclusiones</h3>
-                    </button>
-                </div>
-                 <div id="equipo-caratula" class="max-w-6xl mx-auto mt-12">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Equipo de Proyecto</h3>
-                    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-gray-700">
-                        <!-- Team members injected here -->
+    <!-- === PÁGINA 1: HOME / MENÚ PRINCIPAL === -->
+    <div id="home" class="page active">
+        <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-white">
+            <!-- Fondo Sutil -->
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+            <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-100 rounded-full blur-[120px] opacity-60 -z-10"></div>
+            <div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-slate-100 rounded-full blur-[120px] opacity-60 -z-10"></div>
+
+            <div class="container mx-auto px-6 text-center z-10 py-12">
+                <img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo" class="h-28 mx-auto mb-10 drop-shadow-sm">
+                
+                <span class="inline-block py-2 px-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold tracking-[0.2em] mb-8 border border-slate-200 shadow-sm">PRÁCTICAS PROFESIONALIZANTES 2025</span>
+                
+                <h1 class="text-6xl md:text-8xl font-bold text-slate-900 mb-8 leading-tight tracking-tight">
+                    TALLER DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">AUTOMATIZACIÓN</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mb-20 font-light leading-relaxed">
+                    Sintetizando la teoría y la práctica a través de dos desafíos industriales: <br>
+                    <strong class="text-slate-700">Recuperación de Activos</strong> y <strong class="text-slate-700">Prototipado Modular</strong>.
+                </p>
+
+                <!-- Menú de Selección -->
+                <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <!-- Botón Termoformadora -->
+                    <div onclick="navTo('termo')" class="menu-card border-t-8 border-t-blue-600 group">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-blue-100">Proyecto 01</span>
+                                <i class="fas fa-temperature-high text-4xl text-slate-200 group-hover:text-blue-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-blue-600 transition">Termoformadora</h3>
+                            <p class="text-slate-500 text-base leading-relaxed mb-6">Reconstrucción integral de maquinaria obsoleta. Ingeniería inversa, PLC Kinco y Seguridad Bimanual.</p>
+                        </div>
+                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-blue-600 font-bold text-sm tracking-wide">
+                            <span>EXPLORAR CASO</span>
+                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
+                        </div>
+                    </div>
+
+                    <!-- Botón Envasadora -->
+                    <div onclick="navTo('envasadora')" class="menu-card border-t-8 border-t-orange-500 group">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="bg-orange-50 text-orange-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-orange-100">Proyecto 02</span>
+                                <i class="fas fa-conveyor-belt text-4xl text-slate-200 group-hover:text-orange-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-orange-500 transition">Línea de Envasado</h3>
+                            <p class="text-slate-500 text-base leading-relaxed mb-6">Diseño desde cero de sistema modular. Cinta transportadora, Neumática y Lógica Secuencial.</p>
+                        </div>
+                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-orange-600 font-bold text-sm tracking-wide">
+                            <span>EXPLORAR CASO</span>
+                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
+                        </div>
+                    </div>
+
+                    <!-- Botón Conclusiones -->
+                    <div onclick="navTo('conclusiones')" class="menu-card border-t-8 border-t-green-500 group">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="bg-green-50 text-green-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-green-100">Cierre</span>
+                                <i class="fas fa-users-gear text-4xl text-slate-200 group-hover:text-green-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-3xl text-slate-900 font-bold mb-3 group-hover:text-green-600 transition">Conclusiones</h3>
+                            <p class="text-slate-500 text-base leading-relaxed mb-6">Análisis de resultados, Habilidades Técnicas/Blandas adquiridas y Equipo de Trabajo.</p>
+                        </div>
+                        <div class="mt-auto border-t border-slate-100 pt-4 flex justify-between items-center text-green-600 font-bold text-sm tracking-wide">
+                            <span>VER REFLEXIÓN</span>
+                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
+                        </div>
                     </div>
                 </div>
-                 <div class="mt-12 text-sm text-gray-500 border-t pt-4 max-w-md mx-auto">
-                    <p><strong>Materia:</strong> Máquinas, Equipos y Accionamientos</p>
-                    <p><strong>Docente:</strong> Agustín Barriga | <strong>Curso:</strong> 6° ATT</p>
-                </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    <!-- PAGE 2: TERMOFORMADORA -->
-    <div id="page-thermo" class="page presentation-page">
-        <header class="sticky top-0 z-50">
-           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                 <div class="flex items-center space-x-4">
-                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
-                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">PROYECTO TERMOFORMADORA</h1>
+    <!-- === PÁGINA 2: TERMOFORMADORA === -->
+    <div id="termo" class="page bg-white">
+        <!-- Header Sticky -->
+        <div class="project-header">
+            <div class="container mx-auto px-6 flex justify-between items-center">
+                <div class="flex items-center gap-6">
+                    <button onclick="navTo('home')" class="text-slate-400 hover:text-blue-700 transition text-sm font-bold flex items-center gap-2 border px-3 py-1.5 rounded hover:bg-slate-50">
+                        <i class="fas fa-arrow-left"></i> MENÚ
+                    </button>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 leading-none">TERMOFORMADORA</h2>
+                        <span class="text-xs text-slate-500 font-bold uppercase tracking-wide">Recuperación de Activos</span>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="presentation-mode-btn p-2 text-gray-600 hover:text-blue-600" title="Modo Presentación"><i class="play-icon fas fa-play"></i><i class="stop-icon fas fa-stop hidden"></i></button>
-                    <button class="fullscreen-btn p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
+                <div class="flex items-center gap-3">
+                    <span class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold border border-green-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> OPERATIVO
+                    </span>
                 </div>
-            </nav>
-            <div class="presentation-nav-container hidden">
-                <div class="presentation-progress-bar w-0 h-1 bg-blue-600 transition-all duration-300"></div>
-                <div class="presentation-nav-tree container mx-auto px-6 py-2 flex justify-center items-center text-xs text-gray-500 gap-x-6"></div>
             </div>
-        </header>
-        <main>
-            <section data-title="Intro" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Reconstrucción de Termoformadora</h2><p class="section-subtitle mt-4">Este proyecto documenta la ingeniería inversa, reparación, automatización y análisis de viabilidad de una termoformadora industrial para su puesta en producción.</p></div>
-                    <div class="card grid lg:grid-cols-5 gap-8 mt-12">
-                        <div class="lg:col-span-3">
-                            <h3 class="font-bold text-2xl mb-6 text-blue-600">Pilares del Proyecto</h3>
-                            <div class="space-y-6">
-                                <div class="flex items-start gap-4"><i class="fas fa-wrench text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Ingeniería Inversa y Reconstrucción</h4><p class="text-gray-600 text-sm">Se relevó y documentó la máquina sin planos originales para identificar fallas, proponer mejoras y ejecutar una reparación integral.</p></div></div>
-                                <div class="flex items-start gap-4"><i class="fas fa-robot text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Automatización y Control</h4><p class="text-gray-600 text-sm">Se implementó un sistema de control con un PLC Kinco K3, programando la lógica para un ciclo de operación automático, seguro y eficiente.</p></div></div>
-                                <div class="flex items-start gap-4"><i class="fas fa-chart-pie text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Análisis de Viabilidad</h4><p class="text-gray-600 text-sm">Se elaboró un modelo de negocio con costos de mercado (Octubre 2025, ARS), proyectando la rentabilidad para validar su potencial comercial.</p></div></div>
+        </div>
+
+        <div class="container mx-auto px-6 py-12 max-w-7xl">
+            <!-- Sección 1: Introducción y Ficha Técnica -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20 items-start">
+                
+                <!-- Columna Izquierda: Texto -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-blue-600 font-bold text-sm tracking-widest uppercase mb-2 block">El Desafío Técnico</span>
+                        <h3 class="text-4xl font-bold text-slate-900 mb-6 leading-tight">Reconstrucción Industrial & Ingeniería Inversa</h3>
+                        <p class="text-slate-600 text-lg leading-relaxed text-justify">
+                            El proyecto consistió en la <strong>recuperación integral</strong> de una célula de moldeo fuera de servicio y sin documentación. El equipo realizó un relevamiento exhaustivo, diseñó piezas mecánicas faltantes y migró el sistema de control obsoleto a tecnología PLC moderna.
+                        </p>
+                    </div>
+
+                    <!-- Ficha Técnica -->
+                    <div class="tech-box">
+                        <h4 class="font-bold text-slate-800 border-b border-slate-200 pb-3 mb-4 text-sm uppercase tracking-wide flex items-center gap-2">
+                            <i class="fas fa-microchip text-blue-500"></i> Especificaciones del Sistema
+                        </h4>
+                        <div class="grid grid-cols-2 gap-y-6 gap-x-4">
+                            <div>
+                                <span class="tech-label">PLC Central</span>
+                                <div class="tech-value">Kinco K3 CPU304EX</div>
+                            </div>
+                            <div>
+                                <span class="tech-label">Interfaz HMI</span>
+                                <div class="tech-value">Array SH-300</div>
+                            </div>
+                            <div>
+                                <span class="tech-label">Bomba de Vacío</span>
+                                <div class="tech-value">Motor Eberle 0.37kW</div>
+                            </div>
+                            <div>
+                                <span class="tech-label">Calefacción</span>
+                                <div class="tech-value">Resistencias IR + SSR</div>
                             </div>
                         </div>
-                        <div class="lg:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200 text-center">
-                             <h3 class="font-bold text-2xl mb-6 text-blue-600">Indicadores Clave</h2>
-                             <div class="space-y-4">
-                                <div><p class="text-sm text-gray-500">PRODUCCIÓN ANUAL (12HS)</p><p class="text-3xl font-bold">+735.000</p></div>
-                                <div><p class="text-sm text-gray-500">RECUPERO DE INVERSIÓN (ROI)</p><p class="text-3xl font-bold">~4 Meses</p></div>
-                                <div><p class="text-sm text-gray-500">GANANCIA NETA ANUAL</p><p class="text-3xl font-bold text-green-600">~$13.3M ARS</p></div>
-                             </div>
-                        </div>
                     </div>
-                </div>
-            </section>
-            <section data-title="Proceso" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">El Proceso de Termoformado</h2><p class="section-subtitle mt-4">El sistema transforma una lámina plástica en un producto tridimensional a través de un ciclo automatizado de 5 etapas clave.</p></div>
-                    <div class="card grid grid-cols-2 md:grid-cols-5 gap-4 text-center mt-12">
-                        <div class="p-4"><i class="fas fa-thermometer-half text-5xl text-blue-600 mb-3"></i><h4 class="font-bold">1. Calentamiento</h4><p class="text-sm text-gray-600">Resistencias eléctricas calientan la lámina (120°C-220°C) hasta que se vuelve maleable.</p></div>
-                        <div class="p-4"><i class="fas fa-object-group text-5xl text-blue-600 mb-3"></i><h4 class="font-bold">2. Moldeado</h4><p class="text-sm text-gray-600">Se aplica vacío para que la lámina se adapte a la forma del molde con alta precisión.</p></div>
-                        <div class="p-4"><i class="fas fa-snowflake text-5xl text-blue-600 mb-3"></i><h4 class="font-bold">3. Enfriamiento</h4><p class="text-sm text-gray-600">Un motoventilador enfría la pieza para que se solidifique y conserve su nueva forma.</p></div>
-                        <div class="p-4"><i class="fas fa-cut text-5xl text-blue-600 mb-3"></i><h4 class="font-bold">4. Recorte</h4><p class="text-sm text-gray-600">Se recortan los bordes y el material sobrante para obtener el producto final.</p></div>
-                        <div class="p-4"><i class="fas fa-layer-group text-5xl text-blue-600 mb-3"></i><h4 class="font-bold">5. Apilado</h4><p class="text-sm text-gray-600">Las piezas terminadas se apilan, listas para su empaque o siguiente etapa de ensamblaje.</p></div>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Análisis Técnico" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis Técnico</h2><p class="section-subtitle mt-4">Un desglose de los principales componentes eléctricos, electrónicos y mecánicos relevados en la máquina.</p></div>
-                    <div class="card mt-12 max-w-3xl mx-auto">
-                        <h3 class="text-2xl font-bold mb-6 text-center">Componentes de Control Relevados</h3>
-                         <ul class="space-y-4 text-md">
-                            <li class="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"><i class="fas fa-microchip text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">PLC:</strong> Kinco K3 CPU304EX, con 14 Entradas Digitales (Sink/Source) y 10 Salidas a Relé para la gestión de toda la lógica del ciclo.</div></li>
-                            <li class="flex items-start gap-4 p-4"><i class="fas fa-desktop text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">HMI:</strong> Array SH-300 para la interfaz de operación, configuración de parámetros y monitoreo del proceso en tiempo real.</div></li>
-                            <li class="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"><i class="fas fa-toggle-on text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">Actuadores de Potencia:</strong> 6 Relés de Estado Sólido para un control preciso (PWM) de las resistencias y 3 Contactores para el arranque de los motores.</div></li>
-                            <li class="flex items-start gap-4 p-4"><i class="fas fa-cogs text-blue-500 w-6 text-center mt-1 text-xl"></i><div><strong class="text-blue-700">Motores Trifásicos:</strong> Motor Eberle (0.37kW) para la bomba de vacío y motor Leroy-Somer (0.55kW) para el ventilador de enfriamiento.</div></li>
+
+                    <!-- Aplicaciones -->
+                    <div class="bg-blue-50 border border-blue-100 p-5 rounded-lg">
+                        <h5 class="text-blue-800 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                            <i class="fas fa-industry"></i> Aplicaciones Industriales
+                        </h5>
+                        <ul class="space-y-2 text-sm text-slate-700">
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Farmacéutica:</strong> Blísters para medicamentos.</li>
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Alimenticia:</strong> Bandejas descartables y envases PET.</li>
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i><strong>Marketing:</strong> Expositores y cartelería 3D.</li>
                         </ul>
                     </div>
                 </div>
-            </section>
-            <section data-title="Diagnóstico" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Diagnóstico y Plan de Acción</h2><p class="section-subtitle mt-4">Listado de componentes relevados que requieren reparación o reemplazo para la puesta en marcha segura y funcional de la máquina.</p></div>
-                    <div class="card grid lg:grid-cols-2 gap-8 mt-12">
-                        <div>
-                            <h3 class="text-xl font-bold mb-4 text-red-600"><i class="fas fa-exclamation-triangle mr-2"></i>Componentes Dañados</h3>
-                            <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                <li><strong>Resistencia eléctrica:</strong> Una resistencia fue removida por daño. Afecta la uniformidad del calentamiento. <strong>Acción: Reemplazar.</strong></li>
-                                <li><strong>Parrilla de molde:</strong> Rosca de sujeción barrida. Impide un ajuste firme del molde. <strong>Acción: Rehacer rosca y colocar tornillo.</strong></li>
-                                <li><strong>Burletes de sujeción:</strong> El burlete inferior está roto, causando fugas de vacío. <strong>Acción: Reemplazar (~150 cm).</strong></li>
-                                <li><strong>Conectores Racor:</strong> Conectores neumáticos para mangueras de 5/16 están dañados. <strong>Acción: Reemplazar.</strong></li>
-                            </ul>
+
+                <!-- Columna Derecha: Multimedia -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Imagen Principal -->
+                    <div class="relative group cursor-zoom-in" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.postimg.cc/fy2wJJvk/IMG-20250917-WA0026-1.jpg" alt="Termoformadora Finalizada" class="img-main">
+                        <div class="img-badge">
+                            <i class="fas fa-check-circle text-lg"></i>
+                            <span>PROYECTO FINALIZADO</span>
                         </div>
-                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                            <h3 class="text-xl font-bold mb-4 text-orange-500"><i class="fas fa-puzzle-piece mr-2"></i>Componentes Faltantes</h3>
-                             <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                <li><strong>Bujes:</strong> Ausentes en ejes de movimiento, causando fricción y desgaste. <strong>Acción: Instalar bujes adecuados.</strong></li>
-                                <li><strong>Tornillos de ajuste:</strong> Faltan tornillos para fijar la plancha base del molde. <strong>Acción: Colocar tornillería faltante.</strong></li>
-                                <li><strong>Pintura Alta Temperatura:</strong> La estructura carece de protección térmica. <strong>Acción: Aplicar esmalte para 300°C.</strong></li>
-                            </ul>
-                        </div>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl"></div>
                     </div>
-                </div>
-            </section>
-            <section data-title="Planificación" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Planificación y Organización</h2><p class="section-subtitle mt-4">El proyecto se dividió en fases claras, asignando responsabilidades específicas para asegurar un flujo de trabajo eficiente.</p></div>
-                    <div class="card mt-12">
-                        <h3 class="text-xl font-bold mb-4">Organización y Roles</h3>
-                        <p class="text-sm text-gray-600 mb-6">Para optimizar el proceso, el equipo se dividió en dos subgrupos: el **Equipo Mecánico**, encargado del diagnóstico, despiece, reparación y montaje estructural; y el **Equipo Eléctrico/Electrónico**, responsable del diseño de circuitos, cableado de tablero, programación de PLC/HMI y la integración final de los sistemas de control.</p>
-                        <div id="gantt-thermo">
-                            <!-- Gantt chart for Thermoformer will be injected here by JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Presupuesto" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis de Costos y Presupuesto</h2><p class="section-subtitle mt-4">Estimación de la inversión requerida para la reconstrucción y puesta en marcha de la termoformadora (Cifras en ARS, Oct. 2025).</p></div>
-                    <div class="card mt-12 max-w-4xl mx-auto">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <h3 class="text-xl font-bold mb-4">Componentes Eléctricos y Control</h3>
-                                <table class="w-full text-sm">
-                                    <tbody>
-                                        <tr class="border-b"><td class="py-2">PLC Kinco K3 y HMI Array SH-300</td><td class="text-right font-semibold">$1,450,000</td></tr>
-                                        <tr class="border-b bg-slate-50"><td class="py-2">6x Relés de Estado Sólido</td><td class="text-right font-semibold">$210,000</td></tr>
-                                        <tr class="border-b"><td class="py-2">3x Contactores y guardamotores</td><td class="text-right font-semibold">$185,000</td></tr>
-                                        <tr class="border-b bg-slate-50"><td class="py-2">Cableado, borneras y protecciones</td><td class="text-right font-semibold">$95,000</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-4">Componentes Mecánicos y Repuestos</h3>
-                                <table class="w-full text-sm">
-                                    <tbody>
-                                        <tr class="border-b"><td class="py-2">Resistencia Eléctrica Tubular</td><td class="text-right font-semibold">$88,000</td></tr>
-                                        <tr class="border-b bg-slate-50"><td class="py-2">Burlete de Vacío (1.5m)</td><td class="text-right font-semibold">$42,000</td></tr>
-                                        <tr class="border-b"><td class="py-2">Pintura Alta Temperatura y consumibles</td><td class="text-right font-semibold">$55,000</td></tr>
-                                        <tr class="border-b bg-slate-50"><td class="py-2">Tornillería, racores y bujes</td><td class="text-right font-semibold">$75,000</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-4 border-t text-center">
-                            <p class="text-gray-600">INVERSIÓN TOTAL ESTIMADA (CAPEX)</p>
-                            <p class="text-3xl font-bold text-blue-600">$2,200,000</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-             <section data-title="Evidencia" class="slide">
-                 <div class="container mx-auto px-6 h-full flex flex-col">
-                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Un recorrido visual por el trabajo de relevamiento, reconstrucción y el estado actual del proyecto.</p></div>
-                    <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
-                        <figure class="md:col-span-3"><h4 class="font-semibold text-center mb-2 text-sm">Estado Actual del Proyecto</h4><img src="https://i.postimg.cc/fy2wJJvk/IMG-20250917-WA0026-1.jpg" alt="Estado actual de la termoformadora" class="w-full h-64 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Máquina Original</h4><img src="https://i.postimg.cc/P5FMMNzH/IMG-20251016-WA0185.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Tablero de Control</h4><img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Equipo Trabajando</h4><img src="https://i.postimg.cc/Yqtc5ycq/IMG-20250827-WA0079.jpg" alt="Equipo trabajando en la termoformadora" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Resistencias</h4><img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Simulador" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="card">
-                        <div class="text-center"><h2 class="section-title">Simulador de Producción</h2><p class="section-subtitle mt-4">Seleccione un producto para visualizar el ciclo y su desglose económico.</p></div>
-                        <div class="grid lg:grid-cols-2 gap-12 items-start mt-12">
-                            <div>
-                                <h3 class="font-bold text-xl mb-6">1. Seleccione Producto:</h3>
-                                <div class="space-y-4">
-                                    <input type="radio" name="product" id="prod1" value="bandeja" class="hidden custom-radio" checked><label for="prod1" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://acdn-us.mitiendanube.com/stores/002/955/098/products/bandeja-371-640-0-cad03da57e4ecbcfe816800876412099-1024-1024.jpg" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Bandeja Gastronómica</h5></div></label>
-                                    <input type="radio" name="product" id="prod2" value="mascara" class="hidden custom-radio"><label for="prod2" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://http2.mlstatic.com/D_Q_NP_874796-MLA90547858442_082025-O.webp" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Máscara de Cotillón</h5></div></label>
-                                    <input type="radio" name="product" id="prod3" value="blister" class="hidden custom-radio"><label for="prod3" class="flex items-center p-4 border-2 border-slate-200 rounded-lg cursor-pointer"><img src="https://www.arapack.com/wp-content/uploads/2018/07/arapack-blister-autocierre-e1531559368209-768x282.jpg" class="w-16 h-16 object-contain"><div class="ml-4"><h5 class="font-bold text-lg">Blíster Industrial</h5></div></label>
-                                </div>
-                                <button id="start-simulation-btn" class="mt-8 w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Activar Ciclo</button>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-xl mb-6">2. Resultado del Ciclo:</h3>
-                                <div id="simulation-result" class="bg-slate-50 border border-slate-200 p-6 rounded-lg min-h-[300px] flex justify-center items-center text-center"><p class="text-gray-500">Esperando ciclo...</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Viabilidad Económica" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis de Viabilidad Económica</h2><p class="section-subtitle mt-4">Proyección financiera basada en costos de mercado actualizados a Octubre de 2025 en Argentina.</p></div>
-                    <div class="grid lg:grid-cols-3 gap-8 mt-12">
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Costos</h3><div class="space-y-3 text-gray-600"><p>Inversión Inicial (CAPEX): <span class="font-bold text-gray-800 float-right">$ 2.2M</span></p><p>Costo Op. Mensual (OPEX): <span class="font-bold text-gray-800 float-right">$ 4.1M</span></p></div></div>
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Ganancias Proyectadas</h3><div class="space-y-3 text-gray-600"><p>Ingresos Brutos Mensuales: <span class="font-bold text-gray-800 float-right">$ 5.21M</span></p><p>Ganancia Neta Mensual: <span class="font-bold text-green-600 float-right">$ 1.08M</span></p><p>Ganancia Neta Anual: <span class="font-bold text-green-600 float-right">~$13M</span></p></div></div>
-                        <div class="card"><h3 class="text-2xl font-bold mb-6">Métricas de Rentabilidad</h3><div class="space-y-4 text-center"><p class="text-gray-600">Recupero de Inversión (ROI)</p><p class="text-4xl font-bold">~2 Meses</p><hr class="my-2"><p class="text-gray-600">Punto de Equilibrio</p><p class="text-4xl font-bold">~35.000 <span class="text-lg font-normal">unid/mes</span></p></div></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <div class="presentation-arrows hidden">
-             <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
-             <button class="next-slide-btn fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
-        </div>
-    </div>
-    
-    <!-- PAGE 3: ENVASADORA -->
-    <div id="page-envasadora" class="page presentation-page">
-        <header class="sticky top-0 z-50">
-           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
-                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">PROYECTO LÍNEA DE ENVASADO</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button class="presentation-mode-btn p-2 text-gray-600 hover:text-blue-600" title="Modo Presentación"><i class="play-icon fas fa-play"></i><i class="stop-icon fas fa-stop hidden"></i></button>
-                    <button class="fullscreen-btn p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
-                </div>
-            </nav>
-            <div class="presentation-nav-container hidden">
-                <div class="presentation-progress-bar w-0 h-1 bg-blue-600 transition-all duration-300"></div>
-                <div class="presentation-nav-tree container mx-auto px-6 py-2 flex justify-center items-center text-xs text-gray-500 gap-x-6"></div>
-            </div>
-        </header>
-        <main>
-             <section data-title="Intro" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Línea de Envasado Automatizada</h2><p class="section-subtitle mt-4">Este proyecto abarca el diseño, la construcción y la automatización de un prototipo de línea de envasado modular para producciones de pequeña y mediana escala.</p></div>
-                    <div class="card grid lg:grid-cols-2 gap-8 items-center mt-12">
-                        <div>
-                            <h3 class="font-bold text-2xl mb-6 text-blue-600">Objetivos del Proyecto</h3>
-                            <ul class="space-y-4">
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i><span>Construir una cinta transportadora funcional como base del sistema.</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-cogs text-blue-500 mt-1"></i><span>Diseñar e integrar tres módulos secuenciales: Llenado, Colocación de Tapa y Cierre Hermético.</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-robot text-blue-500 mt-1"></i><span>Desarrollar un sistema de control con PLC para automatizar la secuencia completa, optimizando tiempos y asegurando repetitibilidad.</span></li>
-                            </ul>
-                        </div>
-                        <img src="https://i.postimg.cc/BbYqXXC5/IMG-20250823-WA0086.jpg" class="rounded-lg shadow-md w-full h-80 object-cover clickable-image">
-                    </div>
-                </div>
-            </section>
-            <section data-title="Proceso" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">El Proceso de Envasado</h2><p class="section-subtitle mt-4">El sistema automatiza el envasado de productos en un ciclo de 3 módulos sincronizados por un PLC.</p></div>
-                    <div class="card grid md:grid-cols-3 gap-8 mt-12">
-                        <div class="text-center">
-                            <i class="fas fa-fill-drip text-5xl text-blue-600 mb-4"></i>
-                            <h4 class="font-bold text-xl mb-2">1. Módulo de Llenado</h4>
-                            <p class="text-sm text-gray-600">Una tolva de almacenamiento dosifica el producto. Un cilindro neumático controla una compuerta, regulando el volumen de llenado por tiempo para asegurar precisión.</p>
-                        </div>
-                        <div class="text-center">
-                            <i class="fas fa-sign-in-alt text-5xl text-blue-600 mb-4" style="transform: rotate(90deg);"></i>
-                            <h4 class="font-bold text-xl mb-2">2. Módulo de Taponado</h4>
-                            <p class="text-sm text-gray-600">Un dispensador mecánico alimenta las tapas. La botella, al avanzar, arrastra una tapa por rozamiento, posicionándola correctamente sobre el cuello.</p>
-                        </div>
-                        <div class="text-center">
-                            <i class="fas fa-tools text-5xl text-blue-600 mb-4"></i>
-                            <h4 class="font-bold text-xl mb-2">3. Módulo de Cierre</h4>
-                            <p class="text-sm text-gray-600">Un destornillador neumático, montado en un cilindro de doble efecto, baja, se acopla a la tapa y realiza el apriete para un cierre hermético y uniforme.</p>
-                        </div>
-                    </div>
-                 </div>
-            </section>
-            <section data-title="Análisis Técnico" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis Funcional y Animación</h2><p class="section-subtitle mt-4">Desglose de la ingeniería de la línea de envasado y una simulación animada de su operación secuencial.</p></div>
-                    <div class="card grid lg:grid-cols-2 gap-8 items-center mt-12">
-                         <div class="space-y-4">
-                            <h3 class="text-xl font-bold mb-4">Secuencia de Actuadores (Salidas PLC)</h3>
-                            <div><h4 class="font-semibold"><i class="fas fa-ruler-horizontal text-blue-500 mr-2"></i>Transporte y Posicionamiento</h4><p class="text-sm text-gray-600"><strong>Q1:</strong> Motor de cinta. <strong>Q2, Q3, Q5:</strong> Cilindros neumáticos de parada para posicionar la botella en cada estación.</p></div>
-                            <div><h4 class="font-semibold"><i class="fas fa-fill-drip text-blue-500 mr-2"></i>Llenado</h4><p class="text-sm text-gray-600"><strong>Q4:</strong> Cilindro de la tolva. Se activa por un tiempo predefinido para dosificar el producto.</p></div>
-                            <div><h4 class="font-semibold"><i class="fas fa-toolbox text-blue-500 mr-2"></i>Cierre Hermético</h4><p class="text-sm text-gray-600"><strong>Q6:</strong> Cilindro vertical del atornillador. <strong>Q7:</strong> Atornillador neumático que realiza el apriete final de la tapa.</p></div>
-                        </div>
-                        <div class="text-center">
-                             <h3 class="text-xl font-bold mb-4">Animación del Proceso</h3>
-                             <svg class="envasadora-anim-svg anim-svg w-full border rounded-lg p-4 bg-slate-50" viewBox="0 0 400 150">
-                                <!-- Estructura -->
-                                <rect x="10" y="100" width="380" height="15" fill="#a1a1aa"/>
-                                <g id="fill-station"><path d="M 110 30 L 140 30 L 135 15 L 115 15 Z" fill="#9ca3af"/><rect x="115" y="30" width="20" height="40" fill="#9ca3af"/><rect id="hopper-gate" class="movable" x="120" y="70" width="10" height="10" fill="#a1a1aa"/></g>
-                                <g id="cap-station" transform="translate(-15, 0)"><rect id="screwdriver" class="movable" x="245" y="0" width="10" height="30" fill="#4b5563"/><path d="M 235 40 L 265 40 L 265 30 L 235 30 Z" fill="#9ca3af"/></g>
-                                <g id="bottle-group">
-                                    <path d="M 0 0 L 0 -40 Q 0 -50 5 -50 L 15 -50 Q 20 -50 20 -40 L 20 0 Z" fill="#bfdbfe" transform="translate(15,100)"/>
-                                    <rect id="bottle-fill-level" x="17" y="100" width="16" height="0" fill="#60a5fa" opacity="0"/>
-                                    <rect id="bottle-cap" class="movable" x="17.5" y="45" width="15" height="5" fill="#6b7280" opacity="0"/>
-                                </g>
-                                <rect id="stopper1" class="movable" x="100" y="85" width="5" height="15" fill="#ef4444"/>
-                                <rect id="stopper2" class="movable" x="230" y="85" width="5" height="15" fill="#ef4444"/>
-                                <!-- Textos Animación -->
-                                <text x="125" y="10" text-anchor="middle" class="anim-text" id="text-llenado">1. Llenando...</text>
-                                <text x="235" y="10" text-anchor="middle" class="anim-text" id="text-taponado">2. Taponando...</text>
-                                <text x="320" y="80" text-anchor="middle" class="anim-text" id="text-salida">3. Salida</text>
-                             </svg>
-                             <div class="mt-4 flex justify-center space-x-2"><button id="anim-start-envasadora" class="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg">Iniciar</button><button id="anim-reset-envasadora" class="text-sm bg-gray-200 px-4 py-2 rounded-lg">Reiniciar</button></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Planificación" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Planificación y Organización</h2><p class="section-subtitle mt-4">El proyecto se estructuró en fases, con equipos dedicados a las áreas mecánica y de control para un desarrollo en paralelo.</p></div>
-                    <div class="card mt-12">
-                        <h3 class="text-xl font-bold mb-4">Organización y Roles</h3>
-                        <p class="text-sm text-gray-600 mb-6">El grupo se organizó en un **Equipo de Diseño y Construcción**, enfocado en la estructura de la cinta, montaje de actuadores y la mecánica de los módulos, y un **Equipo de Automatización**, centrado en el diseño del tablero, la programación del PLC y la integración de sensores y electroválvulas.</p>
-                        <div id="gantt-envasadora">
-                            <!-- Gantt chart for Envasadora will be injected here by JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section data-title="Presupuesto" class="slide">
-                <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Análisis de Costos del Prototipo</h2><p class="section-subtitle mt-4">Desglose de la inversión en materiales y componentes para la construcción del prototipo de la línea de envasado (Cifras en ARS).</p></div>
-                    <div class="card mt-12 max-w-4xl mx-auto">
-                        <h3 class="text-2xl font-bold mb-6 text-center">Presupuesto de Materiales</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm text-left text-gray-500">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">Material / Componente</th>
-                                        <th scope="col" class="px-6 py-3 text-right">Cantidad</th>
-                                        <th scope="col" class="px-6 py-3 text-right">Costo Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">PLC Siemens</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$373,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Módulo de Expansión Siemens</td><td class="px-6 py-4 text-right">2</td><td class="px-6 py-4 text-right">$520,000</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">6x Electroválvulas Micro</td><td class="px-6 py-4 text-right">1 Lote</td><td class="px-6 py-4 text-right">$1,200,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Compresor de Aire Lusqtoff</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$297,000</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Motor 12V CC</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$200,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Banda modular plástica Rolmec</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$180,000</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Fuente de Alimentación Siemens</td><td class="px-6 py-4 text-right">1</td><td class="px-6 py-4 text-right">$180,000</td></tr>
-                                    <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">3x Cilindro neumático MD8 Micro</td><td class="px-6 py-4 text-right">1 Lote</td><td class="px-6 py-4 text-right">$132,000</td></tr>
-                                    <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Bastidores de aluminio</td><td class="px-6 py-4 text-right">2</td><td class="px-6 py-4 text-right">$70,000</td></tr>
-                                     <tr class="bg-gray-50 border-b"><td class="px-6 py-4 font-medium">Otros (guías, racores, cojinetes, etc.)</td><td class="px-6 py-4 text-right">Varios</td><td class="px-6 py-4 text-right">$120,950</td></tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="font-semibold text-gray-900">
-                                        <th scope="row" colspan="2" class="px-6 py-3 text-base text-right">Total Inversión Prototipo</th>
-                                        <td class="px-6 py-3 text-base text-right">$3,272,950</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
-             <section data-title="Evidencia" class="slide">
-                <div class="container mx-auto px-6 h-full flex flex-col">
-                    <div class="text-center w-full"><h2 class="section-title">Evidencia del Proceso</h2><p class="section-subtitle mt-4">Imágenes del ensamblaje de la cinta transportadora y el estado actual del prototipo.</p></div>
-                     <div class="card grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 flex-grow">
-                        <figure class="md:col-span-3"><h4 class="font-semibold text-center mb-2 text-sm">Estado Actual del Prototipo</h4><img src="https://i.postimg.cc/8znbbsdR/IMG-20251015-WA0031.jpg" alt="Estado actual de la línea de envasado" class="w-full h-64 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Montaje de Cinta</h4><img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Ajuste de Mecanismos</h4><img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure><h4 class="font-semibold text-center mb-2 text-sm">Equipo Trabajando</h4><img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="w-full h-48 object-cover rounded-lg shadow-md clickable-image"></figure>
-                        <figure class="col-span-2 md:col-span-3">
-                            <h4 class="font-semibold text-center mb-2 text-sm">Vista General (Video)</h4>
-                            <iframe src="https://streamable.com/e/kwwilr" frameborder="0" width="100%" height="100%" allowfullscreen class="w-full flex-grow h-64 rounded-lg shadow-md"></iframe>
-                        </figure>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <div class="presentation-arrows hidden">
-             <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
-             <button class="next-slide-btn fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
-        </div>
-    </div>
-
-    <!-- PAGE 4: CONCLUSIONES -->
-    <div id="page-conclusiones" class="page">
-        <header class="sticky top-0 z-50">
-           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
-                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">CONCLUSIONES Y EQUIPO</h1>
-                </div>
-            </nav>
-        </header>
-         <main>
-            <section class="container mx-auto px-6 py-12">
-                <div class="text-center max-w-4xl mx-auto mb-12">
-                    <h2 class="section-title">Conclusiones y Aprendizajes</h2>
-                    <p class="section-subtitle mt-4">Más allá del resultado técnico, el valor principal de estos proyectos reside en el aprendizaje práctico. Hemos traducido diagramas teóricos en circuitos funcionales, enfrentado imprevistos que no figuran en los manuales y aprendido a colaborar bajo presión, dividiendo tareas y unificando esfuerzos. Esta experiencia nos ha enseñado a diagnosticar, planificar y ejecutar soluciones industriales reales, consolidando nuestra formación de una manera que solo el trabajo práctico puede lograr. Agradecemos a nuestros profesores por su guía, y especialmente a los mentores de Edesur por la invaluable oportunidad de presentar nuestros desarrollos en un entorno profesional.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-2xl font-bold text-center mb-8">Equipo de Proyecto</h3>
-                    <div id="team-container-final" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Final team cards will be injected here -->
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <div id="image-modal-backdrop" class="fixed inset-0 bg-black/70 z-[60] hidden opacity-0 flex items-center justify-center p-4">
-        <div id="image-modal-content" class="bg-white rounded-lg p-2 max-w-4xl max-h-[90vh] w-auto relative scale-95 opacity-0">
-            <button id="image-modal-close" class="absolute -top-4 -right-4 bg-white rounded-full h-10 w-10 text-2xl flex items-center justify-center text-gray-700 shadow-lg">&times;</button>
-            <img id="modal-image" src="" class="max-w-full max-h-[85vh] object-contain rounded">
-        </div>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- GLOBAL SETUP ---
-            const teamMembers = [
-                { name: 'Alcon Brian', linkedin: '#', qr: 'https://i.postimg.cc/v8n6ByYN/IMG-20251017-WA0010.jpg' },
-                { name: 'Abdala Abril', linkedin: '#', qr: 'https://i.postimg.cc/sDRGGL1z/IMG-20251017-WA0015.jpg' },
-                { name: 'Ratti Tomás', linkedin: '#', qr: 'https://i.postimg.cc/Prkvv7Jc/IMG-20251015-WA0130.jpg' },
-                { name: 'Gimenez Brian', linkedin: '#', qr: 'https://i.postimg.cc/02qKK4jH/IMG-20251017-WA0005.jpg' },
-                { name: 'Gozainy Joaquin', linkedin: '#', qr: 'https://i.postimg.cc/4NTHH0nk/IMG-20251017-WA0012.jpg' },
-                { name: 'Cubilla Benjamín', linkedin: '#', qr: 'https://i.postimg.cc/VLc00h5c/IMG-20251017-WA0013.jpg' },
-                { name: 'Jesus Castellanos', linkedin: '#', qr: 'https://i.postimg.cc/dtKZZf3f/IMG-20251017-WA0009.jpg' },
-                { name: 'Guillermo Paulosky', linkedin: '#', qr: 'https://i.postimg.cc/02qKK4rs/IMG-20251017-WA0014.jpg' },
-                { name: 'Joaquin Huaman', linkedin: '#', qr: 'https://i.postimg.cc/8PVffYc0/IMG-20251017-WA0011.jpg' }
-            ];
-            
-            function populateTeamCaratula(containerSelector) {
-                const container = document.querySelector(containerSelector);
-                if(container) {
-                    container.innerHTML = teamMembers.map(member => `<span>${member.name}</span>`).join('<span class="hidden md:inline mx-2">•</span>');
-                }
-            }
-
-            function populateTeamFinal(containerSelector) {
-                const container = document.querySelector(containerSelector);
-                if(container) {
-                    container.innerHTML = teamMembers.map(member => `
-                        <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 flex items-center gap-4">
-                            <i class="fas fa-user-circle text-5xl text-slate-400"></i>
-                            <div class="flex-grow">
-                                <h4 class="font-bold text-gray-800">${member.name}</h4>
-                                <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 transition text-sm"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
-                            </div>
-                            <div class="w-20 h-20 bg-slate-200 rounded-md flex items-center justify-center text-xs text-slate-500 text-center">
-                                <img src="${member.qr || 'https://placehold.co/80x80/e2e8f0/64748b?text=QR'}" alt="QR de ${member.name}" class="rounded-md object-cover w-full h-full">
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
-
-            populateTeamCaratula('#equipo-caratula div');
-            populateTeamFinal('#team-container-final');
-
-            // --- PAGE NAVIGATION ---
-            const pages = document.querySelectorAll('.page');
-            document.querySelectorAll('.page-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = e.currentTarget.dataset.target;
-                    pages.forEach(page => page.classList.toggle('active', page.id === targetId));
-                    window.scrollTo(0, 0);
-                });
-            });
-
-            // --- PRESENTATION MODE ---
-            function setupPresentationPage(pageElement) {
-                const presentationModeBtn = pageElement.querySelector('.presentation-mode-btn');
-                if (!presentationModeBtn) return;
-
-                const playIcon = presentationModeBtn.querySelector('.play-icon');
-                const stopIcon = presentationModeBtn.querySelector('.stop-icon');
-                const fullscreenBtn = pageElement.querySelector('.fullscreen-btn');
-                const presentationNavContainer = pageElement.querySelector('.presentation-nav-container');
-                const presentationArrows = pageElement.querySelector('.presentation-arrows');
-                const prevSlideBtn = pageElement.querySelector('.prev-slide-btn');
-                const nextSlideBtn = pageElement.querySelector('.next-slide-btn');
-                const slides = Array.from(pageElement.querySelectorAll('main > .slide'));
-                
-                let currentSlideIndex = 0;
-                let isPresentationMode = false;
-
-                function setupNavTree() {
-                    const navTree = pageElement.querySelector('.presentation-nav-tree');
-                    navTree.innerHTML = slides.map((slide, index) => `<a href="#" class="nav-item px-3 py-2" data-index="${index}">${slide.dataset.title}</a>`).join('');
-                    navTree.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', e => { 
-                        e.stopPropagation(); 
-                        e.preventDefault(); 
-                        goToSlide(parseInt(e.currentTarget.dataset.index)); 
-                    }));
-                }
-
-                function goToSlide(index) {
-                    if (index < 0 || index >= slides.length) return;
-                    currentSlideIndex = index;
-                    slides.forEach((slide, i) => slide.classList.toggle('active-slide', i === index));
-                    updatePresentationUI();
-                }
-
-                function updatePresentationUI() {
-                    const progress = ((currentSlideIndex + 1) / slides.length) * 100;
-                    pageElement.querySelector('.presentation-progress-bar').style.width = `${progress}%`;
-                    pageElement.querySelectorAll('.presentation-nav-tree .nav-item').forEach((item, i) => item.classList.toggle('active', i === currentSlideIndex));
-                    if (prevSlideBtn) prevSlideBtn.disabled = currentSlideIndex === 0;
-                    if (nextSlideBtn) nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
-                }
-
-                function togglePresentationMode() {
-                    isPresentationMode = !isPresentationMode;
-                    document.body.classList.toggle('presentation-mode', isPresentationMode);
-                    playIcon.classList.toggle('hidden', isPresentationMode);
-                    stopIcon.classList.toggle('hidden', !isPresentationMode);
-                    presentationNavContainer.classList.toggle('hidden', !isPresentationMode);
-                    if (presentationArrows) presentationArrows.classList.toggle('hidden', !isPresentationMode);
-                    if (isPresentationMode) {
-                        goToSlide(0);
-                        if(document.documentElement.requestFullscreen) {
-                            document.documentElement.requestFullscreen();
-                        }
-                    } else {
-                        slides.forEach(s => s.classList.remove('active-slide'));
-                         if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        }
-                    }
-                }
-
-                presentationModeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    togglePresentationMode();
-                });
-
-                if (prevSlideBtn) prevSlideBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToSlide(currentSlideIndex - 1)
-                });
-                if (nextSlideBtn) nextSlideBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToSlide(currentSlideIndex + 1)
-                });
-                
-                slides.forEach(slide => {
-                    slide.addEventListener('click', (e) => {
-                        if (isPresentationMode && !e.target.closest('button, a, input, label, .clickable-image')) {
-                             if (nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
-                        }
-                    });
-                });
-
-                fullscreenBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    } else {
-                        document.documentElement.requestFullscreen();
-                    }
-                });
-                
-                document.addEventListener('keydown', (e) => {
-                    if (isPresentationMode && pageElement.classList.contains('active')) {
-                        if (e.key === 'ArrowRight' && nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
-                        if (e.key === 'ArrowLeft' && prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
-                        if (e.key === 'Escape' || e.key === 'f') {
-                            if (document.fullscreenElement) document.exitFullscreen();
-                            if(isPresentationMode) togglePresentationMode();
-                        }
-                    }
-                });
-                
-                setupNavTree();
-            }
-            
-            document.querySelectorAll('.presentation-page').forEach(setupPresentationPage);
-
-             // --- IMAGE MODAL ---
-            const modalBackdrop = document.getElementById('image-modal-backdrop');
-            const modalContent = document.getElementById('image-modal-content');
-            const modalImage = document.getElementById('modal-image');
-            document.querySelectorAll('.clickable-image').forEach(img => {
-                img.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent slide from advancing
-                    modalImage.src = img.src;
-                    modalBackdrop.classList.remove('hidden');
-                    setTimeout(() => { modalBackdrop.classList.remove('opacity-0'); modalContent.classList.remove('opacity-0', 'scale-95'); }, 10);
-                });
-            });
-            const closeModal = () => {
-                modalContent.classList.add('opacity-0', 'scale-95');
-                modalBackdrop.classList.add('opacity-0');
-                setTimeout(() => modalBackdrop.classList.add('hidden'), 300);
-            };
-            document.getElementById('image-modal-close').addEventListener('click', closeModal);
-            modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
-            
-            // --- SIMULATOR: TERMOFORMADORA ---
-            const thermoPageSim = document.getElementById('page-thermo');
-            if (thermoPageSim) {
-                const productsData = {
-                    bandeja: { name: "Bandeja Gastronómica", image: "https://acdn-us.mitiendanube.com/stores/002/955/098/products/bandeja-371-640-0-cad03da57e4ecbcfe816800876412099-1024-1024.jpg", cycleTime: 12, materialCost: 45, salePrice: 95, material: "PET 0.5mm", temp: 170 },
-                    mascara: { name: "Máscara de Cotillón", image: "https://http2.mlstatic.com/D_Q_NP_874796-MLA90547858442_082025-O.webp", cycleTime: 14, materialCost: 55, salePrice: 280, material: "HIPS 0.8mm", temp: 180 },
-                    blister: { name: "Blíster Industrial", image: "https://www.arapack.com/wp-content/uploads/2018/07/arapack-blister-autocierre-e1531559368209-768x282.jpg", cycleTime: 13, materialCost: 50, salePrice: 190, material: "PVC 0.6mm", temp: 160 }
-                };
-                const startBtn = thermoPageSim.querySelector('#start-simulation-btn');
-                const resultDiv = thermoPageSim.querySelector('#simulation-result');
-                if (startBtn) {
-                    startBtn.addEventListener('click', (e) => {
-                        e.stopPropagation(); // Prevent slide from advancing
-                        const product = productsData[thermoPageSim.querySelector('input[name="product"]:checked').value];
-                        startBtn.disabled = true; startBtn.textContent = 'Procesando...';
-                        resultDiv.innerHTML = `<div class="w-full"><h4 id="simulation-status" class="font-bold mb-2">Iniciando ciclo...</h4><div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div id="progress-bar-sim" class="bg-blue-600 h-2" style="width:0; transition: width 0.1s linear;"></div></div><div id="final-result" class="opacity-0 transition-opacity duration-500 mt-4"></div></div>`;
-                        const simStatus = resultDiv.querySelector('#simulation-status');
-                        const simProgressBar = resultDiv.querySelector('#progress-bar-sim');
-                        const finalResult = resultDiv.querySelector('#final-result');
-                        let progress = 0;
-                        const interval = setInterval(() => {
-                            progress++;
-                            simProgressBar.style.width = `${progress}%`;
-                            if (progress >= 100) {
-                                clearInterval(interval);
-                                simStatus.innerHTML = `<span class="text-green-600 font-bold">¡Ciclo Completo!</span>`;
-                                const hourlyProduction = Math.floor(3600 / product.cycleTime * 0.70); // 70% OEE
-                                finalResult.innerHTML = `<img src="${product.image}" class="mx-auto h-20 my-4 object-contain"><div class="mb-4"><p class="text-sm text-gray-500">PRODUCCIÓN/HORA</p><p class="font-bold text-2xl">${hourlyProduction} u.</p></div><div class="text-xs text-left grid grid-cols-2 gap-x-4 gap-y-1"><span class="text-gray-500">Material:</span><span class="font-semibold text-right">${product.material}</span><span class="text-gray-500">Temp. Moldeo:</span><span class="font-semibold text-right">${product.temp}°C</span><span class="text-gray-500">Costo Mat. Prima:</span><span class="font-semibold text-right">$${product.materialCost}</span><span class="text-gray-500">Valor Venta:</span><span class="font-semibold text-right text-green-600">$${product.salePrice}</span></div><div class="mt-4 pt-4 border-t w-full"><p class="text-sm text-gray-500">MARGEN BRUTO</p><p class="font-bold text-3xl text-blue-600">$${product.salePrice - product.materialCost}</p></div>`;
-                                finalResult.classList.remove('opacity-0');
-                                startBtn.disabled = false; startBtn.textContent = 'Activar Otro Ciclo';
-                            }
-                        }, product.cycleTime * 1.5);
-                    });
-                }
-            }
-
-
-            // --- ANIMATION: ENVASADORA ---
-            const envasadoraPage = document.getElementById('page-envasadora');
-            if(envasadoraPage){
-                const startBtn = envasadoraPage.querySelector('#anim-start-envasadora');
-                const resetBtn = envasadoraPage.querySelector('#anim-reset-envasadora');
-                const bottleGroup = envasadoraPage.querySelector('#bottle-group');
-                const bottleFill = envasadoraPage.querySelector('#bottle-fill-level');
-                const bottleCap = envasadoraPage.querySelector('#bottle-cap');
-                const stopper1 = envasadoraPage.querySelector('#stopper1');
-                const stopper2 = envasadoraPage.querySelector('#stopper2');
-                const hopperGate = envasadoraPage.querySelector('#hopper-gate');
-                const screwdriver = envasadoraPage.querySelector('#screwdriver');
-                const texts = {
-                    llenado: envasadoraPage.querySelector('#text-llenado'),
-                    taponado: envasadoraPage.querySelector('#text-taponado'),
-                    salida: envasadoraPage.querySelector('#text-salida')
-                };
-
-                const resetAnimation = () => {
-                    bottleGroup.style.transition = 'none';
-                    bottleGroup.style.transform = 'translateX(0)';
-                    bottleFill.style.height = '0';
-                    bottleFill.style.transform = 'translateY(0)';
-                    bottleFill.style.opacity = '0';
-                    bottleCap.style.opacity = '0';
-                    [stopper1, stopper2, hopperGate, screwdriver].forEach(el => el.style.transform = 'translateY(0)');
-                    Object.values(texts).forEach(t => t.classList.remove('active'));
-                    startBtn.disabled = false;
-                };
-
-                startBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    startBtn.disabled = true;
-                    resetAnimation();
-                    setTimeout(() => { bottleGroup.style.transition = 'transform 2s linear'; bottleGroup.style.transform = 'translateX(100px)'; }, 100);
-                    setTimeout(() => { stopper1.style.transform = 'translateY(-15px)'; texts.llenado.classList.add('active'); }, 2100);
-                    setTimeout(() => { hopperGate.style.transform = 'translateY(10px)'; }, 2500);
-                    setTimeout(() => { 
-                        bottleFill.style.opacity = '1';
-                        bottleFill.style.height = '30px';
-                        bottleFill.style.transform = 'translateY(-30px)'; // Grow up from the bottom
-                    }, 2700);
-                    setTimeout(() => { hopperGate.style.transform = 'translateY(0)'; }, 3300);
-                    setTimeout(() => { stopper1.style.transform = 'translateY(0)'; texts.llenado.classList.remove('active'); }, 3700);
-                    setTimeout(() => { bottleGroup.style.transform = 'translateX(215px)'; }, 4000);
-                    setTimeout(() => { stopper2.style.transform = 'translateY(-15px)'; texts.taponado.classList.add('active'); }, 6000);
-                    setTimeout(() => { bottleCap.style.opacity = '1'; }, 6400);
-                    setTimeout(() => { screwdriver.style.transform = 'translateY(50px)'; }, 6800);
-                    setTimeout(() => { screwdriver.style.transform = 'translateY(0)'; }, 7800);
-                    setTimeout(() => { stopper2.style.transform = 'translateY(0)'; texts.taponado.classList.remove('active');}, 8200);
-                    setTimeout(() => { texts.salida.classList.add('active'); bottleGroup.style.transform = 'translateX(350px)'; }, 8500);
-                    setTimeout(() => { resetAnimation(); }, 10600);
-                });
-                resetBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    resetAnimation();
-                });
-            }
-
-            // --- GANTT CHART GENERATION ---
-            function createGanttChart(containerId, tasks, startDate, endDate) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-
-                const start = new Date(startDate);
-                const end = new Date(endDate);
-                const totalDays = (end - start) / (1000 * 60 * 60 * 24);
-                
-                const months = ['Jul', 'Ago', 'Sep', 'Oct', 'Nov'];
-                let timelineHtml = '<div class="gantt-timeline col-span-2">';
-                months.forEach(month => timelineHtml += `<div>${month} '25</div>`);
-                timelineHtml += '</div>';
-
-                let tasksHtml = tasks.map(task => {
-                    if(task.isPhase) {
-                        return `<div class="gantt-task-name phase col-span-2">${task.name}</div>`;
-                    }
-                    const taskStart = new Date(task.start);
-                    const taskDays = task.duration;
-                    const offsetDays = (taskStart - start) / (1000 * 60 * 60 * 24);
                     
-                    const left = (offsetDays / totalDays) * 100;
-                    const width = (taskDays / totalDays) * 100;
-
-                    return `
-                        <div class="gantt-task-name subtask">${task.name}</div>
-                        <div class="gantt-bar-container">
-                            <div class="gantt-bar ${task.status}" style="left: ${left}%; width: ${width}%;"></div>
+                    <!-- Galería -->
+                    <div class="img-gallery-container">
+                        <img src="https://i.postimg.cc/P5FMMNzH/IMG-20251016-WA0185.jpg" class="img-gallery" title="Estado Original" onclick="openModal(this.src)">
+                        <img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="img-gallery" title="Nuevo Tablero" onclick="openModal(this.src)">
+                        <img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="img-gallery" title="Resistencias" onclick="openModal(this.src)">
+                    </div>
+                    
+                    <!-- Video -->
+                    <div class="video-placeholder group">
+                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-white/20">
+                            <i class="fas fa-play text-2xl text-white ml-1"></i>
                         </div>
-                    `;
-                }).join('');
+                        <span class="font-bold tracking-wider text-sm">VIDEO DE FUNCIONAMIENTO</span>
+                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide opacity-70">Ciclo Completo de Producción</span>
+                    </div>
+                </div>
+            </div>
 
-                container.innerHTML = `<div class="gantt-container">${timelineHtml}${tasksHtml}</div>`;
-            }
+            <!-- Sección 2: Funcionamiento del Proceso -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-slate-800 pl-4">Ciclo de Producción Automatizado</h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="tech-box text-center hover:border-red-400 transition-colors">
+                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">1</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Calentamiento</h4>
+                        <p class="text-sm text-slate-500">Resistencias IR llevan el plástico a temp. vítrea. Control PID.</p>
+                    </div>
+                    <div class="tech-box text-center hover:border-blue-400 transition-colors">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">2</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Moldeado</h4>
+                        <p class="text-sm text-slate-500">La matriz sube y el vacío (-0.8 bar) fuerza al material a copiar la forma.</p>
+                    </div>
+                    <div class="tech-box text-center hover:border-cyan-400 transition-colors">
+                        <div class="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">3</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Enfriamiento</h4>
+                        <p class="text-sm text-slate-500">Ventilación forzada inmediata para solidificar y evitar deformaciones.</p>
+                    </div>
+                    <div class="tech-box text-center hover:border-green-400 transition-colors">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl shadow-sm">4</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Desmolde</h4>
+                        <p class="text-sm text-slate-500">Inyección de aire a presión positiva para liberar la pieza final.</p>
+                    </div>
+                </div>
+            </div>
 
-            const envasadoraTasks = [
-                { name: 'Fase 1: Diseño y Construcción', isPhase: true },
-                { name: 'Diseño de estructura y módulos', start: '2025-07-01', duration: 14, status: 'completed' },
-                { name: 'Construcción de cinta transportadora', start: '2025-07-15', duration: 21, status: 'completed' },
-                { name: 'Fabricación de módulos (Impresión 3D)', start: '2025-08-05', duration: 14, status: 'completed' },
+            <!-- Sección 3: Seguridad -->
+            <div class="grid md:grid-cols-2 gap-8 mb-20">
+                <div class="tech-box bg-white border-l-4 border-blue-600 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="p-3 bg-blue-50 rounded text-blue-600"><i class="fas fa-hands-holding-circle text-2xl"></i></div>
+                        <h4 class="font-bold text-slate-800 text-lg">Mando Bimanual</h4>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Lógica de seguridad programada en el PLC para la protección del operador. Se exige presionar <strong>dos pulsadores simultáneamente</strong> (con una diferencia menor a 0.5s) para iniciar el ciclo.
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded text-xs font-mono text-slate-500 border border-slate-200">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Garantiza manos fuera de la zona de prensado.
+                    </div>
+                </div>
+                <div class="tech-box bg-white border-l-4 border-red-600 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="p-3 bg-red-50 rounded text-red-600"><i class="fas fa-power-off text-2xl"></i></div>
+                        <h4 class="font-bold text-slate-800 text-lg">Parada de Emergencia</h4>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Normalización bajo estándar ISO 13850. Pulsador tipo hongo con enclavamiento mecánico accesible.
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded text-xs font-mono text-slate-500 border border-slate-200">
+                        <i class="fas fa-bolt text-amber-500 mr-2"></i>Corte físico de potencia (Motores + Calor).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4: Gantt -->
+            <div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-2">Cronograma de Ejecución Real</h3>
+                <div class="gantt-container">
+                    <table class="gantt-table">
+                        <thead>
+                            <tr>
+                                <th class="w-1/4 text-left pl-4">Fase / Tarea</th>
+                                <th>Julio</th><th>Agosto</th><th>Septiembre</th><th>Octubre</th><th>Noviembre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">1. Diagnóstico y Planos</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 0%; width: 15%;">Relevamiento</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">2. Reparación Mecánica</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 10%; width: 25%;">Tornería</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">3. Montaje Tablero</td>
+                                <td colspan="5"><div class="gantt-bar bg-p2" style="left: 30%; width: 20%;">Cableado</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">4. Programación PLC</td>
+                                <td colspan="5"><div class="gantt-bar bg-p3" style="left: 50%; width: 30%;">Lógica Ladder</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">5. Pruebas Finales</td>
+                                <td colspan="5"><div class="gantt-bar bg-p4" style="left: 80%; width: 20%;">Ajustes</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === PÁGINA 3: ENVASADORA === -->
+    <div id="envasadora" class="page bg-white">
+        <!-- Header Sticky -->
+        <div class="project-header">
+            <div class="container mx-auto px-6 flex justify-between items-center">
+                <div class="flex items-center gap-6">
+                    <button onclick="navTo('home')" class="text-slate-400 hover:text-orange-600 transition text-sm font-bold flex items-center gap-2 border px-3 py-1.5 rounded hover:bg-slate-50">
+                        <i class="fas fa-arrow-left"></i> MENÚ
+                    </button>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 leading-none">LÍNEA DE ENVASADO</h2>
+                        <span class="text-xs text-slate-500 font-bold uppercase tracking-wide">Prototipado Modular</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-xs font-bold border border-blue-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> PROTOTIPO OK
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 py-12 max-w-7xl">
+            <!-- Sección 1: Introducción y Ficha Técnica -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20 items-start">
                 
-                { name: 'Fase 2: Montaje y Cableado', isPhase: true },
-                { name: 'Montaje de módulos y actuadores', start: '2025-08-19', duration: 18, status: 'completed' },
-                { name: 'Instalación de circuito neumático', start: '2025-09-08', duration: 10, status: 'completed' },
-                { name: 'Diseño y montaje de tablero eléctrico', start: '2025-09-22', duration: 14, status: 'completed' },
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-orange-600 font-bold text-sm tracking-widest uppercase mb-2 block">Desarrollo desde Cero</span>
+                        <h3 class="text-4xl font-bold text-slate-900 mb-6 leading-tight">Diseño Modular Integral</h3>
+                        <p class="text-slate-600 text-lg leading-relaxed text-justify">
+                            Se diseñó y construyó una cinta transportadora inteligente capaz de sincronizar 3 estaciones de trabajo: <strong>Llenado, Taponado y Cierre</strong>. Se combinó impresión 3D para la matricería personalizada con neumática industrial para la actuación.
+                        </p>
+                    </div>
 
-                { name: 'Fase 3: Programación e Integración', isPhase: true },
-                { name: 'Cableado de sensores y actuadores', start: '2025-10-06', duration: 10, status: 'in-progress' },
-                { name: 'Desarrollo de lógica de control (PLC)', start: '2025-10-20', duration: 12, status: 'pending' },
+                    <div class="tech-box bg-orange-50 border-orange-200">
+                        <h4 class="font-bold text-orange-800 border-b border-orange-200 pb-3 mb-4 text-sm uppercase tracking-wide flex items-center gap-2">
+                            <i class="fas fa-cogs"></i> Arquitectura de Control
+                        </h4>
+                        <div class="grid grid-cols-1 gap-y-4">
+                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
+                                <span class="tech-label text-orange-900/60">PLC</span>
+                                <div class="tech-value">Siemens S7-1200</div>
+                            </div>
+                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
+                                <span class="tech-label text-orange-900/60">Actuadores</span>
+                                <div class="tech-value">Cilindros + Válvulas 5/2</div>
+                            </div>
+                            <div class="flex justify-between border-b border-orange-200/50 pb-2">
+                                <span class="tech-label text-orange-900/60">Motor Cinta</span>
+                                <div class="tech-value">DC 12V con Reductor</div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="tech-label text-orange-900/60">Posicionamiento</span>
+                                <div class="tech-value">Topes Neumáticos</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h5 class="text-slate-800 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                            <i class="fas fa-boxes-packing text-orange-500"></i> Aplicaciones
+                        </h5>
+                        <p class="text-sm text-slate-600">Líneas de llenado flexibles para PyMEs (Química, Bebidas, Farmacéutica).</p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Imagen Principal Envasadora -->
+                    <div class="relative group cursor-zoom-in" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.postimg.cc/8znbbsdR/IMG-20251015-WA0031.jpg" alt="Envasadora Finalizada" class="img-main">
+                        <div class="img-badge bg-orange-500">
+                            <i class="fas fa-check-circle text-lg"></i>
+                            <span>PROTOTIPO FINALIZADO</span>
+                        </div>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl"></div>
+                    </div>
+                    
+                    <div class="img-gallery-container">
+                        <img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="img-gallery" title="Montaje Cinta" onclick="openModal(this.src)">
+                        <img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="img-gallery" title="Ajustes Mecánicos" onclick="openModal(this.src)">
+                        <img src="https://i.postimg.cc/BbYqXXC5/IMG-20250823-WA0086.jpg" class="img-gallery" title="Diseño CAD" onclick="openModal(this.src)">
+                    </div>
+                    
+                    <!-- Video Placeholder -->
+                    <div class="video-placeholder group">
+                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-white/20">
+                            <i class="fas fa-play text-2xl text-white ml-1"></i>
+                        </div>
+                        <span class="font-bold tracking-wider text-sm">VIDEO DE FUNCIONAMIENTO</span>
+                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide opacity-70">Secuencia de Llenado y Cierre</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2: Animación y Proceso -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-orange-500 pl-4">Lógica del Proceso (Secuencia PLC)</h3>
                 
-                { name: 'Fase 4: Pruebas y Documentación', isPhase: true },
-                { name: 'Pruebas integrales y ajuste de tiempos', start: '2025-11-03', duration: 14, status: 'pending' },
-                { name: 'Elaboración de informe técnico final', start: '2025-11-17', duration: 10, status: 'pending' },
-            ];
-            createGanttChart('gantt-envasadora', envasadoraTasks, '2025-07-01', '2025-11-30');
+                <!-- Animación SVG -->
+                <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 mb-8 relative">
+                    <button onclick="runPackingAnimation()" class="absolute top-6 right-6 bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-700 transition shadow-sm z-10 flex items-center gap-2">
+                        <i class="fas fa-play text-xs"></i> SIMULAR
+                    </button>
+                    
+                    <div class="relative h-[250px] overflow-hidden rounded-lg bg-slate-50 border border-slate-100">
+                        <svg class="w-full h-full" viewBox="0 0 600 200">
+                            <!-- Cinta -->
+                            <rect x="10" y="160" width="580" height="10" fill="#475569" rx="2"/>
+                            
+                            <!-- Estación 1: Llenado -->
+                            <g transform="translate(100, 20)">
+                                <path d="M 0 0 L 40 0 L 30 30 L 10 30 Z" fill="#94a3b8"/> 
+                                <rect x="15" y="30" width="10" height="30" fill="#cbd5e1"/>
+                                <rect id="gate" class="anim-part" x="12" y="60" width="16" height="5" fill="#ef4444"/> 
+                                <text x="20" y="85" font-size="10" text-anchor="middle" fill="#64748b" font-weight="bold">LLENADO</text>
+                            </g>
 
-            const thermoTasks = [
-                { name: 'Fase 1: Diagnóstico y Planificación', isPhase: true },
-                { name: 'Relevamiento y diagnóstico completo', start: '2025-07-07', duration: 10, status: 'completed' },
-                { name: 'Diseño de plano eléctrico y de control', start: '2025-07-21', duration: 7, status: 'completed' },
+                            <!-- Estación 2: Taponado (Tobogán) -->
+                            <g transform="translate(300, 30)">
+                                <path d="M 60 0 L 70 0 L 20 50 L 10 50 Z" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+                                <rect x="10" y="45" width="20" height="6" fill="#ef4444" transform="rotate(-45 20 48)"/> 
+                                <text x="40" y="80" font-size="10" text-anchor="middle" fill="#64748b" font-weight="bold">TOBOGÁN</text>
+                            </g>
 
-                { name: 'Fase 2: Reparación y Adquisiciones', isPhase: true },
-                { name: 'Despiece y reparaciones mecánicas', start: '2025-07-28', duration: 18, status: 'completed' },
-                { name: 'Compra de componentes eléctricos', start: '2025-08-19', duration: 14, status: 'completed' },
-                { name: 'Pintura y tratamiento de estructura', start: '2025-09-02', duration: 7, status: 'completed' },
+                            <!-- Estación 3: Cierre -->
+                            <g transform="translate(480, 20)">
+                                <rect x="10" y="0" width="30" height="50" fill="#cbd5e1"/>
+                                <rect id="capper" class="anim-part" x="20" y="50" width="10" height="10" fill="#475569"/>
+                                <rect id="tool" class="anim-part" x="15" y="60" width="20" height="10" fill="#10b981"/>
+                                <text x="25" y="90" font-size="10" text-anchor="middle" fill="#64748b" font-weight="bold">ATORNILLADO</text>
+                            </g>
 
-                { name: 'Fase 3: Montaje y Cableado', isPhase: true },
-                { name: 'Montaje de nuevo tablero eléctrico', start: '2025-09-09', duration: 21, status: 'completed' },
-                { name: 'Cableado de potencia y resistencias', start: '2025-09-30', duration: 10, status: 'in-progress' },
-                { name: 'Cableado de control (PLC/HMI)', start: '2025-10-14', duration: 14, status: 'in-progress' },
-                
-                { name: 'Fase 4: Puesta en Marcha', isPhase: true },
-                { name: 'Programación de secuencia y HMI', start: '2025-10-28', duration: 14, status: 'pending' },
-                { name: 'Pruebas de ciclo y calibración', start: '2025-11-11', duration: 10, status: 'pending' },
-            ];
-            createGanttChart('gantt-thermo', thermoTasks, '2025-07-01', '2025-11-30');
+                            <!-- Botella -->
+                            <g id="bottle" class="anim-part" transform="translate(50, 120)">
+                                <rect x="10" y="10" width="20" height="30" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+                                <rect x="15" y="0" width="10" height="10" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+                                <rect id="liquid" class="liquid-fill" x="11" y="40" width="18" height="0" fill="#2563eb" opacity="0.8"/>
+                                <rect id="cap" class="anim-part" x="10" y="-5" width="20" height="6" fill="#ef4444" opacity="0"/> 
+                            </g>
+                        </svg>
+                    </div>
+                </div>
 
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="tech-box p-4 text-center border-l-4 border-slate-300">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Paso 1</span>
+                        <h4 class="font-bold text-slate-800">Transporte</h4>
+                        <p class="text-xs text-slate-600 mt-2">Avance hasta tope neumático.</p>
+                    </div>
+                    <div class="tech-box p-4 text-center border-l-4 border-blue-400">
+                        <span class="text-xs font-bold text-blue-500 uppercase">Paso 2</span>
+                        <h4 class="font-bold text-slate-800">Dosificación</h4>
+                        <p class="text-xs text-slate-600 mt-2">Apertura temporizada de tolva.</p>
+                    </div>
+                    <div class="tech-box p-4 text-center border-l-4 border-orange-400">
+                        <span class="text-xs font-bold text-orange-500 uppercase">Paso 3</span>
+                        <h4 class="font-bold text-slate-800">Taponado</h4>
+                        <p class="text-xs text-slate-600 mt-2">Arrastre de tapa por gravedad.</p>
+                    </div>
+                    <div class="tech-box p-4 text-center border-l-4 border-green-400">
+                        <span class="text-xs font-bold text-green-500 uppercase">Paso 4</span>
+                        <h4 class="font-bold text-slate-800">Cierre</h4>
+                        <p class="text-xs text-slate-600 mt-2">Descenso y torque neumático.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3: Seguridad -->
+            <div class="grid md:grid-cols-2 gap-8 mb-20">
+                <div class="tech-box bg-white border-l-4 border-amber-500 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="p-3 bg-amber-50 rounded text-amber-600"><i class="fas fa-wind text-2xl"></i></div>
+                        <h4 class="font-bold text-slate-800 text-lg">Despresurización</h4>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Implementación de <strong>Válvula de Escape Rápido (3/2 vías)</strong>. Ante una parada de emergencia, libera toda la presión del circuito (6 bar a 0 bar) evitando movimientos residuales peligrosos de los cilindros.
+                    </p>
+                </div>
+                <div class="tech-box bg-white border-l-4 border-amber-500 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="p-3 bg-amber-50 rounded text-amber-600"><i class="fas fa-shield-alt text-2xl"></i></div>
+                        <h4 class="font-bold text-slate-800 text-lg">Protecciones Físicas</h4>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Diseño e instalación de <strong>guardas de policarbonato</strong> en la zona de atornillado para evitar el acceso manual durante el giro del actuador.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sección 4: Gantt -->
+            <div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-2">Cronograma de Ejecución Real</h3>
+                <div class="gantt-container">
+                    <table class="gantt-table">
+                        <thead>
+                            <tr>
+                                <th class="w-1/4 text-left pl-4">Fase / Tarea</th>
+                                <th>Julio</th><th>Agosto</th><th>Septiembre</th><th>Octubre</th><th>Noviembre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">A. Armado Estructura</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 0%; width: 20%;">Cinta</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">B. Diseño CAD</td>
+                                <td colspan="5"><div class="gantt-bar bg-p1" style="left: 15%; width: 15%;">Modelado</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">C. Impresión 3D</td>
+                                <td colspan="5"><div class="gantt-bar bg-p2" style="left: 25%; width: 25%;">Fabricación</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">D. Neumática</td>
+                                <td colspan="5"><div class="gantt-bar bg-p3" style="left: 45%; width: 20%;">Instalación</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">F. Tablero y PLC</td>
+                                <td colspan="5"><div class="gantt-bar bg-p4" style="left: 60%; width: 25%;">Cableado</div></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-slate-700 pl-4">H. Integración</td>
+                                <td colspan="5"><div class="gantt-bar bg-p4" style="left: 80%; width: 20%;">Final</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === PÁGINA 4: CONCLUSIONES === -->
+    <div id="conclusiones" class="page bg-white">
+        <div class="project-header">
+            <div class="container mx-auto px-6 flex justify-between items-center">
+                <button onclick="navTo('home')" class="text-slate-400 hover:text-green-600 transition text-lg font-bold flex items-center gap-2"><i class="fas fa-arrow-left"></i> VOLVER AL MENÚ</button>
+                <h2 class="text-xl font-bold text-slate-800">CIERRE DEL PROYECTO</h2>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 py-12 max-w-6xl">
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-20">
+                <div class="tech-box border-l-4 border-blue-500 bg-blue-50">
+                    <h3 class="text-xl font-bold text-blue-800 mb-4">Habilidades Técnicas</h3>
+                    <ul class="list-disc list-inside text-slate-700 space-y-3 text-sm leading-relaxed">
+                        <li>Validación exitosa de la integración entre mecánica recuperada y electrónica moderna.</li>
+                        <li>Resolución de fallas críticas sin documentación original (Termoformadora).</li>
+                        <li>Prototipado funcional validando diseño CAD y Neumática (Envasadora).</li>
+                    </ul>
+                </div>
+                <div class="tech-box border-l-4 border-green-500 bg-green-50">
+                    <h3 class="text-xl font-bold text-green-800 mb-4">Habilidades Blandas</h3>
+                    <ul class="list-disc list-inside text-slate-700 space-y-3 text-sm leading-relaxed">
+                        <li>Gestión simultánea de dos proyectos con recursos compartidos.</li>
+                        <li>Trabajo colaborativo bajo presión y división dinámica de roles.</li>
+                        <li>Comunicación efectiva de problemas técnicos y soluciones.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Palabras de Cierre (Script) -->
+            <div class="mb-20 speech-box">
+                <h4 class="font-bold text-slate-800 not-italic mb-6 text-sm uppercase tracking-wide border-b border-orange-200 pb-2 flex justify-between">
+                    <span>Palabras de Cierre</span>
+                    <span class="text-orange-500"><i class="fas fa-microphone"></i></span>
+                </h4>
+                <p>
+                    "Más allá del resultado técnico que hoy ven funcionando, el valor principal de estos proyectos reside en el aprendizaje práctico. Hemos tenido que traducir diagramas teóricos en circuitos funcionales, enfrentándonos a imprevistos que no figuran en los manuales. Aprendimos a colaborar bajo presión, dividiendo tareas y unificando esfuerzos para llegar a la meta. Esta experiencia nos enseñó a diagnosticar, planificar y ejecutar soluciones industriales reales, consolidando nuestra formación de una manera que solo el trabajo práctico puede lograr. Queremos agradecer a nuestros profesores por su guía, y especialmente a los mentores de <strong>Edesur</strong> por la invaluable oportunidad de presentar nuestros desarrollos en este entorno profesional."
+                </p>
+            </div>
+
+            <h3 class="text-center text-slate-500 font-bold uppercase tracking-widest mb-10 text-sm">Equipo de Trabajo (Participación Integral)</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-4xl mx-auto text-center" id="team-container">
+                <!-- Injected via JS -->
+            </div>
+
+            <footer class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm font-mono">
+                INSTITUTO TÉCNICO 13 DE JULIO | AÑO 2025
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal de Imagen -->
+    <div id="image-modal">
+        <span id="modal-close" onclick="closeModal()">&times;</span>
+        <img id="modal-img" src="">
+    </div>
+
+    <script>
+        // --- NAVEGACIÓN ---
+        function navTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.opacity = 0; });
+            const target = document.getElementById(pageId);
+            target.classList.add('active');
+            setTimeout(() => { target.style.opacity = 1; window.scrollTo(0, 0); }, 100);
+        }
+
+        // --- EQUIPO ---
+        const members = ['Alcon Brian', 'Abdala Abril', 'Ratti Tomás', 'Gimenez Brian', 'Gozainy Joaquin', 'Cubilla Benjamín', 'Jesus Castellanos', 'Guillermo Paulosky', 'Joaquin Huaman'];
+        const container = document.getElementById('team-container');
+        members.forEach(m => {
+            container.innerHTML += `
+                <div class="bg-white p-4 rounded border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <h4 class="font-bold text-slate-800 text-sm">${m}</h4>
+                    <p class="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wide text-[10px]">Rol Integral</p>
+                </div>
+            `;
         });
+
+        // --- MODAL DE IMAGEN ---
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+
+        function openModal(src) {
+            modalImg.src = src;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // --- ANIMACIÓN ENVASADORA (MEJORADA 2.0) ---
+        function runPackingAnimation() {
+            const bottle = document.getElementById('bottle');
+            const liquid = document.getElementById('liquid');
+            const cap = document.getElementById('cap');
+            const gate = document.getElementById('gate');
+            const capper = document.getElementById('capper');
+            const tool = document.getElementById('tool');
+
+            // Reset
+            bottle.style.transition = 'none';
+            bottle.style.transform = "translate(50px, 120px)";
+            liquid.setAttribute('height', '0'); liquid.setAttribute('y', '40');
+            cap.style.opacity = '0';
+            
+            // 1. Ir a Llenado
+            setTimeout(() => {
+                bottle.style.transition = "transform 1s linear";
+                bottle.style.transform = "translate(110px, 120px)"; 
+            }, 100);
+
+            // 2. Llenar
+            setTimeout(() => {
+                gate.setAttribute('height', '0'); 
+                liquid.style.transition = "all 1s ease";
+                liquid.setAttribute('height', '25'); liquid.setAttribute('y', '15'); 
+            }, 1200);
+
+            // 3. Cerrar Válvula y Moverse hacia el Tobogán
+            setTimeout(() => {
+                gate.setAttribute('height', '5'); 
+                bottle.style.transform = "translate(315px, 120px)"; 
+            }, 2500);
+
+            // 4. Agarrar Tapa (Simulación de arrastre al pasar)
+            setTimeout(() => {
+                cap.style.transition = "opacity 0.2s";
+                cap.style.opacity = "1"; 
+            }, 3200);
+
+            // 5. Llegar a Cierre
+            setTimeout(() => {
+                bottle.style.transform = "translate(490px, 120px)"; 
+            }, 3300);
+
+            // 6. Bajar y Atornillar
+            setTimeout(() => {
+                capper.style.transform = "translateY(25px)"; 
+                tool.style.transform = "translateY(25px)";
+                tool.style.fill = "#15803d"; 
+            }, 4500);
+
+            // 7. Subir y Salir
+            setTimeout(() => {
+                capper.style.transform = "translateY(0)";
+                tool.style.transform = "translateY(0)";
+                tool.style.fill = "#10b981"; 
+                bottle.style.transform = "translate(600px, 120px)"; 
+            }, 5500);
+        }
     </script>
 </body>
 </html>
-
-
