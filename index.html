@@ -72,10 +72,10 @@
         .img-badge { position: absolute; bottom: 1rem; left: 1rem; background: #10b981; color: white; padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
 
         /* Carrusel de Imágenes Extra */
-        .carousel-container { position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; height: 400px; background: #f1f5f9; margin-top: 2rem; }
-        .carousel-slide { display: none; height: 100%; width: 100%; position: relative; }
-        .carousel-slide.active { display: block; animation: fadeEffect 0.5s; }
-        .carousel-img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+        .carousel-container { position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; height: 450px; background: #f1f5f9; margin-top: 2rem; }
+        .carousel-slide { display: none; height: 100%; width: 100%; position: relative; align-items: center; justify-content: center; background: #000; }
+        .carousel-slide.active { display: flex; animation: fadeEffect 0.5s; }
+        .carousel-img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
         .carousel-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); color: white; padding: 12px; font-size: 0.95rem; text-align: center; font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
         
         .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); color: #1e293b; border: none; padding: 10px; cursor: pointer; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10; }
@@ -92,19 +92,20 @@
         /* Modal de Imagen */
         #image-modal { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 100; 
+            background: rgba(0,0,0,0.95); z-index: 100; 
             display: none; align-items: center; justify-content: center; 
             opacity: 0; transition: opacity 0.3s ease; 
         }
         #image-modal.active { display: flex; opacity: 1; }
-        #modal-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        #modal-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
+        #modal-img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        #modal-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 3rem; cursor: pointer; transition: color 0.2s; }
+        #modal-close:hover { color: #ef4444; }
 
-        /* Placeholder de Video */
-        .video-placeholder {
-            width: 100%; height: 250px; background: #1e293b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; flex-direction: column; cursor: pointer; transition: background 0.3s; border: 1px solid #334155; margin-top: 1rem;
+        /* Video Container */
+        .video-container {
+            width: 100%; height: 400px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #334155; margin-top: 1rem;
         }
-        .video-placeholder:hover { background: #334155; }
+        .video-container video { width: 100%; height: 100%; object-fit: contain; }
 
         /* Script de Discurso */
         .speech-box {
@@ -128,7 +129,7 @@
 </head>
 <body class="antialiased">
 
-    <button id="fullscreen-btn" onclick="toggleFullScreen()" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
+    <button id="fullscreen-btn" onclick="toggleFullScreen()" title="Pantalla Completa"><i class="fas fa-expand" id="fs-icon"></i></button>
 
     <!-- === PÁGINA 1: HOME / MENÚ PRINCIPAL === -->
     <div id="home" class="page active">
@@ -198,7 +199,7 @@
                 <div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-blue-600 pl-3">Reconstrucción Industrial</h3>
                     <p class="text-slate-600 mb-6 text-justify leading-relaxed">
-                        Este proyecto se centró en la <strong>recuperación de activos</strong>. La máquina se encontraba fuera de servicio y sin planos. El trabajo consistió en relevar el funcionamiento, diseñar piezas mecánicas faltantes y migrar el control obsoleto a un sistema moderno con PLC y HMI.
+                        Este proyecto se centró en la <strong>recuperación de activos</strong>. La máquina se encontraba fuera de servicio y sin planos. Nos dividimos en dos grupos para facilitar el diagnóstico: uno se encargó de la conexión del panel de control (aplicando ingeniería inversa a diagramas a mano) y otro del armado de la estructura mecánica.
                     </p>
                     
                     <h4 class="font-bold text-slate-800 mb-3 uppercase text-sm tracking-wide">Pilares del Proyecto</h4>
@@ -220,13 +221,8 @@
                             <i class="fas fa-warehouse text-blue-500"></i> Adecuación del Entorno (Depósito)
                         </h5>
                         <p class="text-sm text-slate-600 mb-2">
-                            Recuperamos un depósito abandonado para establecer el taller de trabajo.
+                            Además de la máquina, tuvimos que acondicionar un depósito para trabajar. Realizamos limpieza profunda, movimiento de muebles, y tareas de albañilería y pintura. También hicimos una instalación eléctrica trifásica desde cero para los motores.
                         </p>
-                        <ul class="text-sm text-slate-600 list-disc list-inside">
-                            <li>Instalación eléctrica trifásica desde cero para motores.</li>
-                            <li>Limpieza, albañilería y pintura del espacio.</li>
-                            <li>Traslado y montaje de maquinaria pesada.</li>
-                        </ul>
                     </div>
                 </div>
                 <div>
@@ -236,17 +232,19 @@
                         <div class="img-badge"><i class="fas fa-check-circle mr-2"></i>PROYECTO TERMINADO</div>
                     </div>
                     
+                    <!-- Galería Estática -->
                     <div class="grid grid-cols-3 gap-2 mb-4">
                         <img src="https://i.postimg.cc/P5FMMNzH/IMG-20251016-WA0185.jpg" class="img-gallery" title="Estado Original" onclick="openModal(this.src)">
-                        <img src="https://i.postimg.cc/2y8kk4nh/IMG-20250828-WA0021.jpg" class="img-gallery" title="Nuevo Tablero" onclick="openModal(this.src)">
+                        <img src="https://i.imgur.com/wqlQOla.jpeg" class="img-gallery" title="Circuitos" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/KjqZRR5r/IMG-20251015-WA0030.jpg" class="img-gallery" title="Resistencias" onclick="openModal(this.src)">
                     </div>
                     
-                    <!-- Placeholder de Video -->
-                    <div class="video-placeholder group">
-                        <i class="fas fa-play-circle text-6xl mb-2 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold">VIDEO DE FUNCIONAMIENTO</span>
-                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide">Clic para reproducir evidencia</span>
+                    <!-- Video Termoformadora Real -->
+                    <div class="video-container">
+                         <video controls poster="https://i.imgur.com/4Kzkyb2.jpeg">
+                            <source src="https://i.imgur.com/CtChRaa.mp4" type="video/mp4">
+                            Tu navegador no soporta el tag de video.
+                        </video>
                     </div>
                 </div>
             </div>
@@ -278,7 +276,7 @@
                         <h4 class="font-bold text-slate-800 mb-2">Soluciones Implementadas</h4>
                         <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
                             <li>Reemplazo de componentes dañados.</li>
-                            <li><strong>Tornería:</strong> Fabricación de bujes nuevos a medida.</li>
+                            <li><strong>Tornería:</strong> Fabricación de bujes nuevos a medida en el taller.</li>
                             <li>Mecanizado de nuevas roscas.</li>
                             <li>Cambio de sellos y racores.</li>
                         </ul>
@@ -289,12 +287,16 @@
             <!-- Seguridad -->
             <div class="grid md:grid-cols-2 gap-8 mb-16">
                 <div class="tech-box bg-white border-l-4 border-blue-600">
-                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-hands-holding-circle text-blue-600"></i> Mando Bimanual</h4>
-                    <p class="text-sm text-slate-600">Lógica de seguridad: el operador debe presionar <strong>dos pulsadores simultáneamente</strong> (<0.5s) para iniciar el ciclo, evitando atrapamientos.</p>
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-hands-holding-circle text-blue-600"></i> Mando Bimanual (Futuro)</h4>
+                    <p class="text-sm text-slate-600">Nuestra máquina por ahora no tiene sistemas de seguridad por falta de tiempo, pero la idea es implementar dos botones de accionamiento separados para que el operador use ambas manos fuera de la zona de riesgo.</p>
                 </div>
                 <div class="tech-box bg-white border-l-4 border-red-600">
-                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-power-off text-red-600"></i> Parada de Emergencia</h4>
-                    <p class="text-sm text-slate-600">Pulsador tipo hongo (ISO 13850). Realiza un corte físico de la potencia, deteniendo motores y resistencias.</p>
+                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fas fa-shield-alt text-red-600"></i> Medidas Previstas</h4>
+                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                        <li>Delimitación de zona de trabajo (actual).</li>
+                        <li>Barómetro para interrupción por falta de presión.</li>
+                        <li>Sensor de temperatura anti-sobrecalentamiento.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -320,32 +322,24 @@
             <!-- CARRUSEL EXTRA TERMOFORMADORA -->
             <div class="carousel-container mt-12" id="carousel-thermo">
                  <div class="carousel-slide active">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO EXTRA 1</span>
-                    </div>
-                    <div class="carousel-caption">Detalle Mecánico</div>
+                    <img src="https://i.imgur.com/8mQUSoj.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Máquina Desarmada (Inicio)</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO EXTRA 2</span>
-                    </div>
-                    <div class="carousel-caption">Proceso de Pintura</div>
+                    <img src="https://i.imgur.com/1Mtorhv.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Lugar de Trabajo en Refacción</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO EXTRA 3</span>
-                    </div>
-                    <div class="carousel-caption">Montaje Final</div>
+                    <img src="https://i.imgur.com/ufAYS2r.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Pintura del Espacio</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO EXTRA 4</span>
-                    </div>
-                    <div class="carousel-caption">Pruebas en Depósito</div>
+                     <div class="bg-black w-full h-full flex items-center justify-center">
+                        <video controls class="w-full h-full object-contain">
+                            <source src="https://i.imgur.com/sTrNb8y.mp4" type="video/mp4">
+                        </video>
+                     </div>
+                    <div class="carousel-caption">Video: Refacción del Lugar</div>
                 </div>
                 <button class="carousel-btn prev" onclick="plusSlides(-1, 'carousel-thermo')">&#10094;</button>
                 <button class="carousel-btn next" onclick="plusSlides(1, 'carousel-thermo')">&#10095;</button>
@@ -372,7 +366,7 @@
                 <div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-orange-500 pl-3">Desarrollo Integral: Paso a Paso</h3>
                     <p class="text-slate-600 mb-6 text-justify leading-relaxed">
-                        El primer paso fue la construcción de la cinta transportadora, utilizando un perfil estructural y banda modular plástica, accionada por un <strong>Motor de CC de 24V</strong> regulado por un <strong>Variador de Frecuencia</strong>. Luego diseñamos en AutoCAD e imprimimos en 3D la tolva y el tobogán. En el área mecánica, trabajamos en la soldadura de soportes y la fabricación de un alimentador con caño reciclado y electroimán. Finalmente, reorganizamos el tablero eléctrico/neumático y ensamblamos la línea completa.
+                        Este proyecto consistió en el diseño y construcción total de una línea automatizada modular. El proceso de fabricación se dividió en cuatro etapas técnicas clave:
                     </p>
                     
                     <div class="space-y-6">
@@ -382,7 +376,7 @@
                                 Estructura y Cinta
                             </h4>
                             <p class="text-sm text-slate-600 mt-1 pl-8 text-justify">
-                                Perfil estructural y banda modular. Motor 24V CC + Variador de Velocidad para ajuste preciso. Múltiples ajustes de nivelación.
+                                El primer paso fue la construcción de la cinta transportadora utilizando un perfil estructural como base y una banda modular plástica. Accionada mediante un <strong>motor de corriente continua de 24 V</strong>. La velocidad del sistema se reguló con un <strong>variador de frecuencia</strong>, permitiendo ajustar el movimiento según las necesidades del proceso. Requirió múltiples ajustes de nivelación.
                             </p>
                         </div>
 
@@ -392,7 +386,7 @@
                                 Diseño CAD y 3D
                             </h4>
                             <p class="text-sm text-slate-600 mt-1 pl-8 text-justify">
-                                Tolva y tobogán de tapas diseñados en AutoCAD e impresos en 3D para medidas exactas compatibles con las botellas.
+                                Diseñamos en AutoCAD la tolva y el tobogán por donde se deslizan las tapitas. Ambas piezas fueron <strong>impresas en tecnología 3D</strong>, lo que permitió obtener medidas exactas y compatibles con las botellas utilizadas.
                             </p>
                         </div>
 
@@ -402,7 +396,7 @@
                                 Mecánica y Soldadura
                             </h4>
                             <p class="text-sm text-slate-600 mt-1 pl-8 text-justify">
-                                Soldadura de soportes para cilindros y atornillador. Alimentador de botellas de <strong>caño reciclado</strong>. Incorporación de <strong>Electroimán</strong> para control unitario de botellas.
+                                En el área mecánica trabajamos en el diseño y <strong>soldadura de los soportes</strong> para los cilindros neumáticos, el atornillador y el electroimán. También incorporamos un alimentador de botellas construido a partir de un <strong>caño reciclado</strong>, adaptándolo correctamente a la función.
                             </p>
                         </div>
 
@@ -412,33 +406,34 @@
                                 Tablero y Ensamble
                             </h4>
                             <p class="text-sm text-slate-600 mt-1 pl-8 text-justify">
-                                Mesa de trabajo a medida. Reorganización del tablero eléctrico/neumático para mayor seguridad y eficiencia.
+                                Fabricamos una mesa de trabajo con medidas precisas y montamos sobre ella el tablero eléctrico y neumático. Mejoramos el tablero existente reorganizando componentes para mayor seguridad. Finalmente, ensamblamos la línea incorporando un <strong>electroimán</strong> que retiene la botella y controla su liberación (una por ciclo).
                             </p>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <!-- Imagen Principal -->
+                    <!-- Galería de Imágenes Envasadora -->
                     <div class="img-main-container mb-4" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.postimg.cc/8znbbsdR/IMG-20251015-WA0031.jpg" alt="Envasadora Finalizada" class="img-main">
+                        <img src="https://i.imgur.com/02x7D0J.jpeg" alt="Envasadora Finalizada" class="img-main">
                         <div class="img-badge bg-orange-500">
                             <i class="fas fa-check-circle text-lg"></i>
                             <span>PROTOTIPO FINALIZADO</span>
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                    <div class="grid grid-cols-2 gap-2 mb-4">
                         <img src="https://i.postimg.cc/sx6VvvJJ/IMG-20251015-WA0029.jpg" class="img-gallery" title="Cinta" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/BbYqXXC5/IMG-20250823-WA0086.jpg" class="img-gallery" title="Diseño CAD" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/yxY11F00/IMG-20250901-WA0279.jpg" class="img-gallery" title="Mecanismos" onclick="openModal(this.src)">
                         <img src="https://i.postimg.cc/3NJ88g2W/IMG-20251015-WA0025.jpg" class="img-gallery" title="Equipo" onclick="openModal(this.src)">
                     </div>
                     
-                    <!-- Placeholder de Video Envasadora -->
-                    <div class="video-placeholder group">
-                        <i class="fas fa-play-circle text-6xl mb-2 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold">VIDEO DE FUNCIONAMIENTO</span>
-                        <span class="text-xs text-slate-400 mt-1 uppercase tracking-wide">Clic para reproducir evidencia</span>
+                    <!-- Video Envasadora Real -->
+                    <div class="video-container">
+                        <video controls poster="https://i.imgur.com/02x7D0J.jpeg">
+                            <source src="https://i.imgur.com/n4LYPct.mp4" type="video/mp4">
+                            Tu navegador no soporta el tag de video.
+                        </video>
                     </div>
                 </div>
             </div>
@@ -500,35 +495,27 @@
                 </div>
             </div>
 
-            <!-- CARRUSEL EXTRA ENVASADORA -->
+            <!-- CARRUSEL EXTRA ENVASADORA (ACTUALIZADO) -->
             <div class="carousel-container mt-12" id="carousel-env">
                  <div class="carousel-slide active">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO SOLDADURA SOPORTES</span>
-                    </div>
-                    <div class="carousel-caption">Proceso de Soldadura y Mecánica</div>
+                    <img src="https://i.imgur.com/ajqJvrq.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Línea de Envasado (Comienzo)</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO IMPRESIÓN 3D</span>
-                    </div>
-                    <div class="carousel-caption">Piezas Impresas 3D (Tolva/Tobogán)</div>
+                    <img src="https://i.imgur.com/4kEn15J.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Armado de Mesa y Soportes</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO ELECTROIMÁN</span>
-                    </div>
-                    <div class="carousel-caption">Detalle Electroimán y Caño Reciclado</div>
+                    <img src="https://i.postimg.cc/8znbbsdR/IMG-20251015-WA0031.jpg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Fase Inicial de Montaje</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-image text-4xl mb-2"></i>
-                        <span>FOTO TABLERO MEJORADO</span>
-                    </div>
-                    <div class="carousel-caption">Reorganización de Tablero</div>
+                     <div class="bg-black w-full h-full flex items-center justify-center">
+                        <video controls class="w-full h-full object-contain">
+                            <source src="https://i.imgur.com/n4LYPct.mp4" type="video/mp4">
+                        </video>
+                     </div>
+                    <div class="carousel-caption">Video: Funcionamiento</div>
                 </div>
                 <button class="carousel-btn prev" onclick="plusSlides(-1, 'carousel-env')">&#10094;</button>
                 <button class="carousel-btn next" onclick="plusSlides(1, 'carousel-env')">&#10095;</button>
@@ -586,32 +573,12 @@
             <!-- CARRUSEL CONCLUSIONES (FOTOS EXTRA) -->
             <div class="carousel-container mt-12" id="carousel-conclusiones">
                  <div class="carousel-slide active">
-                    <div class="placeholder-img">
-                        <i class="fas fa-users text-4xl mb-2"></i>
-                        <span>FOTO EQUIPO GRUPAL</span>
-                    </div>
-                    <div class="carousel-caption">El Equipo Completo</div>
+                    <img src="https://i.imgur.com/UPSrUYi.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Equipo Grupal - Parte 1</div>
                 </div>
                  <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-tools text-4xl mb-2"></i>
-                        <span>FOTO TRABAJANDO</span>
-                    </div>
-                    <div class="carousel-caption">Proceso de Trabajo</div>
-                </div>
-                 <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-chalkboard-teacher text-4xl mb-2"></i>
-                        <span>FOTO PRESENTACIÓN</span>
-                    </div>
-                    <div class="carousel-caption">Defensa</div>
-                </div>
-                 <div class="carousel-slide">
-                    <div class="placeholder-img">
-                        <i class="fas fa-flag-checkered text-4xl mb-2"></i>
-                        <span>FOTO FINAL</span>
-                    </div>
-                    <div class="carousel-caption">Misión Cumplida</div>
+                    <img src="https://i.imgur.com/h7B82db.jpeg" class="carousel-img" onclick="openModal(this.src)">
+                    <div class="carousel-caption">Equipo Grupal - Parte 2</div>
                 </div>
                 <button class="carousel-btn prev" onclick="plusSlides(-1, 'carousel-conclusiones')">&#10094;</button>
                 <button class="carousel-btn next" onclick="plusSlides(1, 'carousel-conclusiones')">&#10095;</button>
@@ -632,8 +599,17 @@
     <script>
         // --- NAVEGACIÓN ---
         function navTo(pageId) {
-            document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.opacity = 0; });
             const target = document.getElementById(pageId);
+            if (!target) {
+                console.error("No se encontró la página:", pageId);
+                return;
+            }
+
+            document.querySelectorAll('.page').forEach(p => { 
+                p.classList.remove('active'); 
+                p.style.opacity = 0; 
+            });
+            
             target.classList.add('active');
             setTimeout(() => { target.style.opacity = 1; window.scrollTo(0, 0); }, 100);
         }
@@ -641,31 +617,37 @@
         // --- EQUIPO ---
         const members = ['Alcon Brian', 'Abdala Abril', 'Ratti Tomás', 'Gimenez Brian', 'Gozainy Joaquin', 'Cubilla Benjamín', 'Jesus Castellanos', 'Guillermo Paulosky', 'Joaquin Huaman'];
         const container = document.getElementById('team-container');
-        members.forEach(m => {
-            container.innerHTML += `
-                <div class="bg-white p-4 rounded border border-slate-200 shadow-sm hover:shadow-md transition">
-                    <h4 class="font-bold text-slate-800 text-sm">${m}</h4>
-                    <p class="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wide text-[10px]">Rol Integral</p>
-                </div>
-            `;
-        });
+        if (container) {
+            members.forEach(m => {
+                container.innerHTML += `
+                    <div class="bg-white p-4 rounded border border-slate-200 shadow-sm hover:shadow-md transition">
+                        <h4 class="font-bold text-slate-800 text-sm">${m}</h4>
+                        <p class="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wide text-[10px]">Rol Integral</p>
+                    </div>
+                `;
+            });
+        }
 
         // --- MODAL DE IMAGEN ---
         const modal = document.getElementById('image-modal');
         const modalImg = document.getElementById('modal-img');
 
         function openModal(src) {
+            if (!modal || !modalImg) return;
             modalImg.src = src;
             modal.classList.add('active');
         }
 
         function closeModal() {
+            if (!modal) return;
             modal.classList.remove('active');
         }
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+        }
 
         // --- CARRUSEL ---
         let indices = { 'carousel-thermo': 1, 'carousel-env': 1, 'carousel-conclusiones': 1 };
@@ -675,21 +657,30 @@
         }
 
         function showSlides(n, id) {
-            let slides = document.getElementById(id).getElementsByClassName("carousel-slide");
+            let container = document.getElementById(id);
+            if (!container) return; // Verificación de seguridad
+            
+            let slides = container.getElementsByClassName("carousel-slide");
+            if (!slides || slides.length === 0) return;
+
             if (n > slides.length) { indices[id] = 1 }
             if (n < 1) { indices[id] = slides.length }
+            
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
                 slides[i].classList.remove('active');
             }
-            slides[indices[id] - 1].style.display = "block";
+            slides[indices[id] - 1].style.display = "flex";
             slides[indices[id] - 1].classList.add('active');
         }
         
-        // Init
-        showSlides(1, 'carousel-thermo');
-        showSlides(1, 'carousel-env');
-        showSlides(1, 'carousel-conclusiones');
+        // --- INICIALIZACIÓN (Esperar al DOM) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inicializar solo si existen los elementos
+            if(document.getElementById('carousel-thermo')) showSlides(1, 'carousel-thermo');
+            if(document.getElementById('carousel-env')) showSlides(1, 'carousel-env');
+            if(document.getElementById('carousel-conclusiones')) showSlides(1, 'carousel-conclusiones');
+        });
 
         // --- FULLSCREEN FUNCTION ---
         function toggleFullScreen() {
@@ -704,16 +695,9 @@
             }
         }
         
-        // Add Fullscreen toggle button
-        const fsBtn = document.createElement('button');
-        fsBtn.id = "fullscreen-btn";
-        fsBtn.onclick = toggleFullScreen;
-        fsBtn.title = "Pantalla Completa";
-        fsBtn.innerHTML = '<i class="fas fa-expand text-xl" id="fs-icon"></i>';
-        document.body.appendChild(fsBtn);
-
         document.addEventListener('fullscreenchange', () => {
             const icon = document.getElementById('fs-icon');
+            if (!icon) return;
             if (document.fullscreenElement) {
                 icon.classList.remove('fa-expand');
                 icon.classList.add('fa-compress');
